@@ -18,34 +18,13 @@ class AnonNavBar extends ConsumerWidget {
         backgroundColor: Colors.white,
         selectedLabelStyle: medium11(context),
         unselectedLabelStyle: medium11(context),
-        items: [
+        items: const [
           BottomNavigationBarItem(
-              icon: SizedBox(
-                  height: height(context) * 0.032,
-                  width: width(context) * 0.2,
-                  child: Image.asset(
-                    'assets/images/icons/sign_in.png',
-                    fit: BoxFit.contain,
-                  )),
-              label: 'Sign In'),
+              icon: Icon(Icons.login_outlined), label: 'Sign In'),
           BottomNavigationBarItem(
-              icon: SizedBox(
-                  height: height(context) * 0.032,
-                  width: width(context) * 0.2,
-                  child: Image.asset(
-                    'assets/images/icons/purchase.png',
-                    fit: BoxFit.contain,
-                  )),
-              label: 'Purchase'),
+              icon: Icon(Icons.local_mall_outlined), label: 'Purchase'),
           BottomNavigationBarItem(
-              icon: SizedBox(
-                  height: height(context) * 0.032,
-                  width: width(context) * 0.2,
-                  child: Image.asset(
-                    'assets/images/icons/setting.png',
-                    fit: BoxFit.contain,
-                  )),
-              label: 'About App'),
+              icon: Icon(Icons.settings_outlined), label: 'About App'),
         ],
         onTap: (i) {
           controller.updateIndex(i);

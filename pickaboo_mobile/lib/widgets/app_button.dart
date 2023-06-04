@@ -12,7 +12,7 @@ class AppButton extends StatelessWidget {
       required this.text,
       required this.onPressed,
       this.buttonWidth = 1,
-      this.buttonHeight = 0.05});
+      this.buttonHeight = 0.0525});
 
   @override
   Widget build(BuildContext context) {

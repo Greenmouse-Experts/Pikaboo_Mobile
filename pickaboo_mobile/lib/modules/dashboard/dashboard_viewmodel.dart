@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pickaboo_mobile/modules/dashboard/inner_pages/purchase_view.dart';
 
 import 'inner_pages/about_view.dart';
 import 'inner_pages/anon_home_view.dart';
+import 'inner_pages/purchase_view.dart';
 
 class DashboardViewModel {
   static const anonDashboardPages = [

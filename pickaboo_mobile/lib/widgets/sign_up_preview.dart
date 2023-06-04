@@ -5,7 +5,12 @@ import '../utilities/utilities.dart';
 class SignUpPreview extends StatelessWidget {
   final String image;
   final String header;
-  const SignUpPreview({super.key, required this.image, required this.header});
+  final VoidCallback onPressed;
+  const SignUpPreview(
+      {super.key,
+      required this.image,
+      required this.header,
+      required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +40,7 @@ class SignUpPreview extends StatelessWidget {
                     .copyWith(color: AppColors.darkAsh.withOpacity(0.85)),
               ),
               InkWell(
-                onTap: () {},
+                onTap: onPressed,
                 child: Text(
                   'Sign In',
                   style: regular11(context).copyWith(color: AppColors.primary),

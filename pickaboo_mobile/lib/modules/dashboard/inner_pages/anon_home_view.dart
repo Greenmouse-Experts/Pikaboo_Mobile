@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../utilities/utilities.dart';
 import '../../../widgets/widgets.dart';
@@ -9,7 +10,7 @@ class AnonHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, implyLeading: true),
+      appBar: customAppBar(context),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -18,7 +19,7 @@ class AnonHomeView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: height(context) * 0.2,
+                  height: height(context) * 0.18,
                   width: width(context),
                   decoration: BoxDecoration(
                       color: AppColors.primary,
@@ -46,15 +47,15 @@ class AnonHomeView extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: height(context) * 0.01),
+                SizedBox(height: height(context) * 0.015),
                 Text(
                   'Get Started with PIKABOO',
                   style: medium16(context),
                 ),
-                SizedBox(height: height(context) * 0.01),
+                SizedBox(height: height(context) * 0.015),
                 Row(
                   children: [
-                    AppButton(text: 'FAQ', onPressed: () {}, buttonWidth: 0.2),
+                    AppButton(text: 'FAQ', onPressed: () {}, buttonWidth: 0.23),
                     const SizedBox(width: 10),
                     TextButton(
                       onPressed: () {},
@@ -73,7 +74,7 @@ class AnonHomeView extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(height: height(context) * 0.01),
+                SizedBox(height: height(context) * 0.015),
                 SizedBox(
                   height: height(context) * 0.1,
                   child: ListView(
@@ -86,13 +87,19 @@ class AnonHomeView extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: height(context) * 0.01),
-                const Row(
+                SizedBox(height: height(context) * 0.015),
+                Row(
                   children: [
-                    SignUpPreview(image: 'house', header: 'House hold User'),
-                    Spacer(),
                     SignUpPreview(
-                        image: 'driver', header: 'Waste Truck Driver'),
+                      image: 'house',
+                      header: 'House hold User',
+                      onPressed: () => context.pushNamed(AppRouter.login),
+                    ),
+                    const Spacer(),
+                    SignUpPreview(
+                        image: 'driver',
+                        header: 'Waste Truck Driver',
+                        onPressed: () => context.pushNamed(AppRouter.login)),
                   ],
                 ),
               ],

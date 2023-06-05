@@ -12,7 +12,7 @@ class OnBoardPrompt extends StatelessWidget {
       width: width(context) * 0.7,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.darkGreen),
+        border: Border.all(color: AppColors.darkGreen.withOpacity(0.3)),
       ),
       child: ListTile(
         leading: Column(

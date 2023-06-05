@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'inner_pages/about_view.dart';
-import 'inner_pages/anon_home_view.dart';
-import 'inner_pages/purchase_view.dart';
+import '../anon_dashboard/inner_pages/about_view.dart';
+import '../anon_dashboard/inner_pages/purchase_view.dart';
+import 'inner_pages/user_home_view.dart';
 
-class DashboardViewModel {
-  static const anonDashboardPages = [
-    AnonHomeView(),
+class UserDashboardViewModel {
+  static const pages = [
+    UserHomeView(),
     PurchaseView(),
     AboutView()
   ];

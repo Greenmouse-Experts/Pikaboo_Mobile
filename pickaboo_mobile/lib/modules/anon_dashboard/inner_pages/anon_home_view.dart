@@ -19,7 +19,7 @@ class AnonHomeView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: height(context) * 0.18,
+                  height: height(context) * 0.17,
                   width: width(context),
                   decoration: BoxDecoration(
                       color: AppColors.primary,
@@ -47,7 +47,7 @@ class AnonHomeView extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: height(context) * 0.015),
+                SizedBox(height: height(context) * 0.02),
                 Text(
                   'Get Started with PIKABOO',
                   style: medium16(context),
@@ -55,7 +55,7 @@ class AnonHomeView extends StatelessWidget {
                 SizedBox(height: height(context) * 0.015),
                 Row(
                   children: [
-                    AppButton(text: 'FAQ', onPressed: () {}, buttonWidth: 0.23),
+                    AppButton(text: 'FAQs', onPressed: () {}, buttonWidth: 0.23, buttonHeight: 0.045,),
                     const SizedBox(width: 10),
                     TextButton(
                       onPressed: () {},
@@ -80,10 +80,10 @@ class AnonHomeView extends StatelessWidget {
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
-                    children: const [
-                      OnBoardPrompt(),
-                      SizedBox(width: 10),
-                      OnBoardPrompt()
+                    children: [
+                      const OnBoardPrompt(),
+                      SizedBox(width: width(context) * 0.04),
+                      const OnBoardPrompt()
                     ],
                   ),
                 ),

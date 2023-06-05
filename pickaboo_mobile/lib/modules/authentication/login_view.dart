@@ -77,7 +77,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       AppButton(
                           text: 'Login',
                           onPressed: () {
-                            context.goNamed(AppRouter.userHome);
+                            context.goNamed(AppRouter.userDashboard);
                           }),
                       SizedBox(height: height(context) * 0.03),
                       TextButton(

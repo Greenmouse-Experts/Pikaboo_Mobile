@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../utilities/utilities.dart';
 
@@ -52,4 +53,39 @@ AppBar customAppBar2(BuildContext context,
           Text('PIKABOO', style: bold11(context).copyWith(color: Colors.white))
         ],
       ),
+    );
+
+AppBar customAppBar3(BuildContext context,
+        {bool? hasElevation, Color? bgColor}) =>
+    AppBar(
+      backgroundColor: bgColor ?? Colors.white,
+      leading: Padding(
+        padding: EdgeInsets.all(width(context) * 0.02),
+        child: InkWell(
+          onTap: () => context.pop(),
+          child: Container(
+            decoration: BoxDecoration(
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: AppColors.primary.withOpacity(0.4),
+                    blurRadius: 5,
+                  ),
+                ],
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(50)),
+            child: Icon(
+              Icons.adaptive.arrow_back_rounded,
+              color: Colors.white,
+              size: width(context) * 0.06,
+            ),
+          ),
+        ),
+      ),
+      foregroundColor: Colors.black,
+      centerTitle: true,
+      elevation: hasElevation == null
+          ? 4
+          : hasElevation
+              ? 4
+              : 0,
     );

@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../widgets/widgets.dart';
-import 'dashboard_viewmodel.dart';
+import 'user_dashboard_vm.dart';
 
-class DashboardView extends ConsumerWidget {
-  const DashboardView({super.key});
+class UserDashboardView extends ConsumerWidget {
+  const UserDashboardView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final index = ref.watch(DashboardViewModel.provider);
+    final index = ref.watch(UserDashboardViewModel.provider);
     return Scaffold(
       body: Consumer(
         builder: (context, ref, child) =>
-            DashboardViewModel.anonDashboardPages[index],
+            UserDashboardViewModel.pages[index],
       ),
-      bottomNavigationBar: const AnonNavBar(),
+      bottomNavigationBar: const UserNavBar(),
     );
   }
 }

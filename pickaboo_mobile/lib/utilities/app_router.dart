@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../modules/anon_dashboard/anon_dashboard_view.dart';
 import '../modules/authentication/forgot_password_view.dart';
 import '../modules/authentication/login_view.dart';
 import '../modules/authentication/reset_status_view.dart';
-import '../modules/dashboard/dashboard_view.dart';
-import '../modules/dashboard/inner_pages/user_home_view.dart';
+import '../modules/notifications/notifications_view.dart';
 import '../modules/onboarding/onboarding_view.dart';
+import '../modules/user_dashboard/user_dashboard_view.dart';
 
 class AppRouter {
   static const onboarding = 'onboarding';
@@ -14,7 +15,8 @@ class AppRouter {
   static const login = 'login';
   static const forgotPassword = 'forgotPassword';
   static const resetStatus = 'resetStatus';
-  static const userHome = 'userHome';
+  static const userDashboard = 'userHome';
+  static const notifications = 'notifications';
 }
 
 final GoRouter _router = GoRouter(routes: <RouteBase>[
@@ -31,7 +33,7 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
         GoRoute(
             name: AppRouter.dashboard,
             path: AppRouter.dashboard,
-            builder: (context, state) => const DashboardView()),
+            builder: (context, state) => const AnonDashboardView()),
         GoRoute(
             name: AppRouter.login,
             path: AppRouter.login,
@@ -45,9 +47,13 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             path: AppRouter.resetStatus,
             builder: (context, state) => const ResetStatusView()),
         GoRoute(
-            name: AppRouter.userHome,
-            path: AppRouter.userHome,
-            builder: (context, state) => const UserHomeView()),
+            name: AppRouter.userDashboard,
+            path: AppRouter.userDashboard,
+            builder: (context, state) => const UserDashboardView()),
+        GoRoute(
+            name: AppRouter.notifications,
+            path: AppRouter.notifications,
+            builder: (context, state) => const NotificationView()),
       ]),
 ]);
 

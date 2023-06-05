@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../utilities/utilities.dart';
 import '../../../widgets/widgets.dart';
@@ -43,7 +44,7 @@ class UserHomeView extends StatelessWidget {
               color: Colors.white,
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                    vertical: height(context) * 0.01,
+                    vertical: height(context) * 0.012,
                     horizontal: width(context) * 0.05),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,34 +67,80 @@ class UserHomeView extends StatelessWidget {
                         style: medium13(context)
                             .copyWith(color: Colors.black.withOpacity(0.7))),
                     SizedBox(height: height(context) * 0.025),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         UserRowIcon(
+                          onTap: () {},
                           bgColor: AppColors.primary,
                           title: 'FAQs',
                           image: 'faq',
                         ),
                         UserRowIcon(
+                          onTap: () {},
                           bgColor: AppColors.orange,
                           title: 'Fund',
                           image: 'fund',
                         ),
                         UserRowIcon(
+                          onTap: () {},
                           bgColor: AppColors.lightBlue,
                           title: 'History',
                           image: 'history',
                         ),
                         UserRowIcon(
+                          onTap: () {
+                            context.pushNamed(AppRouter.notifications);
+                          },
                           bgColor: AppColors.orange,
                           title: 'Notification',
                           image: 'notification',
                         )
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
+            ),
+            SizedBox(height: height(context) * 0.01),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    const ActionCard(
+                      title: 'Request Pick',
+                      content: 'Order for waste pickup.',
+                      image: 'assets/images/icons/request.png',
+                      cardHeight: 0.16,
+                    ),
+                    SizedBox(height: height(context) * 0.007),
+                    const ActionCard(
+                      title: 'Purchase',
+                      content: 'Buy trash cans and waste bins from us.',
+                      image: 'assets/images/icons/purchase1.png',
+                      cardHeight: 0.21,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    const ActionCard(
+                      title: 'Location',
+                      content: 'Set and track your location remotely.',
+                      image: 'assets/images/icons/location.png',
+                      cardHeight: 0.21,
+                    ),
+                    SizedBox(height: height(context) * 0.007),
+                    const ActionCard(
+                      title: 'Contact Details',
+                      content: 'Contact us directly via our details.',
+                      image: 'assets/images/icons/contact.png',
+                      cardHeight: 0.16,
+                    )
+                  ],
+                )
+              ],
             )
           ],
         ),

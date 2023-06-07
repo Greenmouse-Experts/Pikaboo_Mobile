@@ -50,11 +50,13 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       SizedBox(height: height(context) * 0.1),
                       AppTextField(
                           controller: emailController,
+                          keyboardType: TextInputType.emailAddress,
                           label: 'Email',
                           hintText: 'youremail@gmail.com'),
                       SizedBox(height: height(context) * 0.02),
                       AppTextField(
                           controller: passwordController,
+                          keyboardType: TextInputType.visiblePassword,
                           label: 'Password',
                           hintText: '********',
                           isPassword: true),

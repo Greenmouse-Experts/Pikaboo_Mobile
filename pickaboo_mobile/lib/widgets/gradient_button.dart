@@ -35,7 +35,7 @@ class GradientButton extends StatelessWidget {
               colors: [
                 AppColors.orange,
                 AppColors.orange.withOpacity(0.4),
-                AppColors.orange.withOpacity(0.2)
+                AppColors.orange.withOpacity(0.2),
               ]),
         ),
         child: Text(

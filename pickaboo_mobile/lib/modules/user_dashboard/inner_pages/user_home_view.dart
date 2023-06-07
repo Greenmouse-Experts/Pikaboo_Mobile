@@ -73,19 +73,19 @@ class UserHomeView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           UserRowIcon(
-                            onTap: () {},
+                            onTap: () => context.pushNamed(AppRouter.faq),
                             bgColor: AppColors.primary,
                             title: 'FAQs',
                             image: 'faq',
                           ),
                           UserRowIcon(
-                            onTap: () {},
+                            onTap: () => context.pushNamed(AppRouter.fund),
                             bgColor: AppColors.orange,
                             title: 'Fund',
                             image: 'fund',
                           ),
                           UserRowIcon(
-                            onTap: () {},
+                            onTap: () => context.pushNamed(AppRouter.history),
                             bgColor: AppColors.lightBlue,
                             title: 'History',
                             image: 'history',

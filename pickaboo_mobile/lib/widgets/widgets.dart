@@ -15,3 +15,8 @@ export './page_header.dart';
 export './notification_tile.dart';
 export 'id_icon.dart';
 export './pickup_card.dart';
+export './app_image.dart';
+export './wallet_card.dart';
+export './pick_up_tile.dart';
+export './expandable_question.dart';
+export './history_tile.dart';

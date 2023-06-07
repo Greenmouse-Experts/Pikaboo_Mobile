@@ -6,19 +6,29 @@ import '../modules/authentication/forgot_password_view.dart';
 import '../modules/authentication/login_view.dart';
 import '../modules/authentication/reset_status_view.dart';
 import '../modules/driver_dashboard/driver_dashboard_view.dart';
+import '../modules/faq/faq_view.dart';
+import '../modules/fund/fund_status_view.dart';
+import '../modules/fund/fund_view.dart';
+import '../modules/history/history_view.dart';
 import '../modules/notifications/notifications_view.dart';
 import '../modules/onboarding/onboarding_view.dart';
+import '../modules/requests/pickup_request_view.dart';
 import '../modules/user_dashboard/user_dashboard_view.dart';
 
 class AppRouter {
-  static const onboarding = 'onboarding';
-  static const dashboard = 'dashboard';
-  static const login = 'login';
-  static const forgotPassword = 'forgotPassword';
-  static const resetStatus = 'resetStatus';
-  static const userDashboard = 'userDashboard';
-  static const driverDashboard = 'driverDashboard';
-  static const notifications = 'notifications';
+  static const String onboarding = 'onboarding';
+  static const String dashboard = 'dashboard';
+  static const String login = 'login';
+  static const String forgotPassword = 'forgotPassword';
+  static const String resetStatus = 'resetStatus';
+  static const String userDashboard = 'userDashboard';
+  static const String driverDashboard = 'driverDashboard';
+  static const String notifications = 'notifications';
+  static const String fund = 'fund';
+  static const String fundStatus = 'fundStatus';
+  static const String pickUpRequests = 'pickuoRequests';
+  static const String faq = 'faq';
+  static const String history = 'history';
 }
 
 final GoRouter _router = GoRouter(routes: <RouteBase>[
@@ -62,6 +72,27 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             name: AppRouter.driverDashboard,
             path: AppRouter.driverDashboard,
             builder: (context, state) => const DriverDashboardView()),
+        GoRoute(
+            name: AppRouter.fund,
+            path: AppRouter.fund,
+            builder: (context, state) => const FundView()),
+        GoRoute(
+            name: AppRouter.fundStatus,
+            path: AppRouter.fundStatus,
+            builder: (context, state) => const FundStatusView()),
+        GoRoute(
+            name: AppRouter.pickUpRequests,
+            path: AppRouter.pickUpRequests,
+            builder: (context, state) => const PickUpRequestView()),
+        GoRoute(
+            name: AppRouter.faq,
+            path: AppRouter.faq,
+            builder: (context, state) => const FaqView()),
+        GoRoute(
+          name: AppRouter.history,
+          path: AppRouter.history,
+          builder: (context, state) => const HistoryView(),
+        )
       ]),
 ]);
 

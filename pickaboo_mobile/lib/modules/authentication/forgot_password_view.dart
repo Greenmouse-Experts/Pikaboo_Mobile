@@ -13,6 +13,7 @@ class ForgotPasswordView extends StatefulWidget {
 
 class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   TextEditingController emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +44,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
               SizedBox(height: height(context) * 0.04),
               AppTextField(
                 label: 'Email address',
+                keyboardType: TextInputType.emailAddress,
                 controller: emailController,
                 hintText: 'youremail@gmail.com',
               ),

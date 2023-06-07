@@ -4,6 +4,8 @@ import '../utilities/utilities.dart';
 
 class PageHeader extends StatelessWidget {
   final String title;
+
+  /// Leave has search as true when you want a search button to appear
   final bool hasSearch;
   const PageHeader({super.key, this.hasSearch = true, required this.title});
 
@@ -14,7 +16,7 @@ class PageHeader extends StatelessWidget {
       children: [
         Text(
           title,
-          style: semi20(context).copyWith(color: AppColors.primary),
+          style: semi20(context).copyWith(color: AppColors.darkGreen),
         ),
         hasSearch
             ? IconButton(onPressed: () {}, icon: const Icon(Icons.search))

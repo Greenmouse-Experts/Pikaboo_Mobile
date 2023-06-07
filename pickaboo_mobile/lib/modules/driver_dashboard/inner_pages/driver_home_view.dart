@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../utilities/utilities.dart';
 import '../../../widgets/widgets.dart';
@@ -38,7 +39,8 @@ class DriverHomeView extends StatelessWidget {
               child: Center(
                   child: Padding(
                       padding: EdgeInsets.all(width(context) * 0.05),
-                      child: const SearchTextField())),
+                      child: const SearchTextField(
+                          hintText: 'Search Locations', islocation: true))),
             ),
             SizedBox(height: height(context) * 0.02),
             Row(
@@ -48,7 +50,7 @@ class DriverHomeView extends StatelessWidget {
                     bgColor: AppColors.lightYellow,
                     title: 'Requests',
                     image: 'request2',
-                    onTap: () {}),
+                    onTap: () => context.pushNamed(AppRouter.pickUpRequests)),
                 DriverRowIcon(
                     bgColor: AppColors.lightGreen,
                     title: 'Geo Location',
@@ -63,7 +65,7 @@ class DriverHomeView extends StatelessWidget {
                     bgColor: AppColors.lightIndigo,
                     title: 'FAQs',
                     image: 'faqs',
-                    onTap: () {}),
+                    onTap: () => context.pushNamed(AppRouter.faq)),
               ],
             ),
             SizedBox(height: height(context) * 0.02),

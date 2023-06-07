@@ -8,10 +8,14 @@ class AppTextField extends ConsumerWidget {
   final String hintText;
   final TextEditingController controller;
   final bool isPassword;
+  final bool hasLabel;
+  final TextInputType keyboardType;
   const AppTextField(
       {super.key,
       required this.label,
+      required this.keyboardType,
       this.hintText = '',
+      this.hasLabel = true,
       this.isPassword = false,
       required this.controller});
 
@@ -20,8 +24,10 @@ class AppTextField extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label,
-            style: medium14(context).copyWith(color: AppColors.primary)),
+        hasLabel
+            ? Text(label,
+                style: medium14(context).copyWith(color: AppColors.primary))
+            : const SizedBox(),
         SizedBox(height: height(context) * 0.01),
         Consumer(builder: (context, ref, child) {
           final isVisible = ref.watch(switchProvider);
@@ -30,6 +36,7 @@ class AppTextField extends ConsumerWidget {
             controller: controller,
             obscureText: isPassword ? isVisible : false,
             obscuringCharacter: "*",
+            keyboardType: keyboardType,
             decoration: InputDecoration(
               hintText: hintText,
               suffixIcon: isPassword
@@ -42,7 +49,20 @@ class AppTextField extends ConsumerWidget {
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,
                           color: AppColors.primary))
-                  : null,
+                  : !hasLabel
+                      ? Container(
+                          padding: const EdgeInsets.only(right: 5),
+                          width: width(context) * 0.17,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              label,
+                              style: medium13(context).copyWith(
+                                  color: Colors.black.withOpacity(0.4)),
+                            ),
+                          ),
+                        )
+                      : null,
               errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: const BorderSide(color: AppColors.darkGreen)),
@@ -75,15 +95,18 @@ class IsVisibleNotifier extends Notifier<bool> {
 }
 
 class SearchTextField extends StatelessWidget {
-  const SearchTextField({super.key});
+  final String hintText;
+  final bool islocation;
+  const SearchTextField(
+      {super.key, required this.hintText, required this.islocation});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-          hintText: 'Search Locations',
-          filled: true,
-          fillColor: AppColors.lightAsh.withOpacity(0.17),
+          hintText: hintText,
+          filled: islocation,
+          fillColor: islocation ? AppColors.lightAsh.withOpacity(0.17) : null,
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
               borderSide:

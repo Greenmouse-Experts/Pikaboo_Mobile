@@ -6,7 +6,8 @@ import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
 class LoginView extends ConsumerStatefulWidget {
-  const LoginView({super.key});
+  final String type;
+  const LoginView({super.key, required this.type});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LoginViewState();
@@ -25,7 +26,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
             children: [
               Column(
                 children: [
-                  SizedBox(height: height(context) * 0.1),
+                  SizedBox(height: height(context) * 0.075),
                   Image.asset('assets/images/pickaboo_alt_logo.png'),
                   SizedBox(
                     width: width(context),
@@ -33,7 +34,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   ),
                   Text('PIKABOO',
                       style: semi18(context).copyWith(color: Colors.white)),
-                  SizedBox(height: height(context) * 0.1),
+                  SizedBox(height: height(context) * 0.075),
                 ],
               ),
               Expanded(
@@ -77,7 +78,9 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       AppButton(
                           text: 'Login',
                           onPressed: () {
-                            context.goNamed(AppRouter.userDashboard);
+                            widget.type == 'user'
+                                ? context.goNamed(AppRouter.userDashboard)
+                                : context.goNamed(AppRouter.driverDashboard);
                           }),
                       SizedBox(height: height(context) * 0.03),
                       TextButton(

@@ -14,7 +14,7 @@ class NotificationTile extends StatelessWidget {
           vertical: height(context) * 0.01, horizontal: 16),
       leading: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(500),
           color: AppColors.primary,
         ),
         width: width(context) * 0.125,

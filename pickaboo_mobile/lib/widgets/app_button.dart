@@ -19,7 +19,7 @@ class AppButton extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Container(
-        height: height(context) * buttonHeight,
+        height: adjustedHeight(context) * buttonHeight,
         width: width(context) * buttonWidth,
         alignment: Alignment.center,
         decoration: BoxDecoration(

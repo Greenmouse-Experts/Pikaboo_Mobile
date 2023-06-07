@@ -1,0 +1,92 @@
+import 'package:flutter/material.dart';
+
+import '../utilities/utilities.dart';
+
+class UserRowIcon extends StatelessWidget {
+  final Color bgColor;
+  final String title;
+  final String image;
+  final VoidCallback onTap;
+  const UserRowIcon(
+      {super.key,
+      required this.bgColor,
+      required this.title,
+      required this.image,
+      required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        InkWell(
+          onTap: onTap,
+          child: Container(
+            width: width(context) * 0.12,
+            height: width(context) * 0.12,
+            decoration: BoxDecoration(
+              color: bgColor,
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(width(context) * 0.04),
+              child: Image.asset(
+                'assets/images/icons/$image.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: height(context) * 0.007),
+        Text(
+          title,
+          style: medium11(context),
+        )
+      ],
+    );
+  }
+}
+
+class DriverRowIcon extends StatelessWidget {
+  final Color bgColor;
+  final String title;
+  final String image;
+  final VoidCallback onTap;
+  const DriverRowIcon(
+      {super.key,
+      required this.bgColor,
+      required this.title,
+      required this.image,
+      required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        InkWell(
+          onTap: onTap,
+          child: Container(
+            width: width(context) * 0.135,
+            height: width(context) * 0.135,
+            decoration: BoxDecoration(
+              color: bgColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(width(context) * 0.0375),
+              child: Image.asset(
+                'assets/images/icons/$image.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: height(context) * 0.007),
+        Text(
+          title,
+          style:
+              medium13(context).copyWith(color: Colors.black.withOpacity(0.7)),
+        )
+      ],
+    );
+  }
+}

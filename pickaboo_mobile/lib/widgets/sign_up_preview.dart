@@ -19,8 +19,8 @@ class SignUpPreview extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: width(context) * 0.02),
-        width: width(context) * 0.415,
-        height: height(context) * 0.33,
+        width: width(context) * 0.425,
+        height: adjustedHeight(context) * 0.4,
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,

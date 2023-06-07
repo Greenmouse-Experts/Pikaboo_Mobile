@@ -19,7 +19,7 @@ class AnonHomeView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: height(context) * 0.17,
+                  height: adjustedHeight(context) * 0.2,
                   width: width(context),
                   decoration: BoxDecoration(
                       color: AppColors.primary,
@@ -47,15 +47,20 @@ class AnonHomeView extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: height(context) * 0.02),
+                SizedBox(height: adjustedHeight(context) * 0.02),
                 Text(
                   'Get Started with PIKABOO',
                   style: medium16(context),
                 ),
-                SizedBox(height: height(context) * 0.015),
+                SizedBox(height: adjustedHeight(context) * 0.02),
                 Row(
                   children: [
-                    AppButton(text: 'FAQs', onPressed: () {}, buttonWidth: 0.23, buttonHeight: 0.045,),
+                    AppButton(
+                      text: 'FAQs',
+                      onPressed: () {},
+                      buttonWidth: 0.23,
+                      buttonHeight: 0.06,
+                    ),
                     const SizedBox(width: 10),
                     TextButton(
                       onPressed: () {},
@@ -74,9 +79,9 @@ class AnonHomeView extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(height: height(context) * 0.015),
+                SizedBox(height: adjustedHeight(context) * 0.02),
                 SizedBox(
-                  height: height(context) * 0.1,
+                  height: adjustedHeight(context) * 0.12,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     physics: const BouncingScrollPhysics(),
@@ -87,19 +92,21 @@ class AnonHomeView extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: height(context) * 0.015),
+                SizedBox(height: adjustedHeight(context) * 0.02),
                 Row(
                   children: [
                     SignUpPreview(
                       image: 'house',
                       header: 'House hold User',
-                      onPressed: () => context.pushNamed(AppRouter.login),
+                      onPressed: () => context.pushNamed(AppRouter.login,
+                          pathParameters: {'type': 'user'}),
                     ),
                     const Spacer(),
                     SignUpPreview(
                         image: 'driver',
                         header: 'Waste Truck Driver',
-                        onPressed: () => context.pushNamed(AppRouter.login)),
+                        onPressed: () => context.pushNamed(AppRouter.login,
+                            pathParameters: {'type': 'driver'})),
                   ],
                 ),
               ],

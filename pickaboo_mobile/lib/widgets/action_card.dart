@@ -18,7 +18,7 @@ class ActionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2.5,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       color: Colors.white,
       child: Container(
         width: width(context) * 0.42,
@@ -37,7 +37,7 @@ class ActionCard extends StatelessWidget {
             Align(
                 alignment: Alignment.centerRight,
                 child: Container(
-                    height: height(context) * (cardHeight / 4.5),
+                    height: height(context) * (cardHeight / 4.75),
                     padding: EdgeInsets.all(width(context) * 0.01),
                     child: Image.asset(image, fit: BoxFit.cover)))
           ],

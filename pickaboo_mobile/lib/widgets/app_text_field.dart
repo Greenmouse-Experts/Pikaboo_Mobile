@@ -73,3 +73,34 @@ class IsVisibleNotifier extends Notifier<bool> {
     state = !state;
   }
 }
+
+class SearchTextField extends StatelessWidget {
+  const SearchTextField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      decoration: InputDecoration(
+          hintText: 'Search Locations',
+          filled: true,
+          fillColor: AppColors.lightAsh.withOpacity(0.17),
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide:
+                  BorderSide(color: AppColors.lightAsh.withOpacity(0.17))),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide:
+                  BorderSide(color: AppColors.lightAsh.withOpacity(0.17))),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide:
+                  BorderSide(color: AppColors.lightAsh.withOpacity(0.17))),
+          prefixIcon: Icon(
+            Icons.search,
+            color: AppColors.primary,
+            size: width(context) * 0.06,
+          )),
+    );
+  }
+}

@@ -5,6 +5,7 @@ import '../modules/anon_dashboard/anon_dashboard_view.dart';
 import '../modules/authentication/forgot_password_view.dart';
 import '../modules/authentication/login_view.dart';
 import '../modules/authentication/reset_status_view.dart';
+import '../modules/driver_dashboard/driver_dashboard_view.dart';
 import '../modules/notifications/notifications_view.dart';
 import '../modules/onboarding/onboarding_view.dart';
 import '../modules/user_dashboard/user_dashboard_view.dart';
@@ -15,7 +16,8 @@ class AppRouter {
   static const login = 'login';
   static const forgotPassword = 'forgotPassword';
   static const resetStatus = 'resetStatus';
-  static const userDashboard = 'userHome';
+  static const userDashboard = 'userDashboard';
+  static const driverDashboard = 'driverDashboard';
   static const notifications = 'notifications';
 }
 
@@ -36,8 +38,10 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             builder: (context, state) => const AnonDashboardView()),
         GoRoute(
             name: AppRouter.login,
-            path: AppRouter.login,
-            builder: (context, state) => const LoginView()),
+            path: '${AppRouter.login}/:type',
+            builder: (context, state) => LoginView(
+                  type: state.pathParameters['type']!,
+                )),
         GoRoute(
             name: AppRouter.forgotPassword,
             path: AppRouter.forgotPassword,
@@ -54,6 +58,10 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             name: AppRouter.notifications,
             path: AppRouter.notifications,
             builder: (context, state) => const NotificationView()),
+        GoRoute(
+            name: AppRouter.driverDashboard,
+            path: AppRouter.driverDashboard,
+            builder: (context, state) => const DriverDashboardView()),
       ]),
 ]);
 

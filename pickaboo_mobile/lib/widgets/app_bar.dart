@@ -36,8 +36,11 @@ AppBar customAppBar(BuildContext context,
       ),
     );
 
-AppBar customAppBar2(BuildContext context,
-        {bool? implyLeading, bool? hasElevation}) =>
+AppBar customAppBar2(
+  BuildContext context, {
+  bool? implyLeading,
+  bool? hasElevation,
+}) =>
     AppBar(
       backgroundColor: AppColors.primary,
       automaticallyImplyLeading: implyLeading ?? false,
@@ -70,31 +73,33 @@ AppBar customAppBar2(BuildContext context,
     );
 
 AppBar customAppBar3(BuildContext context,
-        {bool? hasElevation, Color? bgColor}) =>
+        {bool? hasElevation, Color? bgColor, bool? implyLeading}) =>
     AppBar(
       backgroundColor: bgColor ?? Colors.white,
-      leading: Padding(
-        padding: EdgeInsets.all(width(context) * 0.02),
-        child: InkWell(
-          onTap: () => context.pop(),
-          child: Container(
-            decoration: BoxDecoration(
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: AppColors.primary.withOpacity(0.4),
-                    blurRadius: 5,
+      leading: implyLeading == false
+          ? const SizedBox()
+          : Padding(
+              padding: EdgeInsets.all(width(context) * 0.02),
+              child: InkWell(
+                onTap: () => context.pop(),
+                child: Container(
+                  decoration: BoxDecoration(
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                          color: AppColors.primary.withOpacity(0.4),
+                          blurRadius: 5,
+                        ),
+                      ],
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(50)),
+                  child: Icon(
+                    Icons.adaptive.arrow_back_rounded,
+                    color: Colors.white,
+                    size: width(context) * 0.06,
                   ),
-                ],
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(50)),
-            child: Icon(
-              Icons.adaptive.arrow_back_rounded,
-              color: Colors.white,
-              size: width(context) * 0.06,
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
       foregroundColor: Colors.black,
       centerTitle: true,
       elevation: hasElevation == null

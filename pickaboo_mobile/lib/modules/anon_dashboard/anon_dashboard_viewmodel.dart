@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'inner_pages/about_view.dart';
+import '../settings/terms_view.dart';
+import '../shop/market_place_view.dart';
 import 'inner_pages/anon_home_view.dart';
-import 'inner_pages/purchase_view.dart';
 
 class AnonDashboardViewModel {
-  static const pages = [AnonHomeView(), PurchaseView(), AboutView()];
+  static const pages = [AnonHomeView(), MarketPlaceView(), TermsView()];
 
   final int _index = 0;
 

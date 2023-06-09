@@ -110,14 +110,17 @@ class UserHomeView extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      const ActionCard(
+                      ActionCard(
+                        onPressed: () {},
                         title: 'Request Pick',
                         content: 'Order for waste pickup.',
                         image: 'assets/images/icons/request.png',
                         cardHeight: 0.16,
                       ),
                       SizedBox(height: height(context) * 0.0075),
-                      const ActionCard(
+                      ActionCard(
+                        onPressed: () =>
+                            context.pushNamed(AppRouter.marketplace),
                         title: 'Purchase',
                         content: 'Buy trash cans and waste bins from us.',
                         image: 'assets/images/icons/purchase1.png',
@@ -127,14 +130,16 @@ class UserHomeView extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      const ActionCard(
+                      ActionCard(
+                        onPressed: () {},
                         title: 'Location',
                         content: 'Set and track your location remotely.',
                         image: 'assets/images/icons/location.png',
                         cardHeight: 0.21,
                       ),
                       SizedBox(height: height(context) * 0.0075),
-                      const ActionCard(
+                      ActionCard(
+                        onPressed: () {},
                         title: 'Contact Details',
                         content: 'Contact us directly via our details.',
                         image: 'assets/images/icons/contact.png',

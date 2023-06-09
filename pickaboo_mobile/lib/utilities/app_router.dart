@@ -13,6 +13,8 @@ import '../modules/history/history_view.dart';
 import '../modules/notifications/notifications_view.dart';
 import '../modules/onboarding/onboarding_view.dart';
 import '../modules/requests/pickup_request_view.dart';
+import '../modules/shop/market_place_view.dart';
+import '../modules/shop/product_view.dart';
 import '../modules/user_dashboard/user_dashboard_view.dart';
 
 class AppRouter {
@@ -29,6 +31,8 @@ class AppRouter {
   static const String pickUpRequests = 'pickuoRequests';
   static const String faq = 'faq';
   static const String history = 'history';
+  static const String marketplace = 'marketPlace';
+  static const String productPage = 'productPage';
 }
 
 final GoRouter _router = GoRouter(routes: <RouteBase>[
@@ -89,10 +93,17 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             path: AppRouter.faq,
             builder: (context, state) => const FaqView()),
         GoRoute(
-          name: AppRouter.history,
-          path: AppRouter.history,
-          builder: (context, state) => const HistoryView(),
-        )
+            name: AppRouter.history,
+            path: AppRouter.history,
+            builder: (context, state) => const HistoryView()),
+        GoRoute(
+            name: AppRouter.marketplace,
+            path: AppRouter.marketplace,
+            builder: (context, state) => const MarketPlaceView()),
+        GoRoute(
+            name: AppRouter.productPage,
+            path: AppRouter.productPage,
+            builder: (context, state) => const ProductView()),
       ]),
 ]);
 

@@ -20,3 +20,7 @@ export './wallet_card.dart';
 export './pick_up_tile.dart';
 export './expandable_question.dart';
 export './history_tile.dart';
+export './product_card.dart';
+export './category_selector.dart';
+export './terms_card.dart';
+export './profile_tile.dart';

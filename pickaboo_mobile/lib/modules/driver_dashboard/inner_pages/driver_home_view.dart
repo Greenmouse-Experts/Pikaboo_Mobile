@@ -73,16 +73,18 @@ class DriverHomeView extends StatelessWidget {
             SizedBox(height: height(context) * 0.01),
             Text('Stay In Touch', style: medium13(context)),
             SizedBox(height: height(context) * 0.015),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ActionCard(
+                  onPressed: () {},
                   title: 'Support',
                   content: 'Need help ? Click here to leave a feedback',
                   image: 'assets/images/icons/location.png',
                   cardHeight: 0.18,
                 ),
                 ActionCard(
+                  onPressed: () {},
                   title: 'Contact Details',
                   content: 'Contact us directly via our details.',
                   image: 'assets/images/icons/contact.png',

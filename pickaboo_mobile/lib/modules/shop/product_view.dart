@@ -10,7 +10,17 @@ class ProductView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar3(context,
-          bgColor: AppColors.fadeGreen, hasElevation: false),
+          bgColor: AppColors.fadeGreen,
+          hasElevation: false,
+          actions: [
+            CircleAvatar(
+              radius: width(context) * 0.04,
+              backgroundColor: AppColors.lightAsh,
+              child: Image.asset('assets/images/dummy_icon.png',
+                  fit: BoxFit.cover),
+            ),
+            SizedBox(width: width(context) * 0.04)
+          ]),
       body: SafeArea(
           child: Container(
         color: AppColors.fadeGreen,
@@ -18,9 +28,9 @@ class ProductView extends StatelessWidget {
           children: [
             Column(
               children: [
-                SizedBox(height: height(context) * 0.05),
+                SizedBox(height: height(context) * 0.04),
                 Image.asset('assets/images/dummy_prod.png'),
-                SizedBox(height: height(context) * 0.05),
+                SizedBox(height: height(context) * 0.04),
               ],
             ),
             Expanded(
@@ -32,17 +42,14 @@ class ProductView extends StatelessWidget {
                       topLeft: Radius.circular(70),
                       topRight: Radius.circular(70))),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                      height: height(context) * 0.035, width: width(context)),
                   Text('Green Container', style: semi20(context)),
-                  SizedBox(height: height(context) * 0.01),
                   Text(
                       'Limited to food waste, yard waste, green waste, other organic materials.',
                       style: medium13(context)
                           .copyWith(color: Colors.black.withOpacity(0.4))),
-                  SizedBox(height: height(context) * 0.01),
                   SizedBox(
                     height: width(context) * 0.33,
                     child: ListView.builder(
@@ -54,12 +61,40 @@ class ProductView extends StatelessWidget {
                               child: const ProductImage(),
                             )),
                   ),
-                  SizedBox(height: height(context) * 0.02),
+                  Row(children: [
+                    Text('Color', style: medium13(context)),
+                    SizedBox(width: width(context) * 0.05),
+                    CircleAvatar(
+                        radius: width(context) * 0.01,
+                        backgroundColor: AppColors.primary),
+                    SizedBox(width: width(context) * 0.02),
+                    CircleAvatar(
+                        radius: width(context) * 0.01,
+                        backgroundColor: Colors.black),
+                    const Spacer(),
+                    Text('Quantity', style: medium13(context)),
+                    SizedBox(width: width(context) * 0.01),
+                    Container(
+                      width: width(context) * 0.18,
+                      height: height(context) * 0.025,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.lightAsh),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Icon(Icons.remove, size: width(context) * 0.04),
+                          Text('1', style: medium13(context)),
+                          Icon(Icons.add, size: width(context) * 0.04),
+                        ],
+                      ),
+                    )
+                  ]),
                   Row(children: [
                     Text('NGN 6,000', style: semi20(context)),
                     const Spacer(),
                     Container(
-                      width: width(context) * 0.15,
+                      width: width(context) * 0.18,
                       height: height(context) * 0.025,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -70,12 +105,12 @@ class ProductView extends StatelessWidget {
                           Icon(Icons.star,
                               color: AppColors.gold,
                               size: width(context) * 0.04),
+                          const SizedBox(width: 2),
                           Text('4.5', style: medium13(context))
                         ],
                       ),
                     )
                   ]),
-                  const Spacer(),
                   AppButton(text: 'Buy', onPressed: () {}, buttonHeight: 0.06)
                 ],
               ),

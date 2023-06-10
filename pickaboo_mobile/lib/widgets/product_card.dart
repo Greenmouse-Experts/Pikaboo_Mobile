@@ -25,7 +25,7 @@ class ProductCard extends StatelessWidget {
                 SizedBox(width: width(context) * 0.04),
                 Expanded(
                   child: SizedBox(
-                    height: width(context) * 0.32,
+                    height: width(context) * 0.35,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -67,7 +67,7 @@ class ProductImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: width(context) * 0.32,
-      height: width(context) * 0.32,
+      height: width(context) * 0.35,
       color: AppColors.fadeGreen,
       child: Padding(
         padding: EdgeInsets.all(width(context) * 0.01),

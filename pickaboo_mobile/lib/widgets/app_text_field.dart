@@ -52,7 +52,7 @@ class AppTextField extends ConsumerWidget {
                   : !hasLabel
                       ? Container(
                           padding: const EdgeInsets.only(right: 5),
-                          width: width(context) * 0.17,
+                          width: width(context) * 0.19,
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: Text(

@@ -24,3 +24,6 @@ export './product_card.dart';
 export './category_selector.dart';
 export './terms_card.dart';
 export './profile_tile.dart';
+export './detail_card.dart';
+export './driver_history_card.dart';
+export './descriptive_icon.dart';

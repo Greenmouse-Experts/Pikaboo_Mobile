@@ -9,10 +9,12 @@ import '../modules/driver_dashboard/driver_dashboard_view.dart';
 import '../modules/faq/faq_view.dart';
 import '../modules/fund/fund_status_view.dart';
 import '../modules/fund/fund_view.dart';
+import '../modules/history/driver_history_view.dart';
 import '../modules/history/history_view.dart';
 import '../modules/notifications/notifications_view.dart';
 import '../modules/onboarding/onboarding_view.dart';
 import '../modules/requests/pickup_request_view.dart';
+import '../modules/settings/support_view.dart';
 import '../modules/shop/market_place_view.dart';
 import '../modules/shop/product_view.dart';
 import '../modules/user_dashboard/user_dashboard_view.dart';
@@ -33,6 +35,8 @@ class AppRouter {
   static const String history = 'history';
   static const String marketplace = 'marketPlace';
   static const String productPage = 'productPage';
+  static const String driverHistory = 'driverHistory';
+  static const String support = 'support';
 }
 
 final GoRouter _router = GoRouter(routes: <RouteBase>[
@@ -104,6 +108,14 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             name: AppRouter.productPage,
             path: AppRouter.productPage,
             builder: (context, state) => const ProductView()),
+        GoRoute(
+            name: AppRouter.driverHistory,
+            path: AppRouter.driverHistory,
+            builder: (context, state) => const DriverHistoryView()),
+        GoRoute(
+            name: AppRouter.support,
+            path: AppRouter.support,
+            builder: (context, state) => const SupportView()),
       ]),
 ]);
 

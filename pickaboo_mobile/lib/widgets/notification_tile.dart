@@ -20,7 +20,7 @@ class NotificationTile extends StatelessWidget {
         width: width(context) * 0.125,
         height: width(context) * 0.125,
         child: Padding(
-            padding: EdgeInsets.all(width(context) * 0.02),
+            padding: EdgeInsets.all(width(context) * 0.035),
             child: Image.asset('assets/images/icons/notification.png')),
       ),
       title: Text(

@@ -10,7 +10,18 @@ class UserHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar2(context, hasElevation: false, implyLeading: false),
+      appBar: customAppBar2(context,
+          hasElevation: false,
+          implyLeading: false,
+          actions: [
+            CircleAvatar(
+              radius: width(context) * 0.04,
+              backgroundColor: AppColors.lightAsh,
+              child: Image.asset('assets/images/dummy_icon.png',
+                  fit: BoxFit.cover),
+            ),
+            SizedBox(width: width(context) * 0.04)
+          ]),
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
         child: SafeArea(
@@ -91,9 +102,8 @@ class UserHomeView extends StatelessWidget {
                             image: 'history',
                           ),
                           UserRowIcon(
-                            onTap: () {
-                              context.pushNamed(AppRouter.notifications);
-                            },
+                            onTap: () =>
+                                context.pushNamed(AppRouter.notifications),
                             bgColor: AppColors.orange,
                             title: 'Notification',
                             image: 'notification',
@@ -139,7 +149,7 @@ class UserHomeView extends StatelessWidget {
                       ),
                       SizedBox(height: height(context) * 0.0075),
                       ActionCard(
-                        onPressed: () {},
+                        onPressed: () => context.pushNamed(AppRouter.support),
                         title: 'Contact Details',
                         content: 'Contact us directly via our details.',
                         image: 'assets/images/icons/contact.png',

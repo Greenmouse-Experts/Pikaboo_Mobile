@@ -9,7 +9,14 @@ class NotificationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar3(context, hasElevation: false),
+      appBar: customAppBar3(context, hasElevation: false, actions: [
+        CircleAvatar(
+            radius: width(context) * 0.04,
+            backgroundColor: AppColors.lightAsh,
+            child:
+                Image.asset('assets/images/dummy_icon.png', fit: BoxFit.cover)),
+        SizedBox(width: width(context) * 0.04)
+      ]),
       body: SingleChildScrollView(
         child: SafeArea(
             child: Column(

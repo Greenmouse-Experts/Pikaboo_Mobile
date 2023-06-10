@@ -19,14 +19,16 @@ class Profileview extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(width: width(context)),
-                CircleAvatar(radius: width(context) * 0.1),
+                CircleAvatar(
+                    radius: width(context) * 0.075,
+                    backgroundColor: AppColors.lightAsh),
                 SizedBox(height: height(context) * 0.01),
                 Text('Victor Osborne',
                     style: semi20(context).copyWith(color: Colors.white)),
                 SizedBox(height: height(context) * 0.01),
                 Text('Household Owner',
                     style: regular14(context).copyWith(color: Colors.white)),
-                SizedBox(height: height(context) * 0.02),
+                SizedBox(height: height(context) * 0.01),
                 Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(

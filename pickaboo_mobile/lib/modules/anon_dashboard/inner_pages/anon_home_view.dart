@@ -10,7 +10,22 @@ class AnonHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context),
+      appBar: customAppBar(context, actions: [
+        IconButton(
+            onPressed: () {},
+            icon: Container(
+              width: width(context) * 0.06,
+              height: width(context) * 0.06,
+              decoration: const BoxDecoration(
+                  color: AppColors.newAsh, shape: BoxShape.circle),
+              child: Icon(
+                Icons.question_mark_outlined,
+                color: AppColors.error,
+                size: width(context) * 0.04,
+              ),
+            )),
+        SizedBox(width: width(context) * 0.04),
+      ]),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -18,8 +33,9 @@ class AnonHomeView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: height(context) * 0.01),
                 Container(
-                  height: adjustedHeight(context) * 0.2,
+                  height: height(context) * 0.2,
                   width: width(context),
                   decoration: BoxDecoration(
                       color: AppColors.primary,
@@ -59,56 +75,120 @@ class AnonHomeView extends StatelessWidget {
                       text: 'FAQs',
                       onPressed: () {},
                       buttonWidth: 0.23,
-                      buttonHeight: 0.06,
+                      buttonHeight: 0.05,
                     ),
                     const SizedBox(width: 10),
-                    TextButton(
+                    AppButton(
+                      text: 'Terms  & Conditions',
                       onPressed: () {},
-                      child: Column(
-                        children: [
-                          Text('Terms & Conditions',
-                              style: medium14(context)
-                                  .copyWith(color: AppColors.primary)),
-                          const SizedBox(height: 1),
-                          Container(
-                              width: width(context) * 0.33,
-                              height: 1,
-                              color: AppColors.primary)
-                        ],
-                      ),
-                    )
+                      buttonColor: AppColors.orange,
+                      buttonWidth: 0.4,
+                      buttonHeight: 0.05,
+                    ),
+                    // TextButton(
+                    //   onPressed: () {},
+                    //   child: Column(
+                    //     children: [
+                    //       Text('Terms & Conditions',
+                    //           style: medium14(context)
+                    //               .copyWith(color: AppColors.primary)),
+                    //       const SizedBox(height: 1),
+                    //       Container(
+                    //           width: width(context) * 0.33,
+                    //           height: 1,
+                    //           color: AppColors.primary)
+                    //     ],
+                    //   ),
+                    // )
                   ],
                 ),
+                SizedBox(height: adjustedHeight(context) * 0.04),
+                Text('What we Do!', style: medium16(context)),
                 SizedBox(height: adjustedHeight(context) * 0.02),
-                SizedBox(
-                  height: adjustedHeight(context) * 0.12,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Expanded(
+                            child: DetailCard(
+                                header: 'Waste Pickup',
+                                content: 'Lorem Ipsum')),
+                        SizedBox(width: width(context) * 0.025),
+                        const Expanded(
+                            child: DetailCard(
+                                header: 'In-app Sales', content: 'Lorem Ipsum'))
+                      ],
+                    ),
+                    SizedBox(height: adjustedHeight(context) * 0.01),
+                    Row(
+                      children: [
+                        const Expanded(
+                            child: DetailCard(
+                                header: 'Pickup Request',
+                                content: 'Lorem Ipsum')),
+                        SizedBox(width: width(context) * 0.025),
+                        const Expanded(
+                            child: DetailCard(
+                                header: 'Timely Delivery',
+                                content: 'Lorem Ipsum'))
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: adjustedHeight(context) * 0.015),
+                Text('Users Sign In', style: medium16(context)),
+                SizedBox(height: adjustedHeight(context) * 0.015),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: AppColors.lightGreen,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Row(
                     children: [
-                      const OnBoardPrompt(),
-                      SizedBox(width: width(context) * 0.04),
-                      const OnBoardPrompt()
+                      ElevatedButton.icon(
+                          onPressed: () => context.pushNamed(AppRouter.login,
+                              pathParameters: {'type': 'user'}),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary),
+                          icon: Icon(Icons.house_outlined,
+                              size: width(context) * 0.05),
+                          label: Text('Household User',
+                              style: medium14(context)
+                                  .copyWith(color: Colors.white))),
+                      const SizedBox(width: 10),
+                      ElevatedButton.icon(
+                          onPressed: () => context.pushNamed(AppRouter.login,
+                              pathParameters: {'type': 'driver'}),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary),
+                          icon: SizedBox(
+                              width: width(context) * 0.06,
+                              height: width(context) * 0.06,
+                              child: Image.asset(
+                                  'assets/images/icons/steering.png')),
+                          label: Text('Household User',
+                              style: medium14(context)
+                                  .copyWith(color: Colors.white))),
                     ],
                   ),
-                ),
-                SizedBox(height: adjustedHeight(context) * 0.02),
-                Row(
-                  children: [
-                    SignUpPreview(
-                      image: 'house',
-                      header: 'House hold User',
-                      onPressed: () => context.pushNamed(AppRouter.login,
-                          pathParameters: {'type': 'user'}),
-                    ),
-                    const Spacer(),
-                    SignUpPreview(
-                        image: 'driver',
-                        header: 'Waste Truck Driver',
-                        onPressed: () => context.pushNamed(AppRouter.login,
-                            pathParameters: {'type': 'driver'})),
-                  ],
-                ),
+                )
+
+                // Row(
+                //   children: [
+                //     SignUpPreview(
+                //       image: 'house',
+                //       header: 'House hold User',
+                //       onPressed: () => context.pushNamed(AppRouter.login,
+                //           pathParameters: {'type': 'user'}),
+                //     ),
+                //     const Spacer(),
+                //     SignUpPreview(
+                //         image: 'driver',
+                //         header: 'Waste Truck Driver',
+                //         onPressed: () => context.pushNamed(AppRouter.login,
+                //             pathParameters: {'type': 'driver'})),
+                //   ],
+                // ),
               ],
             ),
           ),

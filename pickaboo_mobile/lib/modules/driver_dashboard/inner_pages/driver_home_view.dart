@@ -10,7 +10,16 @@ class DriverHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar2(context, hasElevation: false),
+      appBar: customAppBar2(context, hasElevation: false, actions: [
+        IconButton(
+            onPressed: () => context.pushNamed(AppRouter.notifications),
+            icon: Icon(
+              Icons.notifications,
+              size: width(context) * 0.05,
+              color: AppColors.gold,
+            )),
+        SizedBox(width: width(context) * 0.04)
+      ]),
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
         child: SafeArea(
@@ -60,7 +69,7 @@ class DriverHomeView extends StatelessWidget {
                     bgColor: AppColors.lightRed,
                     title: 'History',
                     image: 'history1',
-                    onTap: () {}),
+                    onTap: () => context.pushNamed(AppRouter.driverHistory)),
                 DriverRowIcon(
                     bgColor: AppColors.lightIndigo,
                     title: 'FAQs',

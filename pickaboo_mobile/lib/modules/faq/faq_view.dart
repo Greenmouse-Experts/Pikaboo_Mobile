@@ -37,7 +37,7 @@ class FaqView extends StatelessWidget {
                     Tab(text: 'What’s new'),
                   ]),
               SizedBox(
-                  height: adjustedHeight(context) * 0.8836,
+                  height: adjustedHeight(context) * 0.88,
                   child: const TabBarView(children: [
                     FaqWidget(),
                     Center(child: Text('Feedback')),
@@ -71,6 +71,7 @@ class FaqWidget extends StatelessWidget {
           ),
           SizedBox(height: height(context) * 0.015),
           const PageHeader(title: 'About Pikaboo', hasSearch: false),
+          SizedBox(height: height(context) * 0.02),
           ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),

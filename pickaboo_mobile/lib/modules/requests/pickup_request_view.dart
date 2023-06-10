@@ -40,7 +40,7 @@ class PickUpRequestView extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         padding: EdgeInsets.symmetric(
             horizontal: width(context) * 0.04, vertical: 1),
-        child: AppButton(text: 'text', onPressed: () {}),
+        child: AppButton(text: 'Save', onPressed: () {}),
       ),
     );
   }

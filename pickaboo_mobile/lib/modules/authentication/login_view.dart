@@ -95,7 +95,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                   .copyWith(color: AppColors.darkGreen)),
                           const SizedBox(height: 1),
                           Container(
-                              width: width(context) * 0.28,
+                              width: width(context) * 0.3,
                               height: 1,
                               color: AppColors.darkGreen),
                         ]),

@@ -17,7 +17,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, implyLeading: true, hasElevation: false),
+      appBar: customAppBar4(context, implyLeading: true, hasElevation: false),
       body: SafeArea(
         child: Padding(
           padding: screenPadding(context),
@@ -34,7 +34,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
               ),
               SizedBox(height: height(context) * 0.025),
               SizedBox(
-                  width: width(context) * 0.7,
+                  width: width(context) * 0.73,
                   child: Text(
                     'Enter the email associated with your account and we’ll send a mail with instructions to reset your password',
                     textAlign: TextAlign.center,

@@ -10,7 +10,7 @@ class ResetStatusView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, hasElevation: false, implyLeading: true),
+      appBar: customAppBar4(context, hasElevation: false, implyLeading: true),
       body: SafeArea(
           child: Column(
         children: [

@@ -7,12 +7,14 @@ class AppButton extends StatelessWidget {
   final VoidCallback onPressed;
   final double buttonWidth;
   final double buttonHeight;
+  final Color? buttonColor;
   const AppButton(
       {super.key,
       required this.text,
       required this.onPressed,
       this.buttonWidth = 1,
-      this.buttonHeight = 0.0525});
+      this.buttonColor,
+      this.buttonHeight = 0.06});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,8 @@ class AppButton extends StatelessWidget {
         width: width(context) * buttonWidth,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), color: AppColors.primary),
+            borderRadius: BorderRadius.circular(10),
+            color: buttonColor ?? AppColors.primary),
         child: Text(
           text,
           style: semi13(context).copyWith(color: Colors.white),

@@ -10,7 +10,7 @@ class AnonHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, actions: [
+      appBar: customAppBar(context, hasElevation: false, actions: [
         IconButton(
             onPressed: () {},
             icon: Container(
@@ -33,6 +33,47 @@ class AnonHomeView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Container(
+                    padding: EdgeInsets.all(width(context) * 0.025),
+                    decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Row(
+                      children: [
+                        const AppImage(
+                            image: 'assets/images/truck.png',
+                            imageHeight: 0.16 ,
+                            imageWidth: 0.40),
+                        const Spacer(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                                width: width(context) * 0.45,
+                                child: Text(
+                                    'Get instant waste pick up in your area',
+                                    style: semi18(context)
+                                        .copyWith(color: Colors.white),
+                                    textAlign: TextAlign.end)),
+                            SizedBox(height: height(context) * 0.0125),
+                            AppButton(
+                              text: 'LOGIN',
+                              onPressed: () {},
+                              buttonWidth: 0.2,
+                              buttonHeight: 0.04,
+                              buttonColor: Colors.white,
+                              textColor: Colors.green,
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
                 SizedBox(height: height(context) * 0.01),
                 Container(
                   height: height(context) * 0.2,

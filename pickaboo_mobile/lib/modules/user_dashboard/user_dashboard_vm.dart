@@ -5,7 +5,7 @@ import '../settings/terms_view.dart';
 import 'inner_pages/user_home_view.dart';
 
 class UserDashboardViewModel {
-  static const pages = [UserHomeView(), Profileview(), TermsView()];
+  static const pages = [UserHomeView(), Profileview(), TermsView(isAnon: 'no')];
 
   final int _index = 0;
 

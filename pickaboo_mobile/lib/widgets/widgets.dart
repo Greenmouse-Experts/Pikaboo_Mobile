@@ -27,3 +27,4 @@ export './profile_tile.dart';
 export './detail_card.dart';
 export './driver_history_card.dart';
 export './descriptive_icon.dart';
+export './transaction_history_card.dart';

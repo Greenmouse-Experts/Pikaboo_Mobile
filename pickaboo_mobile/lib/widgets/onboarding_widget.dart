@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../utilities/utilities.dart';
+import 'app_image.dart';
 
 class OnBoardingWidget extends StatelessWidget {
   final CustomPainter painter;
@@ -65,6 +66,84 @@ class OnBoardingWidget extends StatelessWidget {
           ),
         )
       ]),
+    );
+  }
+}
+
+class InfoWidget extends StatelessWidget {
+  final Color color;
+  final String title;
+  final String content;
+  final String image;
+  const InfoWidget(
+      {super.key,
+      required this.color,
+      required this.title,
+      required this.content,
+      required this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(
+          vertical: height(context) * 0.015, horizontal: 16),
+      tileColor: color,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      title: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: Text(title, style: medium16(context)),
+      ),
+      trailing: AppImage(imageWidth: 0.15, imageHeight: 0.08, image: image),
+      subtitle: Text(content,
+          style:
+              medium11(context).copyWith(color: Colors.black.withOpacity(0.4))),
+    );
+  }
+}
+
+class ChooseSignIn extends StatelessWidget {
+  final Color color;
+  final String title;
+  final String content;
+  final String image;
+  final VoidCallback onPressed;
+  const ChooseSignIn(
+      {super.key,
+      required this.color,
+      required this.onPressed,
+      required this.title,
+      required this.content,
+      required this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(
+          vertical: height(context) * 0.015, horizontal: 16),
+      tileColor: color,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      onTap: onPressed,
+      trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.arrow_forward_outlined,
+            size: width(context) * 0.06,
+            color: AppColors.darkGreen,
+          ),
+        ],
+      ),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppImage(imageWidth: 0.1, imageHeight: 0.035, image: image),
+          Text(title, style: medium16(context)),
+          const SizedBox(height: 2),
+          Text(content,
+              style: medium11(context)
+                  .copyWith(color: Colors.black.withOpacity(0.4))),
+        ],
+      ),
     );
   }
 }

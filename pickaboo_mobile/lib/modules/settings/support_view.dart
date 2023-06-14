@@ -10,14 +10,17 @@ class SupportView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar3(context, actions: [
-        CircleAvatar(
-            radius: width(context) * 0.04,
-            backgroundColor: AppColors.lightAsh,
-            child:
-                Image.asset('assets/images/dummy_icon.png', fit: BoxFit.cover)),
-        SizedBox(width: width(context) * 0.04)
-      ]),
+      appBar: customAppBar3(context,
+          hasElevation: false,
+          bgColor: AppColors.fadeGreen,
+          actions: [
+            CircleAvatar(
+                radius: width(context) * 0.04,
+                backgroundColor: AppColors.lightAsh,
+                child: Image.asset('assets/images/dummy_icon.png',
+                    fit: BoxFit.cover)),
+            SizedBox(width: width(context) * 0.04)
+          ]),
       body: Column(
         children: [
           Container(
@@ -49,9 +52,10 @@ class SupportView extends StatelessWidget {
                   children: [
                     DriverRowIcon(
                         bgColor: AppColors.lightYellow,
-                        title: 'Transaction history',
+                        title: 'Transactions',
                         image: 'transaction',
-                        onTap: (){}),
+                        onTap: () =>
+                            context.pushNamed(AppRouter.transactionHistory)),
                     DriverRowIcon(
                         bgColor: AppColors.lightGreen,
                         title: 'Add funds',
@@ -61,8 +65,7 @@ class SupportView extends StatelessWidget {
                         bgColor: AppColors.lightRed,
                         title: 'Report issue',
                         image: 'issue',
-                        onTap: () =>
-                            context.pushNamed(AppRouter.faq)),
+                        onTap: () => context.pushNamed(AppRouter.faq)),
                     DriverRowIcon(
                         bgColor: AppColors.lightIndigo,
                         title: 'FAQs',

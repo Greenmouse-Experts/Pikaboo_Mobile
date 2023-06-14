@@ -39,13 +39,19 @@ class AnonHomeView extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(width(context) * 0.025),
                     decoration: BoxDecoration(
-                        color: Colors.green,
+                        gradient: const RadialGradient(
+                          radius: 0.7,
+                          colors: [
+                            AppColors.primaryLight,
+                            AppColors.primary,
+                          ],
+                        ),
                         borderRadius: BorderRadius.circular(15)),
                     child: Row(
                       children: [
                         const AppImage(
                             image: 'assets/images/truck.png',
-                            imageHeight: 0.16 ,
+                            imageHeight: 0.18,
                             imageWidth: 0.40),
                         const Spacer(),
                         Column(
@@ -74,162 +80,52 @@ class AnonHomeView extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: height(context) * 0.01),
-                Container(
-                  height: height(context) * 0.2,
-                  width: width(context),
-                  decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(12),
-                      image: const DecorationImage(
-                          image: AssetImage('assets/images/patterns.png'))),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(
-                          width: width(context) * 0.635,
-                          child: Text('Clean Environment,\nClean Life.',
-                              textAlign: TextAlign.center,
-                              style: semi20(context)
-                                  .copyWith(color: Colors.white))),
-                      SizedBox(
-                        width: width(context) * 0.635,
-                        child: Text(
-                          'Book garbage collectors at the comfort of your home.',
-                          textAlign: TextAlign.center,
-                          style: medium13(context)
-                              .copyWith(color: Colors.white.withOpacity(0.7)),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(height: adjustedHeight(context) * 0.02),
-                Text(
-                  'Get Started with PIKABOO',
-                  style: medium16(context),
-                ),
-                SizedBox(height: adjustedHeight(context) * 0.02),
+                SizedBox(height: height(context) * 0.02),
+                Text('Get Started with PIKABOO', style: medium16(context)),
+                SizedBox(height: height(context) * 0.02),
                 Row(
                   children: [
                     AppButton(
                       text: 'FAQs',
-                      onPressed: () {},
+                      onPressed: () => context.pushNamed(AppRouter.faq),
                       buttonWidth: 0.23,
                       buttonHeight: 0.05,
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 15),
                     AppButton(
                       text: 'Terms  & Conditions',
-                      onPressed: () {},
+                      onPressed: () => context.pushNamed(AppRouter.terms,
+                          pathParameters: {'isAnon': 'yes'}),
                       buttonColor: AppColors.orange,
                       buttonWidth: 0.4,
                       buttonHeight: 0.05,
                     ),
-                    // TextButton(
-                    //   onPressed: () {},
-                    //   child: Column(
-                    //     children: [
-                    //       Text('Terms & Conditions',
-                    //           style: medium14(context)
-                    //               .copyWith(color: AppColors.primary)),
-                    //       const SizedBox(height: 1),
-                    //       Container(
-                    //           width: width(context) * 0.33,
-                    //           height: 1,
-                    //           color: AppColors.primary)
-                    //     ],
-                    //   ),
-                    // )
                   ],
                 ),
-                SizedBox(height: adjustedHeight(context) * 0.04),
+                SizedBox(height: height(context) * 0.03),
                 Text('What we Do!', style: medium16(context)),
-                SizedBox(height: adjustedHeight(context) * 0.02),
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        const Expanded(
-                            child: DetailCard(
-                                header: 'Waste Pickup',
-                                content: 'Lorem Ipsum')),
-                        SizedBox(width: width(context) * 0.025),
-                        const Expanded(
-                            child: DetailCard(
-                                header: 'In-app Sales', content: 'Lorem Ipsum'))
-                      ],
-                    ),
-                    SizedBox(height: adjustedHeight(context) * 0.01),
-                    Row(
-                      children: [
-                        const Expanded(
-                            child: DetailCard(
-                                header: 'Pickup Request',
-                                content: 'Lorem Ipsum')),
-                        SizedBox(width: width(context) * 0.025),
-                        const Expanded(
-                            child: DetailCard(
-                                header: 'Timely Delivery',
-                                content: 'Lorem Ipsum'))
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(height: adjustedHeight(context) * 0.015),
+                SizedBox(height: height(context) * 0.02),
+                const InfoWidget(
+                    color: AppColors.fadeGreen2,
+                    title: 'Waste Pickup',
+                    content:
+                        "Sign in as a truck driver and get paid to pick up waste in your preferred locations",
+                    image: 'assets/images/wastetruck.png'),
+                SizedBox(height: height(context) * 0.02),
+                const InfoWidget(
+                    color: AppColors.fadePurple,
+                    title: 'Household Owner',
+                    content:
+                        "Sign in as a household owner and get request for garbage pick up waste your location.",
+                    image: 'assets/images/dump.png'),
+                SizedBox(height: height(context) * 0.015),
                 Text('Users Sign In', style: medium16(context)),
-                SizedBox(height: adjustedHeight(context) * 0.015),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                      color: AppColors.lightGreen,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Row(
-                    children: [
-                      ElevatedButton.icon(
-                          onPressed: () => context.pushNamed(AppRouter.login,
-                              pathParameters: {'type': 'user'}),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary),
-                          icon: Icon(Icons.house_outlined,
-                              size: width(context) * 0.05),
-                          label: Text('Household User',
-                              style: medium14(context)
-                                  .copyWith(color: Colors.white))),
-                      const SizedBox(width: 10),
-                      ElevatedButton.icon(
-                          onPressed: () => context.pushNamed(AppRouter.login,
-                              pathParameters: {'type': 'driver'}),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary),
-                          icon: SizedBox(
-                              width: width(context) * 0.06,
-                              height: width(context) * 0.06,
-                              child: Image.asset(
-                                  'assets/images/icons/steering.png')),
-                          label: Text('Household User',
-                              style: medium14(context)
-                                  .copyWith(color: Colors.white))),
-                    ],
-                  ),
-                )
-
-                // Row(
-                //   children: [
-                //     SignUpPreview(
-                //       image: 'house',
-                //       header: 'House hold User',
-                //       onPressed: () => context.pushNamed(AppRouter.login,
-                //           pathParameters: {'type': 'user'}),
-                //     ),
-                //     const Spacer(),
-                //     SignUpPreview(
-                //         image: 'driver',
-                //         header: 'Waste Truck Driver',
-                //         onPressed: () => context.pushNamed(AppRouter.login,
-                //             pathParameters: {'type': 'driver'})),
-                //   ],
-                // ),
+                SizedBox(height: height(context) * 0.015),
+                AppButton(
+                    text: 'Login',
+                    onPressed: () {
+                      context.pushNamed(AppRouter.chooseSignIn);
+                    }),
               ],
             ),
           ),

@@ -10,6 +10,7 @@ class DriverHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.primary,
       appBar: customAppBar2(context, hasElevation: false, actions: [
         IconButton(
             onPressed: () => context.pushNamed(AppRouter.notifications),
@@ -23,86 +24,106 @@ class DriverHomeView extends StatelessWidget {
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
         child: SafeArea(
-            child: CustomBackground2(
-                child: Padding(
-          padding: screenPadding(context),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const IdIcon(),
-            SizedBox(height: adjustedHeight(context) * 0.02),
+            child: Column(
+          children: [
             Container(
-              alignment: Alignment.center,
-              width: width(context) * 0.25,
-              height: adjustedHeight(context) * 0.05,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.white)),
-              child: Text('Jun 2023',
-                  style: medium13(context).copyWith(color: Colors.white)),
+              color: AppColors.primary,
+              child: Padding(
+                padding: screenPadding(context),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: height(context) * 0.01),
+                      const IdIcon(),
+                      SizedBox(height: adjustedHeight(context) * 0.02),
+                      SizedBox(height: adjustedHeight(context) * 0.015),
+                      Row(
+                        children: [
+                          Text('Joined on:',
+                              style: medium13(context).copyWith(
+                                  color: Colors.white.withOpacity(0.7))),
+                          Text('    Jun 2023',
+                              style: medium13(context)
+                                  .copyWith(color: Colors.white)),
+                        ],
+                      ),
+                      SizedBox(height: adjustedHeight(context) * 0.015),
+                      SizedBox(height: height(context) * 0.02),
+                    ]),
+              ),
             ),
-            SizedBox(height: adjustedHeight(context) * 0.03),
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: Center(
-                  child: Padding(
-                      padding: EdgeInsets.all(width(context) * 0.05),
-                      child: const SearchTextField(
-                          hintText: 'Search Locations', islocation: true))),
-            ),
-            SizedBox(height: height(context) * 0.02),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                DriverRowIcon(
-                    bgColor: AppColors.lightYellow,
-                    title: 'Requests',
-                    image: 'request2',
-                    onTap: () => context.pushNamed(AppRouter.pickUpRequests)),
-                DriverRowIcon(
-                    bgColor: AppColors.lightGreen,
-                    title: 'Geo Location',
-                    image: 'geolocation',
-                    onTap: () {}),
-                DriverRowIcon(
-                    bgColor: AppColors.lightRed,
-                    title: 'History',
-                    image: 'history1',
-                    onTap: () => context.pushNamed(AppRouter.driverHistory)),
-                DriverRowIcon(
-                    bgColor: AppColors.lightIndigo,
-                    title: 'FAQs',
-                    image: 'faqs',
-                    onTap: () => context.pushNamed(AppRouter.faq)),
-              ],
-            ),
-            SizedBox(height: height(context) * 0.02),
-            const PickUpCard(),
-            SizedBox(height: height(context) * 0.01),
-            Text('Stay In Touch', style: medium13(context)),
-            SizedBox(height: height(context) * 0.015),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ActionCard(
-                  onPressed: () {},
-                  title: 'Support',
-                  content: 'Need help ? Click here to leave a feedback',
-                  image: 'assets/images/icons/location.png',
-                  cardHeight: 0.18,
-                ),
-                ActionCard(
-                  onPressed: () {},
-                  title: 'Contact Details',
-                  content: 'Contact us directly via our details.',
-                  image: 'assets/images/icons/contact.png',
-                  cardHeight: 0.18,
-                ),
-              ],
+            Container(
+              height: height(context) * 0.593,
+              padding: screenPadding(context),
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(70),
+                      topRight: Radius.circular(70)),
+                  color: Colors.white),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: height(context) * 0.05),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      DriverRowIcon(
+                          bgColor: AppColors.lightYellow,
+                          title: 'Requests',
+                          image: 'request2',
+                          onTap: () =>
+                              context.pushNamed(AppRouter.pickUpRequests)),
+                      DriverRowIcon(
+                          bgColor: AppColors.lightGreen,
+                          title: 'Geo Location',
+                          image: 'geolocation',
+                          onTap: () {}),
+                      DriverRowIcon(
+                          bgColor: AppColors.lightRed,
+                          title: 'History',
+                          image: 'history1',
+                          onTap: () =>
+                              context.pushNamed(AppRouter.driverHistory)),
+                      DriverRowIcon(
+                          bgColor: AppColors.lightIndigo,
+                          title: 'FAQs',
+                          image: 'faqs',
+                          onTap: () => context.pushNamed(AppRouter.faq)),
+                    ],
+                  ),
+                  SizedBox(height: height(context) * 0.02),
+                     Text('Pick Up Alert', style: medium13(context)),
+                  SizedBox(height: height(context) * 0.01),
+                  const PickUpCard(),
+                  SizedBox(height: height(context) * 0.03),
+                  Text('Stay In Touch', style: medium13(context)),
+                  SizedBox(height: height(context) * 0.015),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ActionCard(
+                        onPressed: () {},
+                        title: 'Support',
+                        color: AppColors.fadeGreen2,
+                        content: 'Need help ? Click here to leave a feedback',
+                        image: 'assets/images/icons/new_request.png',
+                        cardHeight: 0.18,
+                      ),
+                      ActionCard(
+                        onPressed: () {},
+                        color: AppColors.fadePurple,
+                        title: 'Contact Details',
+                        content: 'Contact us directly via our details.',
+                        image: 'assets/images/icons/new_contact.png',
+                        cardHeight: 0.18,
+                      ),
+                    ],
+                  )
+                ],
+              ),
             )
-          ]),
-        ))),
+          ],
+        )),
       ),
     );
   }

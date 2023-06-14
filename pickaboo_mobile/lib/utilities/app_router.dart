@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../modules/anon_dashboard/anon_dashboard_view.dart';
+import '../modules/anon_dashboard/choose_sign_in_view.dart';
 import '../modules/authentication/forgot_password_view.dart';
 import '../modules/authentication/login_view.dart';
 import '../modules/authentication/reset_status_view.dart';
@@ -9,12 +10,14 @@ import '../modules/driver_dashboard/driver_dashboard_view.dart';
 import '../modules/faq/faq_view.dart';
 import '../modules/fund/fund_status_view.dart';
 import '../modules/fund/fund_view.dart';
+import '../modules/fund/transactions_history_view.dart';
 import '../modules/history/driver_history_view.dart';
 import '../modules/history/history_view.dart';
 import '../modules/notifications/notifications_view.dart';
 import '../modules/onboarding/onboarding_view.dart';
 import '../modules/requests/pickup_request_view.dart';
 import '../modules/settings/support_view.dart';
+import '../modules/settings/terms_view.dart';
 import '../modules/shop/market_place_view.dart';
 import '../modules/shop/product_view.dart';
 import '../modules/user_dashboard/user_dashboard_view.dart';
@@ -37,6 +40,9 @@ class AppRouter {
   static const String productPage = 'productPage';
   static const String driverHistory = 'driverHistory';
   static const String support = 'support';
+  static const String chooseSignIn = 'chooseSignIn';
+  static const String terms = 'termsandconditions';
+  static const String transactionHistory = 'transactionHistory';
 }
 
 final GoRouter _router = GoRouter(routes: <RouteBase>[
@@ -54,6 +60,10 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             name: AppRouter.dashboard,
             path: AppRouter.dashboard,
             builder: (context, state) => const AnonDashboardView()),
+        GoRoute(
+            name: AppRouter.chooseSignIn,
+            path: AppRouter.chooseSignIn,
+            builder: (context, state) => const ChooseSignInView()),
         GoRoute(
             name: AppRouter.login,
             path: '${AppRouter.login}/:type',
@@ -116,6 +126,16 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             name: AppRouter.support,
             path: AppRouter.support,
             builder: (context, state) => const SupportView()),
+        GoRoute(
+            name: AppRouter.transactionHistory,
+            path: AppRouter.transactionHistory,
+            builder: (context, state) => const TransactionsHistoryView()),
+        GoRoute(
+            name: AppRouter.terms,
+            path: '${AppRouter.terms}/:isAnon',
+            builder: (context, state) => TermsView(
+                  isAnon: state.pathParameters['isAnon']!,
+                )),
       ]),
 ]);
 

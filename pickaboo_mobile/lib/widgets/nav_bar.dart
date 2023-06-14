@@ -79,17 +79,17 @@ class UserNavBar extends ConsumerWidget {
               icon: Icon(Icons.home_outlined, size: width(context) * 0.06),
               label: 'Home'),
           BottomNavigationBarItem(
-              activeIcon: Icon(Icons.account_circle,
+              activeIcon: Icon(Icons.person,
                   color: AppColors.primary, size: width(context) * 0.06),
-              icon: Icon(Icons.account_circle_outlined,
+              icon: Icon(Icons.person_outlined,
                   size: width(context) * 0.06),
               label: 'Profile'),
           BottomNavigationBarItem(
-              activeIcon: Icon(Icons.receipt_long,
+              activeIcon: Icon(Icons.policy,
                   color: AppColors.primary, size: width(context) * 0.06),
-              icon: Icon(Icons.receipt_long_outlined,
+              icon: Icon(Icons.policy_outlined,
                   size: width(context) * 0.06),
-              label: 'Terms and Conditions'),
+              label: 'Policy'),
         ],
         onTap: (i) {
           controller.updateIndex(i);
@@ -132,17 +132,17 @@ class DriverNavBar extends ConsumerWidget {
               icon: Icon(Icons.home_outlined, size: width(context) * 0.06),
               label: 'Home'),
           BottomNavigationBarItem(
-              activeIcon: Icon(Icons.account_circle,
+              activeIcon: Icon(Icons.person,
                   color: AppColors.primary, size: width(context) * 0.06),
-              icon: Icon(Icons.account_circle_outlined,
+              icon: Icon(Icons.person_outlined,
                   size: width(context) * 0.06),
               label: 'Profile'),
           BottomNavigationBarItem(
-              activeIcon: Icon(Icons.receipt_long,
+              activeIcon: Icon(Icons.policy,
                   color: AppColors.primary, size: width(context) * 0.06),
-              icon: Icon(Icons.receipt_long_outlined,
+              icon: Icon(Icons.policy_outlined,
                   size: width(context) * 0.06),
-              label: 'Terms and Conditions'),
+              label: 'Policy'),
         ],
         onTap: (i) {
           controller.updateIndex(i);

@@ -34,7 +34,9 @@ class Profileview extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   child: Padding(
-                    padding: EdgeInsets.all(width(context) * 0.02),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: width(context) * 0.06,
+                        vertical: width(context) * 0.02),
                     child: const Column(
                       children: [
                         ProfileTile(
@@ -45,6 +47,7 @@ class Profileview extends StatelessWidget {
                         ProfileTile(
                             icon: Icons.people,
                             title: 'Account',
+                            isLast: true,
                             subTitle:
                                 'Name, Email address, Phone number, Agreement...'),
                       ],
@@ -78,6 +81,7 @@ class Profileview extends StatelessWidget {
                         ProfileTile(
                             icon: Icons.logout,
                             title: 'Logout',
+                            isLast: true,
                             subTitle: 'Logout of your account.'),
                       ],
                     ),

@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 
 import '../../utilities/utilities.dart';
@@ -37,7 +39,9 @@ class FaqView extends StatelessWidget {
                     Tab(text: 'What’s new'),
                   ]),
               SizedBox(
-                  height: adjustedHeight(context) * 0.88,
+                  height: Platform.isIOS
+                      ? adjustedHeight(context) * 0.88
+                      : adjustedHeight(context) * 0.92,
                   child: const TabBarView(children: [
                     FaqWidget(),
                     Center(child: Text('Feedback')),

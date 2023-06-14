@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../utilities/utilities.dart';
 
 class TermsCard extends StatelessWidget {
-  const TermsCard({super.key});
+  final String question;
+  final String answer;
+  const TermsCard({super.key, required this.question, required this.answer});
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +14,29 @@ class TermsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('1. Terms & Conditions', style: medium16(context)),
+          Text(question, style: medium16(context)),
           SizedBox(height: height(context) * 0.015),
-          Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque neque ipsum, imperdiet a aliquet quis, facilisis at massa. Maecenas tempor sem id purus consequat finibus. Phasellus aliquet sem luctus risus iaculis aliquet. Phasellus eu pellentesque magna, sit amet luctus purus. Duis eu mauris enim. Pellentesque tortor risus, ultrices sed enim a, pulvinar tincidunt ante. Quisque maximus elit sit amet turpis semper, eu interdum tortor posuere.',
+          Text(answer,
+              style: regular13(context)
+                  .copyWith(color: Colors.black.withOpacity(0.4)))
+        ],
+      ),
+    );
+  }
+}
+
+class AboutCard extends StatelessWidget {
+  final String answer;
+  const AboutCard({super.key, required this.answer});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: height(context) * 0.015),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(answer,
               style: regular13(context)
                   .copyWith(color: Colors.black.withOpacity(0.4)))
         ],

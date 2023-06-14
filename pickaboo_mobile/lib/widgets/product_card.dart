@@ -60,6 +60,36 @@ class ProductCard extends StatelessWidget {
   }
 }
 
+class ProductGridCard extends StatelessWidget {
+  const ProductGridCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: AppColors.fadeGreen,
+          border: Border.all(color: AppColors.primary)),
+      child: Column(
+        children: [
+          Image.asset('assets/images/dummy_prod.png'),
+          //   SizedBox(height: height(context) * 0.01),
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(5)),
+            padding: EdgeInsets.all(width(context) * 0.025),
+            child: Text(
+              'Waste Container',
+              style: medium13(context),
+            ),
+          ),
+          const SizedBox(height: 5)
+        ],
+      ),
+    );
+  }
+}
+
 class ProductImage extends StatelessWidget {
   const ProductImage({super.key});
 

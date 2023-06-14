@@ -5,7 +5,11 @@ import '../settings/terms_view.dart';
 import 'inner_pages/driver_home_view.dart';
 
 class DriverDashboardViewModel {
-  static const pages = [DriverHomeView(), Profileview(), TermsView()];
+  static const pages = [
+    DriverHomeView(),
+    Profileview(),
+    TermsView(isAnon: 'no')
+  ];
 
   final int _index = 0;
 

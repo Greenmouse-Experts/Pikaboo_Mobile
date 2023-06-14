@@ -45,7 +45,23 @@ class ProductView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Green Container', style: semi20(context)),
+                  Row(
+                    children: [
+                      Text('Green Container', style: semi20(context)),
+                      const Spacer(),
+                      TextButton.icon(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.bookmark_outline_outlined,
+                            color: Colors.black,
+                            size: width(context) * 0.05,
+                          ),
+                          label: Text(
+                            'Save',
+                            style: regular11(context),
+                          )),
+                    ],
+                  ),
                   Text(
                       'Limited to food waste, yard waste, green waste, other organic materials.',
                       style: medium13(context)

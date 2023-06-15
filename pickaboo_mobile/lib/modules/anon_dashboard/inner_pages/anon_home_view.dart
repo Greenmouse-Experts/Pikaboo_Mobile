@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -31,53 +32,24 @@ class AnonHomeView extends StatelessWidget {
           child: Padding(
             padding: screenPadding(context),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Container(
-                    padding: EdgeInsets.all(width(context) * 0.025),
-                    decoration: BoxDecoration(
-                        gradient: const RadialGradient(
-                          radius: 0.7,
-                          colors: [
-                            AppColors.primaryLight,
-                            AppColors.primary,
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Row(
-                      children: [
-                        const AppImage(
-                            image: 'assets/images/truck.png',
-                            imageHeight: 0.18,
-                            imageWidth: 0.40),
-                        const Spacer(),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                                width: width(context) * 0.45,
-                                child: Text(
-                                    'Get instant waste pick up in your area',
-                                    style: semi18(context)
-                                        .copyWith(color: Colors.white),
-                                    textAlign: TextAlign.end)),
-                            SizedBox(height: height(context) * 0.0125),
-                            AppButton(
-                              text: 'LOGIN',
-                              onPressed: () {},
-                              buttonWidth: 0.2,
-                              buttonHeight: 0.04,
-                              buttonColor: Colors.white,
-                              textColor: Colors.green,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
+                CarouselSlider.builder(
+                  itemCount: 3,
+                  itemBuilder: (context, index, i) {
+                    return index == 0
+                        ? const CardSlide1()
+                        : index == 1
+                            ? const CardSlide3()
+                            : const CardSlide2();
+                  },
+                  options: CarouselOptions(
+                    height: height(context) * 0.19,
+                    viewportFraction: 1,
+                    enableInfiniteScroll: false,
+                    enlargeCenterPage: true,
+                    autoPlay: true,
                   ),
                 ),
                 SizedBox(height: height(context) * 0.02),
@@ -122,7 +94,7 @@ class AnonHomeView extends StatelessWidget {
                 Text('Users Sign In', style: medium16(context)),
                 SizedBox(height: height(context) * 0.015),
                 AppButton(
-                    text: 'Login',
+                    text: 'Get Started',
                     onPressed: () {
                       context.pushNamed(AppRouter.chooseSignIn);
                     }),

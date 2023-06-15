@@ -20,14 +20,18 @@ class OnBoardingView extends StatelessWidget {
               OnBoardingWidget(
                   painter: OnboardingCurve1(),
                   header: 'Get Hired as a Waste Truck Driver',
+                  content:
+                      'Sign in to your dashboard as a waste truck driver and get daily pickup tasks posted by the waste manager.',
                   image: '1',
                   imageWidth: 0.8,
                   imageHeight: 0.25,
                   imageTop: height(context) * 0.3),
               OnBoardingWidget(
                   painter: OnboardingCurve2(),
-                  header: 'Sign up as a Household Owners',
+                  header: 'Continue as a Household Owner',
                   image: '2',
+                  content:
+                      'Get the opportunity to request for garbage pick-up in your homes, offices and environment as a Household owner.',
                   imageWidth: 0.9,
                   imageHeight: 0.35,
                   imageTop: height(context) * 0.25),
@@ -36,6 +40,8 @@ class OnBoardingView extends StatelessWidget {
                   header: 'Sign up to your Niche ',
                   image: '3',
                   imageWidth: 0.5,
+                  content:
+                      'Choose the dashboard that suits your needs, either as a truck driver or as a household owner.',
                   imageHeight: 0.35,
                   imageTop: height(context) * 0.25),
             ],

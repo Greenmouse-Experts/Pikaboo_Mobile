@@ -6,6 +6,7 @@ import 'app_image.dart';
 class OnBoardingWidget extends StatelessWidget {
   final CustomPainter painter;
   final String header;
+  final String content;
   final String image;
   final double imageTop;
   final double imageWidth;
@@ -14,6 +15,7 @@ class OnBoardingWidget extends StatelessWidget {
       {super.key,
       required this.painter,
       required this.header,
+      required this.content,
       required this.image,
       required this.imageTop,
       required this.imageWidth,
@@ -57,7 +59,7 @@ class OnBoardingWidget extends StatelessWidget {
               SizedBox(
                 width: width(context) * 0.8,
                 child: Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eros ligula, rutrum imperdiet',
+                  content,
                   style: medium16(context).copyWith(color: AppColors.ash),
                   textAlign: TextAlign.center,
                 ),

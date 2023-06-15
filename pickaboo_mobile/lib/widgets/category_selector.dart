@@ -13,7 +13,7 @@ class CategorySelector extends StatelessWidget {
       child: FilterChip(
           backgroundColor: isSelected ? AppColors.primary : Colors.white,
           label: Text('All',
-              style: medium13(context).copyWith(
+              style: medium16(context).copyWith(
                   color: isSelected
                       ? Colors.white
                       : Colors.black.withOpacity(0.4))),

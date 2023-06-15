@@ -26,7 +26,7 @@ class PickUpRequestView extends StatelessWidget {
               ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 20,
+                  itemCount: 7,
                   itemBuilder: (context, i) {
                     return PickupTile(
                       isFirst: i == 0,

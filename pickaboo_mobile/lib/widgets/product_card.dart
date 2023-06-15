@@ -65,26 +65,29 @@ class ProductGridCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: AppColors.fadeGreen,
-          border: Border.all(color: AppColors.primary)),
-      child: Column(
-        children: [
-          Image.asset('assets/images/dummy_prod.png'),
-          //   SizedBox(height: height(context) * 0.01),
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(5)),
-            padding: EdgeInsets.all(width(context) * 0.025),
-            child: Text(
-              'Waste Container',
-              style: medium13(context),
+    return InkWell(
+      onTap: () => context.pushNamed(AppRouter.productPage),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: AppColors.fadeGreen,
+            border: Border.all(color: AppColors.primary)),
+        child: Column(
+          children: [
+            Image.asset('assets/images/dummy_prod.png'),
+            //   SizedBox(height: height(context) * 0.01),
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(5)),
+              padding: EdgeInsets.all(width(context) * 0.025),
+              child: Text(
+                'Waste Container',
+                style: medium13(context),
+              ),
             ),
-          ),
-          const SizedBox(height: 5)
-        ],
+            const SizedBox(height: 5)
+          ],
+        ),
       ),
     );
   }

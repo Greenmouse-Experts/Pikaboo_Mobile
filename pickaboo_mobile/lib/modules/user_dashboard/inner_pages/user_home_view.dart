@@ -113,6 +113,7 @@ class UserHomeView extends StatelessWidget {
                           )
                         ],
                       ),
+                      SizedBox(height: height(context) * 0.01),
                     ],
                   ),
                 ),

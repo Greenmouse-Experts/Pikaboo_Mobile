@@ -79,12 +79,20 @@ class FaqWidget extends StatelessWidget {
           ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: 70,
+              itemCount: theQuestions.length,
               itemBuilder: (context, i) {
-                return const ExpandableQuestion();
+                return ExpandableQuestion(
+                  question: theQuestions[i],
+                );
               })
         ],
       ),
     );
   }
 }
+
+final List<String> theQuestions = [
+  'What is Pikaboo?',
+  'How do I fund my wallet?',
+  'Can I buy on Pikaboo?'
+];

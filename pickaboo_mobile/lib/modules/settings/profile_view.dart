@@ -20,7 +20,7 @@ class Profileview extends StatelessWidget {
               children: [
                 SizedBox(width: width(context)),
                 CircleAvatar(
-                    radius: width(context) * 0.075,
+                    radius: width(context) * 0.065,
                     backgroundColor: AppColors.lightAsh),
                 SizedBox(height: height(context) * 0.01),
                 Text('Victor Osborne',
@@ -60,7 +60,9 @@ class Profileview extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
                   child: Padding(
-                    padding: EdgeInsets.all(width(context) * 0.02),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: width(context) * 0.06,
+                        vertical: width(context) * 0.02),
                     child: const Column(
                       children: [
                         ProfileTile(

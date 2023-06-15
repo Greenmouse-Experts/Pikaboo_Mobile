@@ -57,8 +57,8 @@ class DriverHomeView extends StatelessWidget {
               padding: screenPadding(context),
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(70),
-                      topRight: Radius.circular(70)),
+                      topLeft: Radius.circular(50),
+                      topRight: Radius.circular(50)),
                   color: Colors.white),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,9 +91,9 @@ class DriverHomeView extends StatelessWidget {
                           onTap: () => context.pushNamed(AppRouter.faq)),
                     ],
                   ),
-                  SizedBox(height: height(context) * 0.02),
+                  SizedBox(height: height(context) * 0.015),
                      Text('Pick Up Alert', style: medium13(context)),
-                  SizedBox(height: height(context) * 0.01),
+                  SizedBox(height: height(context) * 0.015),
                   const PickUpCard(),
                   SizedBox(height: height(context) * 0.03),
                   Text('Stay In Touch', style: medium13(context)),

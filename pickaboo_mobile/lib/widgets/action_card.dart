@@ -21,7 +21,7 @@ class ActionCard extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Card(
-        elevation: 1,
+        elevation: 1.5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         color: color,
         child: Container(

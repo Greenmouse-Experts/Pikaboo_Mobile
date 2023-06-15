@@ -33,6 +33,7 @@ class WalletCard extends StatelessWidget {
                 IconButton(
                     onPressed: () {},
                     icon: Icon(Icons.visibility_outlined,
+                    color: Colors.white,
                         size: width(context) * 0.06))
               ],
             ),

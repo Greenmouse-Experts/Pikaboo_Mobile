@@ -5,12 +5,15 @@ import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
 class MarketPlaceView extends ConsumerWidget {
-  const MarketPlaceView({super.key});
+  final String canGoBack;
+  const MarketPlaceView({super.key, required this.canGoBack});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: customAppBar3(context, hasElevation: false, actions: [
+      appBar: customAppBar3(context, hasElevation: false,
+       implyLeading: canGoBack == 'yes' ?  true : false,
+       actions: [
         CircleAvatar(
           radius: width(context) * 0.04,
           backgroundColor: AppColors.lightAsh,

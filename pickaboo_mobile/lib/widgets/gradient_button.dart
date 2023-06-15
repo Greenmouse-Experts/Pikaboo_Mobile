@@ -24,19 +24,7 @@ class GradientButton extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              stops: const [
-                0.6,
-                0.9,
-                1
-              ],
-              colors: [
-                AppColors.orange,
-                AppColors.orange.withOpacity(0.4),
-                AppColors.orange.withOpacity(0.2),
-              ]),
+          color: AppColors.orange,
         ),
         child: Text(
           text,

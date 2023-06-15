@@ -5,7 +5,7 @@ import 'inner_pages/about_view.dart';
 import 'inner_pages/anon_home_view.dart';
 
 class AnonDashboardViewModel {
-  static const pages = [AnonHomeView(), MarketPlaceView(), AboutView()];
+  static const pages = [AnonHomeView(), MarketPlaceView(canGoBack: 'no',), AboutView()];
 
   final int _index = 0;
 

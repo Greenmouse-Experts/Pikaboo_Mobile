@@ -4,7 +4,8 @@ import 'package:expandable/expandable.dart';
 import '../utilities/utilities.dart';
 
 class ExpandableQuestion extends StatelessWidget {
-  const ExpandableQuestion({super.key});
+  final String question;
+  const ExpandableQuestion({super.key, required this.question});
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +17,20 @@ class ExpandableQuestion extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ExpandableButton(
-                        child: const QuestionHeader(isExpanded: false))
+                        child: QuestionHeader(
+                      isExpanded: false,
+                      question: question,
+                    ))
                   ],
                 ),
                 expanded: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ExpandableButton(
-                        child: const QuestionHeader(isExpanded: true)),
+                        child: QuestionHeader(
+                      isExpanded: true,
+                      question: question,
+                    )),
                     SizedBox(height: height(context) * 0.01),
                     Text(
                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eros ligula, rutrum imperdiet',
@@ -40,14 +47,16 @@ class ExpandableQuestion extends StatelessWidget {
 
 class QuestionHeader extends StatelessWidget {
   final bool isExpanded;
-  const QuestionHeader({super.key, required this.isExpanded});
+  final String question;
+  const QuestionHeader(
+      {super.key, required this.isExpanded, required this.question});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Text(
-          'What is Pikaboo?',
+          question,
           style: medium13(context),
         ),
         const Spacer(),

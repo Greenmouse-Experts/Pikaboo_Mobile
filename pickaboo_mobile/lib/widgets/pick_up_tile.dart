@@ -53,8 +53,9 @@ class PickupTile extends StatelessWidget {
           Text('Pickup address',
               style: medium11(context)
                   .copyWith(color: Colors.black.withOpacity(0.4))),
-          SizedBox(height: height(context) * 0.0001),
-          Text('Maclemore Street', style: semi13(context))
+          SizedBox(height: height(context) * 0.0002),
+          Text('Maclemore Street', style: semi13(context)),
+  SizedBox(height: height(context) * 0.0002),
         ],
       ),
       subtitle: Text('OJOTA',

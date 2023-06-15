@@ -113,7 +113,9 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
         GoRoute(
             name: AppRouter.marketplace,
             path: AppRouter.marketplace,
-            builder: (context, state) => const MarketPlaceView()),
+            builder: (context, state) => const MarketPlaceView(
+                  canGoBack: 'yes',
+                )),
         GoRoute(
             name: AppRouter.productPage,
             path: AppRouter.productPage,

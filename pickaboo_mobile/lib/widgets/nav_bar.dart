@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../modules/anon_dashboard/anon_dashboard_viewmodel.dart';
 import '../modules/driver_dashboard/driver_dashboard_vm.dart';
@@ -39,7 +40,11 @@ class AnonNavBar extends ConsumerWidget {
               label: 'About App'),
         ],
         onTap: (i) {
-          controller.updateIndex(i);
+          if (i == 0) {
+            context.pushNamed(AppRouter.chooseSignIn);
+          } else {
+            controller.updateIndex(i);
+          }
         },
         currentIndex: ref.watch(AnonDashboardViewModel.provider),
         selectedItemColor: Colors.black,
@@ -79,17 +84,21 @@ class UserNavBar extends ConsumerWidget {
               icon: Icon(Icons.home_outlined, size: width(context) * 0.06),
               label: 'Home'),
           BottomNavigationBarItem(
+              activeIcon: Icon(Icons.local_mall,
+                  color: AppColors.primary, size: width(context) * 0.06),
+              icon:
+                  Icon(Icons.local_mall_outlined, size: width(context) * 0.06),
+              label: 'Store'),
+          BottomNavigationBarItem(
               activeIcon: Icon(Icons.person,
                   color: AppColors.primary, size: width(context) * 0.06),
-              icon: Icon(Icons.person_outlined,
-                  size: width(context) * 0.06),
+              icon: Icon(Icons.person_outlined, size: width(context) * 0.06),
               label: 'Profile'),
-          BottomNavigationBarItem(
-              activeIcon: Icon(Icons.policy,
-                  color: AppColors.primary, size: width(context) * 0.06),
-              icon: Icon(Icons.policy_outlined,
-                  size: width(context) * 0.06),
-              label: 'Policy'),
+          // BottomNavigationBarItem(
+          //     activeIcon: Icon(Icons.policy,
+          //         color: AppColors.primary, size: width(context) * 0.06),
+          //     icon: Icon(Icons.policy_outlined, size: width(context) * 0.06),
+          //     label: 'Policy'),
         ],
         onTap: (i) {
           controller.updateIndex(i);
@@ -134,14 +143,12 @@ class DriverNavBar extends ConsumerWidget {
           BottomNavigationBarItem(
               activeIcon: Icon(Icons.person,
                   color: AppColors.primary, size: width(context) * 0.06),
-              icon: Icon(Icons.person_outlined,
-                  size: width(context) * 0.06),
+              icon: Icon(Icons.person_outlined, size: width(context) * 0.06),
               label: 'Profile'),
           BottomNavigationBarItem(
               activeIcon: Icon(Icons.policy,
                   color: AppColors.primary, size: width(context) * 0.06),
-              icon: Icon(Icons.policy_outlined,
-                  size: width(context) * 0.06),
+              icon: Icon(Icons.policy_outlined, size: width(context) * 0.06),
               label: 'Policy'),
         ],
         onTap: (i) {

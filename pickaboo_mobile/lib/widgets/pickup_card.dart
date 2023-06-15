@@ -10,6 +10,7 @@ class PickUpCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
+      shadowColor: Colors.black.withOpacity(0.3),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: ListTile(
           contentPadding: EdgeInsets.only(

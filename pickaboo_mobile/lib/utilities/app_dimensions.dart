@@ -18,7 +18,7 @@ EdgeInsets horizontalPadding(BuildContext context) =>
 double calculateTextSize(BuildContext context, double fontSize) {
   final scaleFactor = width(context) > 480
       ? width(context) / (baseScreenWidth * 1.2)
-      : width(context) / (baseScreenWidth * 0.95);
+      : width(context) / (baseScreenWidth * 0.94);
   final calculatedFontSize = fontSize * scaleFactor;
   return calculatedFontSize;
 }

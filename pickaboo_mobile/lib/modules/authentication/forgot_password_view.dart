@@ -34,7 +34,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
               ),
               SizedBox(height: height(context) * 0.025),
               SizedBox(
-                  width: width(context) * 0.73,
+                  width: width(context) * 0.77,
                   child: Text(
                     'Enter the email associated with your account and we’ll send a mail with instructions to reset your password',
                     textAlign: TextAlign.center,

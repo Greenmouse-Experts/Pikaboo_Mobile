@@ -180,6 +180,22 @@ TextStyle bold13(BuildContext context) =>
 TextStyle extra13(BuildContext context) =>
     appTextStyle(context: context, fontWeight: FontWeight.w800, fontSize: 13);
 
+
+TextStyle regular12(BuildContext context) =>
+    appTextStyle(context: context, fontWeight: FontWeight.w400, fontSize: 12);
+
+TextStyle medium12(BuildContext context) =>
+    appTextStyle(context: context, fontWeight: FontWeight.w500, fontSize: 12);
+
+TextStyle semi12(BuildContext context) =>
+    appTextStyle(context: context, fontWeight: FontWeight.w600, fontSize: 12);
+
+TextStyle bold12(BuildContext context) =>
+    appTextStyle(context: context, fontWeight: FontWeight.w700, fontSize: 12);
+
+TextStyle extra12(BuildContext context) =>
+    appTextStyle(context: context, fontWeight: FontWeight.w800, fontSize: 12);
+
 TextStyle regular11(BuildContext context) =>
     appTextStyle(context: context, fontWeight: FontWeight.w400, fontSize: 11);
 

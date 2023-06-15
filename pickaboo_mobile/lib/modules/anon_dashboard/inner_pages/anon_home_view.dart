@@ -102,7 +102,7 @@ class AnonHomeView extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: height(context) * 0.03),
+                SizedBox(height: height(context) * 0.025),
                 Text('What we Do!', style: medium16(context)),
                 SizedBox(height: height(context) * 0.02),
                 const InfoWidget(
@@ -111,7 +111,7 @@ class AnonHomeView extends StatelessWidget {
                     content:
                         "Sign in as a truck driver and get paid to pick up waste in your preferred locations",
                     image: 'assets/images/wastetruck.png'),
-                SizedBox(height: height(context) * 0.02),
+                SizedBox(height: height(context) * 0.015),
                 const InfoWidget(
                     color: AppColors.fadePurple,
                     title: 'Household Owner',

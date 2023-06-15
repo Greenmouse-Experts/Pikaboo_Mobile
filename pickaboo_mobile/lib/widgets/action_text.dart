@@ -21,12 +21,12 @@ class ActionText extends StatelessWidget {
         textAlign: TextAlign.center,
         text: TextSpan(
             text: leadingText,
-            style: medium11(context)
+            style: medium13(context)
                 .copyWith(color: Colors.black.withOpacity(0.7)),
             children: <TextSpan>[
               TextSpan(
                 text: actionText,
-                style: medium11(context).copyWith(color: AppColors.primary),
+                style: medium13(context).copyWith(color: AppColors.primary),
                 recognizer: TapGestureRecognizer()..onTap = action,
               )
             ]),

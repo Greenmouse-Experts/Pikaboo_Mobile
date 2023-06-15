@@ -93,10 +93,10 @@ class InfoWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: Text(title, style: medium16(context)),
       ),
-      trailing: AppImage(imageWidth: 0.15, imageHeight: 0.08, image: image),
+      trailing: AppImage(imageWidth: 0.11, imageHeight: 0.08, image: image),
       subtitle: Text(content,
           style:
-              medium11(context).copyWith(color: Colors.black.withOpacity(0.4))),
+              medium12(context).copyWith(color: Colors.black.withOpacity(0.4))),
     );
   }
 }
@@ -140,7 +140,7 @@ class ChooseSignIn extends StatelessWidget {
           Text(title, style: medium16(context)),
           const SizedBox(height: 2),
           Text(content,
-              style: medium11(context)
+              style: medium13(context)
                   .copyWith(color: Colors.black.withOpacity(0.4))),
         ],
       ),

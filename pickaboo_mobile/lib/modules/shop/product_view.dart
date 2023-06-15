@@ -58,7 +58,7 @@ class ProductView extends StatelessWidget {
                           ),
                           label: Text(
                             'Save',
-                            style: regular11(context),
+                            style: regular13(context),
                           )),
                     ],
                   ),

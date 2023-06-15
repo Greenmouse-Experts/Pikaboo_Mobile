@@ -72,7 +72,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                 });
                           }),
                           Text('Remember Me',
-                              style: regular11(context).copyWith(
+                              style: regular13(context).copyWith(
                                   color: AppColors.darkAsh.withOpacity(0.85)))
                         ],
                       ),
@@ -103,7 +103,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       SizedBox(height: height(context) * 0.02),
                       Text(
                         'Need help logging in to your account?',
-                        style: medium11(context)
+                        style: medium12(context)
                             .copyWith(color: Colors.black.withOpacity(0.7)),
                       )
                     ],

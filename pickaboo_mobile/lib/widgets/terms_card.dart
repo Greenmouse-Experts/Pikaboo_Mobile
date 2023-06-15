@@ -14,10 +14,10 @@ class TermsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(question, style: medium16(context)),
+          Text(question, style: medium18(context)),
           SizedBox(height: height(context) * 0.015),
           Text(answer,
-              style: regular13(context)
+              style: regular14(context)
                   .copyWith(color: Colors.black.withOpacity(0.4)))
         ],
       ),
@@ -37,7 +37,7 @@ class AboutCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(answer,
-              style: regular13(context)
+              style: regular16(context)
                   .copyWith(color: Colors.black.withOpacity(0.4)))
         ],
       ),

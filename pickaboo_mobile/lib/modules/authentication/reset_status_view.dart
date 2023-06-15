@@ -44,7 +44,7 @@ class ResetStatusView extends StatelessWidget {
           ),
           const Spacer(),
           SizedBox(
-            width: width(context) * 0.68,
+            width: width(context) * 0.75,
             child: ActionText(
                 action: () {},
                 leadingText:

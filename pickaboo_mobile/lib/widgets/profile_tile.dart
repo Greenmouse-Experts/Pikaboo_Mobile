@@ -39,7 +39,8 @@ class ProfileTile extends StatelessWidget {
           child: SizedBox(
             width: width(context),
             child: Text(subTitle,
-                style: regular11(context)
+            maxLines: 1,
+                style: regular12(context)
                     .copyWith(color: Colors.black.withOpacity(0.4))),
           ),
         ),

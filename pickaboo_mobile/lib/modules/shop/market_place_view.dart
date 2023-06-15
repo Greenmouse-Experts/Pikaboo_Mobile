@@ -49,11 +49,11 @@ class MarketPlaceView extends ConsumerWidget {
                         icon: Icon(
                           Icons.bookmark_outline_outlined,
                           color: Colors.black,
-                          size: width(context) * 0.05,
+                          size: width(context) * 0.06,
                         ),
                         label: Text(
                           'Save',
-                          style: regular11(context),
+                          style: regular12(context),
                         )),
                     const Spacer(),
                     InkWell(

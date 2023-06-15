@@ -19,7 +19,7 @@ class DescriptiveIcon extends StatelessWidget {
         color: Colors.black.withOpacity(0.4),
       ),
       title: Text(description,
-          style: regular13(context)
+          style: regular14(context)
               .copyWith(color: Colors.black.withOpacity(0.4))),
     );
   }

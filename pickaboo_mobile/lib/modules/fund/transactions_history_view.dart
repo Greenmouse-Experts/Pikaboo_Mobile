@@ -37,7 +37,7 @@ class TransactionsHistoryView extends StatelessWidget {
                             children: [
                               Text(
                                 'Available Balance: NGN*****',
-                                style: medium13(context).copyWith(
+                                style: medium14(context).copyWith(
                                     color: Colors.black.withOpacity(0.3)),
                               ),
                               IconButton(

@@ -53,7 +53,7 @@ class DriverHomeView extends StatelessWidget {
               ),
             ),
             Container(
-              height: height(context) * 0.593,
+              height: height(context) * 0.6,
               padding: screenPadding(context),
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(

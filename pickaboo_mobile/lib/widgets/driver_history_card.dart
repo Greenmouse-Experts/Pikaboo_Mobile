@@ -19,45 +19,21 @@ class DriverHistoryCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Column(
-                  children: [
-                    Container(
-                      width: width(context) * 0.05,
-                      height: width(context) * 0.05,
-                      decoration: const BoxDecoration(
-                        color: AppColors.primary,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(width(context) * 0.015),
-                        child: Container(
-                          width: width(context) * 0.05,
-                          height: width(context) * 0.05,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const NewDotLine(),
-                    Icon(
-                      Icons.location_pin,
-                      color: AppColors.error,
-                      size: width(context) * 0.05,
-                    )
-                  ],
+                Icon(
+                  Icons.location_pin,
+                  color: AppColors.error,
+                  size: width(context) * 0.06,
                 ),
                 SizedBox(width: width(context) * 0.035),
-                SizedBox(
-                  height: height(context) * 0.1275,
-                  child: const Column(
-                    children: [LocationText(), Spacer(), LocationText()],
-                  ),
-                )
+                const LocationText(),
+                const Spacer(),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.delete_outline_outlined,
+                        color: AppColors.error, size: width(context) * 0.06))
               ],
             ),
-            SizedBox(height: height(context) * 0.01),
+            SizedBox(height: height(context) * 0.0125),
             Divider(color: Colors.black.withOpacity(0.2)),
             SizedBox(height: height(context) * 0.01),
             Row(

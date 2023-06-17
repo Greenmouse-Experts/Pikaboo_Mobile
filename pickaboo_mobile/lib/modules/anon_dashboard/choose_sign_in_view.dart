@@ -10,7 +10,9 @@ class ChooseSignInView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, actions: [
+      appBar: customAppBar5(context,
+   //  onLeadingPressed: ,
+       actions: [
         IconButton(
             onPressed: () {},
             icon: Container(

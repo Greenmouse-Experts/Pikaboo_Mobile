@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pickaboo_mobile/modules/anon_dashboard/anon_dashboard_viewmodel.dart';
+import 'package:pickaboo_mobile/modules/user_dashboard/user_dashboard_vm.dart';
 
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
@@ -11,16 +13,30 @@ class MarketPlaceView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: customAppBar3(context, hasElevation: false,
-       implyLeading: canGoBack == 'yes' ?  true : false,
-       actions: [
-        CircleAvatar(
-          radius: width(context) * 0.04,
-          backgroundColor: AppColors.lightAsh,
-          child: Image.asset('assets/images/dummy_icon.png', fit: BoxFit.cover),
-        ),
-        SizedBox(width: width(context) * 0.04)
-      ]),
+      appBar: customAppBar5(context,
+          hasElevation: false,
+          onLeadingPressed: canGoBack == 'yes'
+              ? null
+              : canGoBack == 'user'
+                  ? () {
+                      ref
+                          .read(UserDashboardViewModel.provider.notifier)
+                          .updateIndex(0);
+                    }
+                  : () {
+                      ref
+                          .read(AnonDashboardViewModel.provider.notifier)
+                          .updateIndex(0);
+                    },
+          actions: [
+            CircleAvatar(
+              radius: width(context) * 0.04,
+              backgroundColor: AppColors.lightAsh,
+              child: Image.asset('assets/images/dummy_icon.png',
+                  fit: BoxFit.cover),
+            ),
+            SizedBox(width: width(context) * 0.04)
+          ]),
       body: SingleChildScrollView(
         child: SafeArea(
             child: Padding(

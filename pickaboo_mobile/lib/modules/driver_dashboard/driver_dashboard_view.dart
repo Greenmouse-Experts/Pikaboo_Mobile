@@ -10,11 +10,21 @@ class DriverDashboardView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final index = ref.watch(DriverDashboardViewModel.provider);
-    return Scaffold(
-      body: Consumer(
-        builder: (context, ref, child) => DriverDashboardViewModel.pages[index],
+    return WillPopScope(
+      onWillPop: () async {
+        if (index != 0) {
+          ref.read(DriverDashboardViewModel.provider.notifier).updateIndex(0);
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        body: Consumer(
+          builder: (context, ref, child) =>
+              DriverDashboardViewModel.pages[index],
+        ),
+        bottomNavigationBar: const DriverNavBar(),
       ),
-      bottomNavigationBar: const DriverNavBar(),
     );
   }
 }

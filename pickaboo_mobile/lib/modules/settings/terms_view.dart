@@ -1,29 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pickaboo_mobile/modules/driver_dashboard/driver_dashboard_vm.dart';
 
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
-class TermsView extends StatelessWidget {
+class TermsView extends ConsumerWidget {
   final String isAnon;
   const TermsView({super.key, required this.isAnon});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: AppColors.altWhite,
-      appBar: customAppBar3(context,
-          hasElevation: false,
-          implyLeading: isAnon == 'yes' ? true : false,
-          bgColor: AppColors.altWhite,
-          actions: [
-            CircleAvatar(
-              radius: width(context) * 0.04,
-              backgroundColor: AppColors.lightAsh,
-              child: Image.asset('assets/images/dummy_icon.png',
-                  fit: BoxFit.cover),
-            ),
-            SizedBox(width: width(context) * 0.04)
-          ]),
+      
+      appBar: customAppBar5(context, hasElevation: false,
+      bgColor: AppColors.altWhite,onLeadingPressed: () {
+        if (isAnon == 'yes') {
+          null;
+        } else {
+          ref.read(DriverDashboardViewModel.provider.notifier).updateIndex(0);
+        }
+      }, actions: [
+        CircleAvatar(
+          radius: width(context) * 0.04,
+          backgroundColor: AppColors.lightAsh,
+          child: Image.asset('assets/images/dummy_icon.png', fit: BoxFit.cover),
+        ),
+        SizedBox(width: width(context) * 0.04)
+      ]),
       body: SingleChildScrollView(
         child: SafeArea(
             child: Padding(

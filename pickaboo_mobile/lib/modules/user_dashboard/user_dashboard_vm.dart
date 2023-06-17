@@ -5,7 +5,11 @@ import '../shop/market_place_view.dart';
 import 'inner_pages/user_home_view.dart';
 
 class UserDashboardViewModel {
-  static const pages = [UserHomeView(), MarketPlaceView(canGoBack: 'no',), Profileview()];
+  static const pages = [
+    UserHomeView(),
+    MarketPlaceView(canGoBack: 'user'),
+    Profileview(isUser: true)
+  ];
 
   final int _index = 0;
 

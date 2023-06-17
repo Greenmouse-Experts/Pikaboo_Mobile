@@ -60,7 +60,7 @@ class OnBoardingWidget extends StatelessWidget {
                 width: width(context) * 0.8,
                 child: Text(
                   content,
-                  style: medium16(context).copyWith(color: AppColors.ash),
+                  style: medium16(context),
                   textAlign: TextAlign.center,
                 ),
               )

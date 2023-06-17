@@ -7,7 +7,7 @@ import 'inner_pages/driver_home_view.dart';
 class DriverDashboardViewModel {
   static const pages = [
     DriverHomeView(),
-    Profileview(),
+    Profileview(isUser: false),
     TermsView(isAnon: 'no')
   ];
 

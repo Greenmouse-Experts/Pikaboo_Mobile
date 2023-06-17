@@ -35,11 +35,7 @@ class AboutCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: height(context) * 0.015),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(answer,
-              style: regular16(context)
-                  .copyWith(color: Colors.black.withOpacity(0.4)))
-        ],
+        children: [Text(answer, style: regular16(context))],
       ),
     );
   }

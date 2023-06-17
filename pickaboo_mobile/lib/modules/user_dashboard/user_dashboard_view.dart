@@ -10,12 +10,20 @@ class UserDashboardView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final index = ref.watch(UserDashboardViewModel.provider);
-    return Scaffold(
-      body: Consumer(
-        builder: (context, ref, child) =>
-            UserDashboardViewModel.pages[index],
+    return WillPopScope(
+      onWillPop: () async {
+        if (index != 0) {
+          ref.read(UserDashboardViewModel.provider.notifier).updateIndex(0);
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        body: Consumer(
+          builder: (context, ref, child) => UserDashboardViewModel.pages[index],
+        ),
+        bottomNavigationBar: const UserNavBar(),
       ),
-      bottomNavigationBar: const UserNavBar(),
     );
   }
 }

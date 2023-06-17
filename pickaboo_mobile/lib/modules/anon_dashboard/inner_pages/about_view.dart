@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../utilities/utilities.dart';
 import '../../../widgets/widgets.dart';
+import '../anon_dashboard_viewmodel.dart';
 
-class AboutView extends StatelessWidget {
+class AboutView extends ConsumerWidget {
   const AboutView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: customAppBar(context, hasElevation: false, actions: [
+      appBar: customAppBar5(context, hasElevation: false, onLeadingPressed: () {
+        ref.read(AnonDashboardViewModel.provider.notifier).updateIndex(0);
+      }, actions: [
         IconButton(
             onPressed: () {},
             icon: Container(

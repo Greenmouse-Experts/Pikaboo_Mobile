@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pickaboo_mobile/modules/driver_dashboard/driver_dashboard_vm.dart';
 
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
+import '../user_dashboard/user_dashboard_vm.dart';
 
-class Profileview extends StatelessWidget {
-  const Profileview({super.key});
+class Profileview extends ConsumerWidget {
+  final bool isUser;
+  const Profileview({super.key, required this.isUser});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: customAppBar2(context, hasElevation: false),
+      appBar: customAppBar6(context, hasElevation: false, onLeadingPressed: () {
+        if (isUser) {
+          ref.read(UserDashboardViewModel.provider.notifier).updateIndex(0);
+        } else {
+          ref.read(DriverDashboardViewModel.provider.notifier).updateIndex(0);
+        }
+      }),
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
         child: SafeArea(

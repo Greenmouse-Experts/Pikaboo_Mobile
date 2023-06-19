@@ -42,7 +42,7 @@ class ChooseSignInView extends StatelessWidget {
                 onPressed: () => context.pushNamed(AppRouter.login,
                     pathParameters: {'type': 'driver'}),
                 color: AppColors.fadeGreen2,
-                title: 'Waste Pickup',
+                title: 'Service Personnel',
                 content:
                     "Sign in as a truck driver and get paid to pick up waste in your preferred locations",
                 image: 'assets/images/wastetruck.png'),
@@ -51,7 +51,7 @@ class ChooseSignInView extends StatelessWidget {
                 onPressed: () => context.pushNamed(AppRouter.login,
                     pathParameters: {'type': 'user'}),
                 color: AppColors.fadePurple,
-                title: 'Household Owner',
+                title: 'Home Resident',
                 content:
                     "Sign in as a household owner and get request for garbage pick up waste your location.",
                 image: 'assets/images/dump.png'),

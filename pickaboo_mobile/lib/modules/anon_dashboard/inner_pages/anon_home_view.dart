@@ -79,14 +79,14 @@ class AnonHomeView extends StatelessWidget {
                 SizedBox(height: height(context) * 0.02),
                 const InfoWidget(
                     color: AppColors.fadeGreen2,
-                    title: 'Waste Pickup',
+                    title: 'Service Personnel',
                     content:
                         "Sign in as a truck driver and get paid to pick up waste in your preferred locations",
                     image: 'assets/images/wastetruck.png'),
                 SizedBox(height: height(context) * 0.015),
                 const InfoWidget(
                     color: AppColors.fadePurple,
-                    title: 'Household Owner',
+                    title: 'Home Resident',
                     content:
                         "Sign in as a household owner and get request for garbage pick up waste your location.",
                     image: 'assets/images/dump.png'),

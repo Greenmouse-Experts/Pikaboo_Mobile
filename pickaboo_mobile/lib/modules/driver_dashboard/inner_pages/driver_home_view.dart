@@ -94,7 +94,7 @@ class DriverHomeView extends StatelessWidget {
                   SizedBox(height: height(context) * 0.015),
                      Text('Pick Up Alert', style: medium13(context)),
                   SizedBox(height: height(context) * 0.015),
-                  const PickUpCard(),
+                  const PickUpPreview(),
                   SizedBox(height: height(context) * 0.03),
                   Text('Stay In Touch', style: medium13(context)),
                   SizedBox(height: height(context) * 0.015),

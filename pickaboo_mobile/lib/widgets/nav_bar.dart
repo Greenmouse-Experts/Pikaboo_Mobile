@@ -6,6 +6,7 @@ import '../modules/anon_dashboard/anon_dashboard_viewmodel.dart';
 import '../modules/driver_dashboard/driver_dashboard_vm.dart';
 import '../modules/user_dashboard/user_dashboard_vm.dart';
 import '../utilities/utilities.dart';
+import 'widgets.dart';
 
 class AnonNavBar extends ConsumerWidget {
   const AnonNavBar({super.key});
@@ -42,6 +43,8 @@ class AnonNavBar extends ConsumerWidget {
         onTap: (i) {
           if (i == 0) {
             context.pushNamed(AppRouter.chooseSignIn);
+          } else if (i == 1) {
+            AppOverlays.showSignInDialog(context: context);
           } else {
             controller.updateIndex(i);
           }

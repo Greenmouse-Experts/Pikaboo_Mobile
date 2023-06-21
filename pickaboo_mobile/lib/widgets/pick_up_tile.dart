@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:go_router/go_router.dart';
 
 import '../utilities/utilities.dart';
+import 'widgets.dart';
 
 class PickupTile extends StatelessWidget {
   final bool isFirst;
@@ -13,7 +15,6 @@ class PickupTile extends StatelessWidget {
     return ListTile(
       minVerticalPadding: 0,
       contentPadding: EdgeInsets.zero,
-
       leading: Column(
         children: [
           !isFirst ? const DotLine() : SizedBox(height: height(context) * 0.01),
@@ -55,7 +56,7 @@ class PickupTile extends StatelessWidget {
                   .copyWith(color: Colors.black.withOpacity(0.4))),
           SizedBox(height: height(context) * 0.0002),
           Text('Maclemore Street', style: semi13(context)),
-  SizedBox(height: height(context) * 0.0002),
+          SizedBox(height: height(context) * 0.0002),
         ],
       ),
       subtitle: Text('OJOTA',
@@ -90,6 +91,57 @@ class DotLine extends StatelessWidget {
         direction: Axis.vertical,
         dashColor: AppColors.primary,
       ),
+    );
+  }
+}
+
+class PickUpCard extends StatelessWidget {
+  final bool isActive;
+  const PickUpCard({super.key, required this.isActive});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: height(context) * 0.005),
+        Row(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Pickup address',
+                    style: medium13(context)
+                        .copyWith(color: Colors.black.withOpacity(0.4))),
+                SizedBox(height: height(context) * 0.01),
+                Text(
+                  'Akuku/Ewan',
+                  style: semi14(context),
+                )
+              ],
+            ),
+            const Spacer(),
+            InkWell(
+              onTap: () => context.pushNamed(AppRouter.requstDetails),
+              child: Row(
+                children: [
+                  isActive
+                      ? CustomButton(
+                          bgColor: AppColors.fadeGreen3,
+                          textColor: AppColors.primary,
+                          onPressed: () {},
+                          text: 'Active')
+                      : Text('Review', style: regular13(context)),
+                  const SizedBox(width: 4),
+                  Icon(Icons.arrow_forward_ios_outlined,
+                      size: width(context) * 0.04)
+                ],
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: height(context) * 0.015),
+        const Divider(color: AppColors.lightAsh)
+      ],
     );
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pickaboo_mobile/modules/driver_dashboard/driver_dashboard_vm.dart';
 
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
+import '../driver_dashboard/driver_dashboard_vm.dart';
 
 class TermsView extends ConsumerWidget {
   final String isAnon;

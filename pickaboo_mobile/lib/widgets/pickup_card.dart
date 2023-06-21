@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../utilities/utilities.dart';
 import 'app_button.dart';
 
-class PickUpCard extends StatelessWidget {
-  const PickUpCard({super.key});
+class PickUpPreview extends StatelessWidget {
+  const PickUpPreview({super.key});
 
   @override
   Widget build(BuildContext context) {

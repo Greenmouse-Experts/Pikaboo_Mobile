@@ -90,3 +90,29 @@ class DriverRowIcon extends StatelessWidget {
     );
   }
 }
+
+class RowTitle extends StatelessWidget {
+  final String title;
+  final String content;
+  const RowTitle({super.key, required this.title, required this.content});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: height(context) * 0.007),
+      child: Row(
+        children: [
+          Text(
+            '$title :',
+            style: regular15(context),
+          ),
+          const SizedBox(width: 5),
+          Text(
+            content,
+            style: regular15(context).copyWith(color: AppColors.primary),
+          )
+        ],
+      ),
+    );
+  }
+}

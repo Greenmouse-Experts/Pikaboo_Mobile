@@ -36,17 +36,17 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
               SizedBox(
                   width: width(context) * 0.77,
                   child: Text(
-                    'Enter the email associated with your account and we’ll send a mail with instructions to reset your password',
+                    'Enter the phone number associated with your account and we’ll send an sms with instructions to reset your password',
                     textAlign: TextAlign.center,
                     style: medium13(context)
                         .copyWith(color: Colors.black.withOpacity(0.7)),
                   )),
               SizedBox(height: height(context) * 0.04),
               AppTextField(
-                label: 'Email address',
+                label: 'Phone Number',
                 keyboardType: TextInputType.emailAddress,
                 controller: emailController,
-                hintText: 'youremail@gmail.com',
+                hintText: '09022336728',
               ),
               SizedBox(height: height(context) * 0.06),
               AppButton(

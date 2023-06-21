@@ -3,9 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../modules/anon_dashboard/anon_dashboard_view.dart';
 import '../modules/anon_dashboard/choose_sign_in_view.dart';
-import '../modules/authentication/forgot_password_view.dart';
-import '../modules/authentication/login_view.dart';
-import '../modules/authentication/reset_status_view.dart';
+import '../modules/authentication/views.dart';
 import '../modules/driver_dashboard/driver_dashboard_view.dart';
 import '../modules/faq/faq_view.dart';
 import '../modules/fund/fund_status_view.dart';
@@ -15,9 +13,8 @@ import '../modules/history/driver_history_view.dart';
 import '../modules/history/history_view.dart';
 import '../modules/notifications/notifications_view.dart';
 import '../modules/onboarding/onboarding_view.dart';
-import '../modules/requests/pickup_request_view.dart';
-import '../modules/settings/support_view.dart';
-import '../modules/settings/terms_view.dart';
+import '../modules/requests/views.dart';
+import '../modules/settings/views.dart';
 import '../modules/shop/market_place_view.dart';
 import '../modules/shop/product_view.dart';
 import '../modules/user_dashboard/user_dashboard_view.dart';
@@ -43,6 +40,12 @@ class AppRouter {
   static const String chooseSignIn = 'chooseSignIn';
   static const String terms = 'termsandconditions';
   static const String transactionHistory = 'transactionHistory';
+  static const String preRequest = 'preRequestView';
+  static const String requestPickupView = 'requestPickupView';
+  static const String userRequests = 'userRequests';
+  static const String requstDetails = 'requestsDetails';
+  static const String accountView = 'accountView';
+  static const String addressView = 'addressView';
 }
 
 final GoRouter _router = GoRouter(routes: <RouteBase>[
@@ -67,7 +70,7 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
         GoRoute(
             name: AppRouter.login,
             path: '${AppRouter.login}/:type',
-            builder: (context, state) => LoginView(
+            builder: (context, state) => UserLoginView(
                   type: state.pathParameters['type']!,
                 )),
         GoRoute(
@@ -138,6 +141,32 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             builder: (context, state) => TermsView(
                   isAnon: state.pathParameters['isAnon']!,
                 )),
+        GoRoute(
+            name: AppRouter.preRequest,
+            path: AppRouter.preRequest,
+            builder: (context, state) => const PreRequestView()),
+        GoRoute(
+            name: AppRouter.requestPickupView,
+            path: '${AppRouter.requestPickupView}/:isSpecial',
+            builder: (context, state) => RequestPickupView(
+                  isSpecialRequest: state.pathParameters['isSpecial']! == 'yes',
+                )),
+        GoRoute(
+            name: AppRouter.userRequests,
+            path: AppRouter.userRequests,
+            builder: (context, state) => const UserRequestsView()),
+        GoRoute(
+            name: AppRouter.requstDetails,
+            path: AppRouter.requstDetails,
+            builder: (context, state) => const RequestDetailsView()),
+        GoRoute(
+            name: AppRouter.addressView,
+            path: AppRouter.addressView,
+            builder: (context, state) => const AddressView()),
+        GoRoute(
+            name: AppRouter.accountView,
+            path: AppRouter.accountView,
+            builder: (context, state) => const AccountView()),
       ]),
 ]);
 

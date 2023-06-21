@@ -125,7 +125,8 @@ class UserHomeView extends StatelessWidget {
                   Column(
                     children: [
                       ActionCard(
-                        onPressed: () {},
+                        onPressed: () =>
+                            context.pushNamed(AppRouter.preRequest),
                         color: AppColors.fadeGreen2,
                         title: 'Request Pick',
                         content: 'Order for waste pickup.',

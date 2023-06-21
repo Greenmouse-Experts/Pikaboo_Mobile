@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pickaboo_mobile/modules/anon_dashboard/anon_dashboard_viewmodel.dart';
-import 'package:pickaboo_mobile/modules/user_dashboard/user_dashboard_vm.dart';
 
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
+import '../anon_dashboard/anon_dashboard_viewmodel.dart';
+import '../user_dashboard/user_dashboard_vm.dart';
 
 class MarketPlaceView extends ConsumerWidget {
   final String canGoBack;
@@ -56,8 +56,11 @@ class MarketPlaceView extends ConsumerWidget {
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: 5,
-                    itemBuilder: (context, i) =>
-                        CategorySelector(isSelected: i == 0)),
+                    itemBuilder: (context, i) => CategorySelector(
+                          title: 'All',
+                          isSelected: i == 0,
+                          onSelected: () {},
+                        )),
               ),
               Consumer(builder: (context, ref, child) {
                 final isSingle = ref.watch(switchProvider);

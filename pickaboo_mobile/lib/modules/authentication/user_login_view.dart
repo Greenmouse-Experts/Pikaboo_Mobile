@@ -5,15 +5,15 @@ import 'package:go_router/go_router.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
-class LoginView extends ConsumerStatefulWidget {
+class UserLoginView extends ConsumerStatefulWidget {
   final String type;
-  const LoginView({super.key, required this.type});
+  const UserLoginView({super.key, required this.type});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _LoginViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _UserLoginViewState();
 }
 
-class _LoginViewState extends ConsumerState<LoginView> {
+class _UserLoginViewState extends ConsumerState<UserLoginView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override
@@ -34,7 +34,12 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   ),
                   Text('PIKABOO',
                       style: semi18(context).copyWith(color: Colors.white)),
-                  SizedBox(height: height(context) * 0.075),
+                  SizedBox(height: height(context) * 0.06),
+                  Text(
+                    'Fill in your details to login as a Home Resident',
+                    style: bold14(context).copyWith(color: Colors.white),
+                  ),
+                  SizedBox(height: height(context) * 0.03),
                 ],
               ),
               Expanded(
@@ -43,21 +48,21 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(70),
-                          topRight: Radius.circular(70))),
+                          topLeft: Radius.circular(50),
+                          topRight: Radius.circular(50))),
                   child: Column(
                     children: [
-                      SizedBox(height: height(context) * 0.1),
+                      SizedBox(height: height(context) * 0.05),
                       AppTextField(
                           controller: emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          label: 'Email',
-                          hintText: 'youremail@gmail.com'),
+                          keyboardType: TextInputType.phone,
+                          label: 'Phone Number',
+                          hintText: '09028912673'),
                       SizedBox(height: height(context) * 0.02),
                       AppTextField(
                           controller: passwordController,
                           keyboardType: TextInputType.visiblePassword,
-                          label: 'Password',
+                          label: 'OTP',
                           hintText: '********',
                           isPassword: true),
                       Row(

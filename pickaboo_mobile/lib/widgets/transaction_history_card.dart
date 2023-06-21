@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pickaboo_mobile/utilities/utilities.dart';
+
+import '../utilities/utilities.dart';
 
 class TransactionHistoryCard extends StatelessWidget {
   const TransactionHistoryCard({super.key});

@@ -73,3 +73,34 @@ class AppButton2 extends StatelessWidget {
     );
   }
 }
+
+class CustomButton extends StatelessWidget {
+  final Color bgColor;
+  final Color textColor;
+  final String text;
+  final VoidCallback onPressed;
+  const CustomButton(
+      {super.key,
+      required this.bgColor,
+      required this.textColor,
+      required this.onPressed,
+      required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+            vertical: height(context) * 0.0075,
+            horizontal: width(context) * 0.07),
+        decoration: BoxDecoration(
+            color: bgColor, borderRadius: BorderRadius.circular(3)),
+        child: Text(
+          text,
+          style: medium14(context).copyWith(color: textColor),
+        ),
+      ),
+    );
+  }
+}

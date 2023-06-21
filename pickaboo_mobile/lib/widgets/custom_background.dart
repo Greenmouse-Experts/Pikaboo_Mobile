@@ -96,7 +96,7 @@ class CustomBackground3 extends StatelessWidget {
           Column(
             children: [
               Container(
-                height: height(context) * 0.25,
+                height: height(context) * 0.22,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(width(context) * 0.15),

@@ -28,7 +28,7 @@ class ResetStatusView extends StatelessWidget {
           SizedBox(
             width: width(context) * 0.7,
             child: Text(
-              'We have sent a mail containing your new password details.',
+              'We have sent an sms to 07012345678 containing your new password details.',
               textAlign: TextAlign.center,
               style: medium13(context)
                   .copyWith(color: Colors.black.withOpacity(0.7)),
@@ -48,8 +48,8 @@ class ResetStatusView extends StatelessWidget {
             child: ActionText(
                 action: () {},
                 leadingText:
-                    'Did not receive any mail? Check your spam filter, or ',
-                actionText: 'try another email address.'),
+                    'Did not receive any OTP? Check your spam filter, or ',
+                actionText: 'try another phone number.'),
           ),
           SizedBox(height: height(context) * 0.02),
         ],

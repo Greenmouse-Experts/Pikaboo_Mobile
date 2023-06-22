@@ -37,8 +37,7 @@ class ChooseSignInView extends StatelessWidget {
                 style: medium16(context).copyWith(color: AppColors.primary)),
             SizedBox(height: height(context) * 0.02),
             ChooseSignIn(
-                onPressed: () => context.pushNamed(AppRouter.login,
-                    pathParameters: {'type': 'driver'}),
+                onPressed: () => context.pushNamed(AppRouter.driverLogin),
                 color: AppColors.fadeGreen2,
                 title: 'Service Personnel',
                 content:

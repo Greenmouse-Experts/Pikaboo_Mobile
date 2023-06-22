@@ -46,6 +46,7 @@ class AppRouter {
   static const String requstDetails = 'requestsDetails';
   static const String accountView = 'accountView';
   static const String addressView = 'addressView';
+  static const String driverLogin = 'driverLogin';
 }
 
 final GoRouter _router = GoRouter(routes: <RouteBase>[
@@ -73,6 +74,10 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             builder: (context, state) => UserLoginView(
                   type: state.pathParameters['type']!,
                 )),
+        GoRoute(
+            name: AppRouter.driverLogin,
+            path: AppRouter.driverLogin,
+            builder: (context, state) => const DriverLoginView()),
         GoRoute(
             name: AppRouter.forgotPassword,
             path: AppRouter.forgotPassword,

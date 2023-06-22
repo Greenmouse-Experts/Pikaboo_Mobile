@@ -45,16 +45,16 @@ class AnonHomeView extends StatelessWidget {
                             : const CardSlide2();
                   },
                   options: CarouselOptions(
-                    height: height(context) * 0.19,
+                    height: height(context) * 0.2,
                     viewportFraction: 1,
                     enableInfiniteScroll: false,
                     enlargeCenterPage: true,
                     autoPlay: true,
                   ),
                 ),
-                SizedBox(height: height(context) * 0.02),
+                SizedBox(height: height(context) * 0.022),
                 Text('Get Started with PIKABOO', style: medium16(context)),
-                SizedBox(height: height(context) * 0.02),
+                SizedBox(height: height(context) * 0.022),
                 Row(
                   children: [
                     AppButton(
@@ -76,14 +76,14 @@ class AnonHomeView extends StatelessWidget {
                 ),
                 SizedBox(height: height(context) * 0.025),
                 Text('What we Do!', style: medium16(context)),
-                SizedBox(height: height(context) * 0.02),
+                SizedBox(height: height(context) * 0.022),
                 const InfoWidget(
                     color: AppColors.fadeGreen2,
                     title: 'Service Personnel',
                     content:
                         "Sign in as a truck driver and get paid to pick up waste in your preferred locations",
                     image: 'assets/images/wastetruck.png'),
-                SizedBox(height: height(context) * 0.015),
+                SizedBox(height: height(context) * 0.02),
                 const InfoWidget(
                     color: AppColors.fadePurple,
                     title: 'Home Resident',

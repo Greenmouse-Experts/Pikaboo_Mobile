@@ -68,12 +68,12 @@ class _UserLoginViewState extends ConsumerState<UserLoginView> {
                       Row(
                         children: [
                           Consumer(builder: (context, ref, child) {
-                            final remember = ref.watch(rememberMe);
+                            final remember = ref.watch(_rememberMe);
                             return Checkbox.adaptive(
                                 activeColor: AppColors.primary,
                                 value: remember,
                                 onChanged: (newval) {
-                                  ref.read(rememberMe.notifier).switchState();
+                                  ref.read(_rememberMe.notifier).switchState();
                                 });
                           }),
                           Text('Remember Me',
@@ -123,10 +123,10 @@ class _UserLoginViewState extends ConsumerState<UserLoginView> {
   }
 }
 
-final rememberMe =
-    NotifierProvider<RememberMeNotifier, bool>(RememberMeNotifier.new);
+final _rememberMe =
+    NotifierProvider<_RememberMeNotifier, bool>(_RememberMeNotifier.new);
 
-class RememberMeNotifier extends Notifier<bool> {
+class _RememberMeNotifier extends Notifier<bool> {
   @override
   build() {
     return true;

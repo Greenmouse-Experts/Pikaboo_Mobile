@@ -4,8 +4,9 @@ import 'package:expandable/expandable.dart';
 import '../utilities/utilities.dart';
 
 class ExpandableQuestion extends StatelessWidget {
-  final String question;
-  const ExpandableQuestion({super.key, required this.question});
+  final String question, answer;
+  const ExpandableQuestion(
+      {super.key, required this.question, required this.answer});
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +33,7 @@ class ExpandableQuestion extends StatelessWidget {
                       question: question,
                     )),
                     SizedBox(height: height(context) * 0.01),
-                    Text(
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eros ligula, rutrum imperdiet',
+                    Text(answer,
                         style: medium13(context)
                             .copyWith(color: Colors.black.withOpacity(0.4)))
                   ],
@@ -55,9 +55,12 @@ class QuestionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(
-          question,
-          style: medium13(context),
+        SizedBox(
+          width: width(context) * 0.85,
+          child: Text(
+            question,
+            style: medium13(context),
+          ),
         ),
         const Spacer(),
         Container(

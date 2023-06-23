@@ -50,7 +50,12 @@ class OnBoardingView extends StatelessWidget {
               top: height(context) * 0.075,
               child: Column(
                 children: [
-                  Image.asset('assets/images/pickaboo_alt_logo.png'),
+                  SizedBox(height: height(context) * 0.1),
+                  SizedBox(
+                      width: width(context) * 0.12,
+                      height: height(context) * 0.06,
+                      child:
+                          Image.asset('assets/images/pickaboo_alt_logo.png')),
                   SizedBox(
                     width: width(context),
                     height: 2,

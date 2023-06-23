@@ -27,10 +27,14 @@ class _UserLoginViewState extends ConsumerState<UserLoginView> {
               Column(
                 children: [
                   SizedBox(height: height(context) * 0.075),
-                  Image.asset('assets/images/pickaboo_alt_logo.png'),
+                     SizedBox(
+                      width: width(context) * 0.12,
+                      height: height(context) * 0.06,
+                      child:
+                          Image.asset('assets/images/pickaboo_alt_logo.png')),
                   SizedBox(
                     width: width(context),
-                    height: 2,
+                    height: 4,
                   ),
                   Text('PIKABOO',
                       style: semi18(context).copyWith(color: Colors.white)),

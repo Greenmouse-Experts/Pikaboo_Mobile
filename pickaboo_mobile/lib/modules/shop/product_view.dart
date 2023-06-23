@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../utilities/utilities.dart';
+import '../../widgets/check_out_modal.dart';
 import '../../widgets/widgets.dart';
 
 class ProductView extends StatelessWidget {
@@ -8,6 +9,17 @@ class ProductView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void showCheckOut() {
+      showModalBottomSheet(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+          context: context,
+          builder: (context) {
+            return const CheckoutModal();
+          });
+    }
+
     return Scaffold(
       appBar: customAppBar3(context,
           bgColor: AppColors.fadeGreen,
@@ -127,7 +139,12 @@ class ProductView extends StatelessWidget {
                       ),
                     )
                   ]),
-                  AppButton(text: 'Buy', onPressed: () {}, buttonHeight: 0.06)
+                  AppButton(
+                      text: 'Buy',
+                      onPressed: () {
+                        showCheckOut();
+                      },
+                      buttonHeight: 0.06)
                 ],
               ),
             ))

@@ -116,3 +116,30 @@ class RowTitle extends StatelessWidget {
     );
   }
 }
+
+class RowTitle2 extends StatelessWidget {
+  final String title;
+  final String content;
+  const RowTitle2({super.key, required this.title, required this.content});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: height(context) * 0.009),
+      child: Row(
+        children: [
+          Text(
+            '$title :',
+            style: medium15(context)
+                .copyWith(color: Colors.black.withOpacity(0.4)),
+          ),
+          const Spacer(),
+          Text(
+            content,
+            style: medium16(context),
+          )
+        ],
+      ),
+    );
+  }
+}

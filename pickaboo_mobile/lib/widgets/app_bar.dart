@@ -234,3 +234,48 @@ AppBar customAppBar6(
           ),
         ),
         actions: actions);
+
+AppBar customAppBar7(BuildContext context,
+        {VoidCallback? onLeadingPressed,
+        bool? hasElevation,
+        Color? bgColor,
+        List<Widget>? actions}) =>
+    AppBar(
+      backgroundColor: bgColor ?? AppColors.primary,
+      foregroundColor: Colors.black,
+      leading: Padding(
+        padding: EdgeInsets.all(width(context) * 0.02),
+        child: InkWell(
+          onTap: () {
+            if (onLeadingPressed == null) {
+              context.pop();
+            } else {
+              onLeadingPressed();
+            }
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: AppColors.primary.withOpacity(0.4),
+                    blurRadius: 5,
+                  ),
+                ],
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(50)),
+            child: Icon(
+              Icons.adaptive.arrow_back_rounded,
+              color: AppColors.primary,
+              size: width(context) * 0.06,
+            ),
+          ),
+        ),
+      ),
+      centerTitle: true,
+      elevation: hasElevation == null
+          ? 4
+          : hasElevation
+              ? 4
+              : 0,
+      actions: actions,
+    );

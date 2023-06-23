@@ -111,7 +111,8 @@ class _AccountViewState extends ConsumerState<AccountView> {
                             title: Text('Male', style: medium14(context)),
                             value: 'male',
                             groupValue: gender,
-                            onChanged: (newVal) {
+                            onChanged: (String? newVal) {
+                              // onChanged: (String newVal) {
                               ref
                                   .read(genderProvider.notifier)
                                   .updateGender(newVal ?? '');
@@ -125,7 +126,7 @@ class _AccountViewState extends ConsumerState<AccountView> {
                             title: Text('Female', style: medium14(context)),
                             value: 'female',
                             groupValue: gender,
-                            onChanged: (newVal) {
+                            onChanged: (String? newVal) {
                               ref
                                   .read(genderProvider.notifier)
                                   .updateGender(newVal ?? '');

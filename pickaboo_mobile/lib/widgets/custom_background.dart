@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../utilities/utilities.dart';
 
 class CustomBackground extends StatelessWidget {
@@ -11,8 +12,8 @@ class CustomBackground extends StatelessWidget {
       height: height(context) * 0.8,
       // < 850,
 
-          // ? height(context) * 0.837
-          // : height(context) * 0.8,
+      // ? height(context) * 0.837
+      // : height(context) * 0.8,
       child: Stack(
         children: [
           Column(
@@ -44,7 +45,7 @@ class CustomBackground2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height(context) * 1.1 ,
+      height: height(context) * 1.1,
       // < 850
       //     ? height(context) * 0.837
       //     : height(context) * 0.8,
@@ -87,10 +88,10 @@ class CustomBackground3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height:
-      // height(context) < 850
-        //  ? 
+          // height(context) < 850
+          //  ?
           height(context) * 0.8,
-         // : height(context) * 0.8,
+      // : height(context) * 0.8,
       child: Stack(
         children: [
           Column(

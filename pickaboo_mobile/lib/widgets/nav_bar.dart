@@ -33,7 +33,7 @@ class AnonNavBar extends ConsumerWidget {
                   color: AppColors.primary, size: width(context) * 0.06),
               icon:
                   Icon(Icons.local_mall_outlined, size: width(context) * 0.06),
-              label: 'Store'),
+              label: 'Shop'),
           BottomNavigationBarItem(
               activeIcon: Icon(Icons.settings,
                   color: AppColors.primary, size: width(context) * 0.06),

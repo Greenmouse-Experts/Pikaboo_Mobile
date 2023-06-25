@@ -9,7 +9,7 @@ class CustomBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height(context) * 0.8,
+      height: height(context) * 0.82,
       // < 850,
 
       // ? height(context) * 0.837
@@ -90,7 +90,7 @@ class CustomBackground3 extends StatelessWidget {
       height:
           // height(context) < 850
           //  ?
-          height(context) * 0.8,
+          height(context) * 0.82,
       // : height(context) * 0.8,
       child: Stack(
         children: [

@@ -28,7 +28,7 @@ class CardSlide1 extends StatelessWidget {
             const AppImage(
                 image: 'assets/images/truck.png',
                 imageHeight: 0.18,
-                imageWidth: 0.40),
+                imageWidth: 0.38),
             const Spacer(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -75,7 +75,7 @@ class CardSlide2 extends StatelessWidget {
             const AppImage(
                 image: 'assets/images/call.png',
                 imageHeight: 0.18,
-                imageWidth: 0.40),
+                imageWidth: 0.38),
             const Spacer(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -124,7 +124,7 @@ class CardSlide3 extends StatelessWidget {
             const AppImage(
                 image: 'assets/images/groupeddump.png',
                 imageHeight: 0.18,
-                imageWidth: 0.40),
+                imageWidth: 0.38),
             const Spacer(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,

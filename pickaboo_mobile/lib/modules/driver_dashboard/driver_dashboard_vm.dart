@@ -1,13 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../settings/profile_view.dart';
-import '../settings/terms_view.dart';
+import '../settings/views.dart';
 import 'inner_pages/driver_home_view.dart';
 
 class DriverDashboardViewModel {
   static const pages = [
     DriverHomeView(),
-    Profileview(isUser: false),
+    DriverProfileView(),
     TermsView(isAnon: 'no')
   ];
 

@@ -7,9 +7,9 @@ import '../../widgets/widgets.dart';
 import '../driver_dashboard/driver_dashboard_vm.dart';
 import '../user_dashboard/user_dashboard_vm.dart';
 
-class Profileview extends ConsumerWidget {
+class UserProfileview extends ConsumerWidget {
   final bool isUser;
-  const Profileview({super.key, required this.isUser});
+  const UserProfileview({super.key, required this.isUser});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,7 +37,7 @@ class Profileview extends ConsumerWidget {
                 Text('Victor Osborne',
                     style: semi20(context).copyWith(color: Colors.white)),
                 SizedBox(height: height(context) * 0.01),
-                Text('Household Owner',
+                Text('Home Resident',
                     style: regular14(context).copyWith(color: Colors.white)),
                 SizedBox(height: height(context) * 0.01),
                 Card(
@@ -102,7 +102,7 @@ class Profileview extends ConsumerWidget {
                     ),
                   ),
                 ),
-                 SizedBox(height: height(context) * 0.015),
+                SizedBox(height: height(context) * 0.015),
                 Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(

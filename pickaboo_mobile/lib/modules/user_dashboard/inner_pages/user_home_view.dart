@@ -79,9 +79,20 @@ class UserHomeView extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: height(context) * 0.003),
-                      Text('Get started as Household Owner',
-                          style: medium13(context)
-                              .copyWith(color: Colors.black.withOpacity(0.7))),
+                      Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                                text: 'Get started as ',
+                                style: medium13(context).copyWith(
+                                    color: Colors.black.withOpacity(0.7))),
+                            TextSpan(
+                                text: 'Home Resident',
+                                style: medium13(context)
+                                    .copyWith(color: AppColors.primary)),
+                          ],
+                        ),
+                      ),
                       SizedBox(height: height(context) * 0.025),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

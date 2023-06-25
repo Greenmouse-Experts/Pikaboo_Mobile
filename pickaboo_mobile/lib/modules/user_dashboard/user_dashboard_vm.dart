@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../settings/profile_view.dart';
+import '../settings/user_profile_view.dart';
 import '../shop/market_place_view.dart';
 import 'inner_pages/user_home_view.dart';
 
@@ -8,7 +8,7 @@ class UserDashboardViewModel {
   static const pages = [
     UserHomeView(),
     MarketPlaceView(canGoBack: 'user'),
-    Profileview(isUser: true)
+    UserProfileview(isUser: true)
   ];
 
   final int _index = 0;

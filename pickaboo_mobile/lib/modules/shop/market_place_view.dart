@@ -74,7 +74,7 @@ class MarketPlaceView extends ConsumerWidget {
                           size: width(context) * 0.06,
                         ),
                         label: Text(
-                          'Save',
+                          'Saved',
                           style: regular12(context),
                         )),
                     const Spacer(),

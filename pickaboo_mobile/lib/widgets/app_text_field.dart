@@ -398,3 +398,30 @@ class _EditableTextFieldState extends State<EditableTextField> {
     );
   }
 }
+
+class TextArea extends StatelessWidget {
+  final String hintText;
+  const TextArea({super.key, required this.hintText});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      keyboardType: TextInputType.multiline,
+      maxLines: 8,
+      cursorColor: AppColors.primary,
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        hintText: hintText,
+        errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.black.withOpacity(0.4))),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.black.withOpacity(0.4))),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.black.withOpacity(0.4))),
+      ),
+    );
+  }
+}

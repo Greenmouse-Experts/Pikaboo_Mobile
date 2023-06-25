@@ -1,6 +1,9 @@
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
@@ -44,13 +47,75 @@ class FaqView extends StatelessWidget {
                       : adjustedHeight(context) * 0.92,
                   child: const TabBarView(children: [
                     FaqWidget(),
-                    Center(child: Text('Feedback')),
+                    FeedbackWidget(),
                     Center(child: Text('What’s new'))
                   ]))
             ],
           ),
         ),
       )),
+    );
+  }
+}
+
+class FeedbackWidget extends ConsumerWidget {
+  const FeedbackWidget({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(width: width(context), height: height(context) * 0.02),
+          const PageHeader(title: 'Rate Your Experience', hasSearch: false),
+          SizedBox(height: height(context) * 0.01),
+          Text('Are you satisfied with our services?',
+              style: regular14(context)
+                  .copyWith(color: Colors.black.withOpacity(0.4))),
+          SizedBox(height: height(context) * 0.01),
+          RatingBar.builder(
+              minRating: 1,
+              maxRating: 5,
+              itemCount: 5,
+              glowColor: AppColors.gold,
+              itemBuilder: (context, i) => const Icon(
+                    Icons.star_outline_outlined,
+                    color: AppColors.primary,
+                  ),
+              onRatingUpdate: (rating) {}),
+          SizedBox(height: height(context) * 0.02),
+          const Divider(color: AppColors.lightAsh),
+          SizedBox(height: height(context) * 0.02),
+          Text('Tell us what can be improved', style: medium14(context)),
+          SizedBox(height: height(context) * 0.01),
+          Consumer(builder: (context, ref, child) {
+            final improvements = ref.watch(improveProvider);
+            return Wrap(
+                alignment: WrapAlignment.start,
+                children: theImprovements.map((item) {
+                  return ImprovementSelector(
+                      isSelected: improvements.contains(item),
+                      title: item,
+                      onSelected: () {
+                        if (!improvements.contains(item)) {
+                          ref.read(improveProvider.notifier).addNewItem(item);
+                        } else {
+                          ref.read(improveProvider.notifier).removeItem(item);
+                        }
+                      });
+                }).toList());
+          }),
+          SizedBox(height: height(context) * 0.01),
+          const TextArea(hintText: 'Tell us how we can improve'),
+          SizedBox(height: height(context) * 0.02),
+          AppButton(
+              text: 'Submit',
+              onPressed: () {
+                context.pushReplacementNamed(AppRouter.feedbackStatus);
+              })
+        ],
+      ),
     );
   }
 }
@@ -73,8 +138,6 @@ class FaqWidget extends StatelessWidget {
                 child: const SearchTextField(
                     hintText: 'Search Keywords', islocation: false)),
           ),
-          //  SizedBox(height: height(context) * 0.015),
-          //  const PageHeader(title: 'About Pikaboo', hasSearch: false),
           SizedBox(height: height(context) * 0.02),
           ListView.builder(
               shrinkWrap: true,
@@ -117,3 +180,33 @@ final List<String> theAnswers = [
   'Response to special calls is an uninterrupted process driven by the availability of service personnel within the area of call provided calls are within service hours.',
   'PikaBoo Service Hours are generally as stipulated by the local Waste Management Authority but usually daylight hours between 0700 and 1700Hours.'
 ];
+
+final List<String> theImprovements = [
+  'Overall services',
+  'Customer support',
+  'Speed and efficiency',
+  'Transparency',
+  'Pickup and response service',
+  'Quality'
+];
+
+final improveProvider =
+    NotifierProvider<ImprovedNotifier, List<String>>(ImprovedNotifier.new);
+
+class ImprovedNotifier extends Notifier<List<String>> {
+  @override
+  build() {
+    return [];
+  }
+
+  void addNewItem(String newItem) {
+    state = [...state, newItem];
+  }
+
+  void removeItem(String item) {
+    state = [
+      for (final oldItem in state)
+        if (oldItem != item) oldItem,
+    ];
+  }
+}

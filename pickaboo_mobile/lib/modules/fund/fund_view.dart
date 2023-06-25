@@ -71,21 +71,26 @@ class _FundViewState extends State<FundView> {
               Text('Terms & Conditions',
                   style: medium13(context).copyWith(color: AppColors.primary)),
               SizedBox(height: height(context) * 0.02),
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 4,
-                  itemBuilder: (context, i) {
-                    return ListTile(
-                        minLeadingWidth: 10,
-                        leading: Text('${i + 1} .',
-                            style: medium13(context).copyWith(
-                                color: Colors.black.withOpacity(0.4))),
-                        title: Text(
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eros ligula, rutrum imperdiet ',
-                            style: medium13(context).copyWith(
-                                color: Colors.black.withOpacity(0.4))));
-                  })
+              const TermsCard(
+                question: 'Payment Terms & Refund Policy',
+                answer:
+                    '    All payments on this platform are as advised by the subscribing local Waste Management Authority through designated personal User wallets from which levies will be swept to service providers. In addition to monthly levies, subscribers will be charged separately, additional fees for special service clearance calls and standard Bin request. No refund shall be due to registered users of this App as it applies to their existing monthly waste levies unless advised otherwise by the local Authority.',
+              ),
+              // ListView.builder(
+              //     shrinkWrap: true,
+              //     physics: const NeverScrollableScrollPhysics(),
+              //     itemCount: 4,
+              //     itemBuilder: (context, i) {
+              //       return ListTile(
+              //           minLeadingWidth: 10,
+              //           leading: Text('${i + 1} .',
+              //               style: medium13(context).copyWith(
+              //                   color: Colors.black.withOpacity(0.4))),
+              //           title: Text(
+              //               'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eros ligula, rutrum imperdiet ',
+              //               style: medium13(context).copyWith(
+              //                   color: Colors.black.withOpacity(0.4))));
+              //     })
             ],
           ),
         )),

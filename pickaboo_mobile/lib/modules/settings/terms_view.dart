@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
@@ -13,11 +14,11 @@ class TermsView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: AppColors.altWhite,
-      
-      appBar: customAppBar5(context, hasElevation: false,
-      bgColor: AppColors.altWhite,onLeadingPressed: () {
+      appBar: customAppBar5(context,
+          hasElevation: false,
+          bgColor: AppColors.altWhite, onLeadingPressed: () {
         if (isAnon == 'yes') {
-          null;
+          context.pop();
         } else {
           ref.read(DriverDashboardViewModel.provider.notifier).updateIndex(0);
         }

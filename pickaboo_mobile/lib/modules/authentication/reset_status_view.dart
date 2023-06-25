@@ -21,7 +21,7 @@ class ResetStatusView extends StatelessWidget {
           ),
           SizedBox(height: height(context) * 0.025),
           Text(
-            'Check Your Mail ',
+            'Check Your Messages ',
             style: semi20(context).copyWith(color: AppColors.darkGreen),
           ),
           SizedBox(height: height(context) * 0.025),

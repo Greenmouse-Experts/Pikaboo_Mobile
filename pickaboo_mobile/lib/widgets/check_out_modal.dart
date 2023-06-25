@@ -21,7 +21,10 @@ class _CheckoutModalState extends State<CheckoutModal> {
   @override
   void initState() {
     super.initState();
-    plugin.initialize(publicKey: publicKey);
+    //  plugin.
+    plugin.initialize(
+      publicKey: publicKey,
+    );
   }
 
   void checkout() async {
@@ -29,12 +32,13 @@ class _CheckoutModalState extends State<CheckoutModal> {
       ..amount = 600000
       ..reference = 'TR-${DateTime.now().millisecondsSinceEpoch}'
       ..email = 'greenmouseapp@gmail.com'
+      ..accessCode = 'sk_test_bcfe24dd9cd0ec46cd0a06637406ea3b7333b9bd'
       ..currency = "NGN";
 
     plugin
         .checkout(
       context,
-      method: CheckoutMethod.card,
+      method: CheckoutMethod.selectable,
       charge: charge,
       fullscreen: true,
     )
@@ -73,22 +77,28 @@ class _CheckoutModalState extends State<CheckoutModal> {
               ],
             ),
             SizedBox(height: height(context) * 0.01),
-            ListTile(
-              leading: Icon(Icons.location_on,
-                  size: width(context) * 0.08, color: Colors.black),
-              title: Text('Delivery Address', style: medium16(context)),
-              subtitle: Text('Richard Moore estate, Victoria island.',
-                  style: regular13(context)
-                      .copyWith(color: Colors.black.withOpacity(0.4))),
-              trailing: IconButton(
-                  onPressed: () {
-                    context.pushNamed(AppRouter.addressView);
-                  },
-                  icon: Icon(
-                    Icons.mode_edit_outline_sharp,
-                    color: Colors.black,
-                    size: width(context) * 0.05,
-                  )),
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border:
+                      Border.all(width: 0.25, color: const Color(0xFF007004))),
+              child: ListTile(
+                leading: Icon(Icons.location_on,
+                    size: width(context) * 0.08, color: Colors.black),
+                title: Text('Delivery Address', style: medium16(context)),
+                subtitle: Text('Richard Moore estate, Victoria island.',
+                    style: regular13(context)
+                        .copyWith(color: Colors.black.withOpacity(0.4))),
+                trailing: IconButton(
+                    onPressed: () {
+                      context.pushNamed(AppRouter.addressView);
+                    },
+                    icon: Icon(
+                      Icons.mode_edit_outline_sharp,
+                      color: Colors.black,
+                      size: width(context) * 0.05,
+                    )),
+              ),
             ),
             SizedBox(height: height(context) * 0.02),
             const RowTitle2(title: 'Subtotal', content: '₦ 6,000.00'),

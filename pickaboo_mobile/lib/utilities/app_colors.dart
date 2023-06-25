@@ -9,9 +9,10 @@ class AppColors {
   static const Color lightGreen = Color(0XFFF0F9F0);
   static const Color fadeGreen = Color(0XFFF7FCF8);
   static const Color fadeGreen3 = Color(0XFFE5FFE6);
-  static const Color fadePurple = Color(0XFFF0F4FF); 
+  static const Color fadePurple = Color(0XFFF0F4FF);
   static const Color ash = Color(0XFFBFBFBF);
   static const Color newAsh = Color(0XFFF2F2F2);
+  static const Color ash2 = Color(0XFFECECEC);
   static const Color altAsh = Color(0XFF999999);
   static const Color lightAsh = Color(0XFFD9D9D9);
   static const Color altBlack = Color(0XFF060606);

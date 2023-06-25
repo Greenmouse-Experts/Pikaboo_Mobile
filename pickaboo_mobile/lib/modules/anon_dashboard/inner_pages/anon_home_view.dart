@@ -12,19 +12,7 @@ class AnonHomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(context, hasElevation: false, actions: [
-        IconButton(
-            onPressed: () {},
-            icon: Container(
-              width: width(context) * 0.06,
-              height: width(context) * 0.06,
-              decoration: const BoxDecoration(
-                  color: AppColors.newAsh, shape: BoxShape.circle),
-              child: Icon(
-                Icons.question_mark_outlined,
-                color: AppColors.error,
-                size: width(context) * 0.04,
-              ),
-            )),
+        const QuestionIcon(),
         SizedBox(width: width(context) * 0.04),
       ]),
       body: SingleChildScrollView(
@@ -94,7 +82,7 @@ class AnonHomeView extends StatelessWidget {
                 Text('Users Sign In', style: medium16(context)),
                 SizedBox(height: height(context) * 0.015),
                 AppButton(
-                    text: 'Get Started',
+                    text: 'Login',
                     onPressed: () {
                       context.pushNamed(AppRouter.chooseSignIn);
                     }),

@@ -11,19 +11,7 @@ class ChooseSignInView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar5(context, actions: [
-        IconButton(
-            onPressed: () {},
-            icon: Container(
-              width: width(context) * 0.06,
-              height: width(context) * 0.06,
-              decoration: const BoxDecoration(
-                  color: AppColors.newAsh, shape: BoxShape.circle),
-              child: Icon(
-                Icons.question_mark_outlined,
-                color: AppColors.error,
-                size: width(context) * 0.04,
-              ),
-            )),
+        const QuestionIcon(),
         SizedBox(width: width(context) * 0.04),
       ]),
       body: SafeArea(

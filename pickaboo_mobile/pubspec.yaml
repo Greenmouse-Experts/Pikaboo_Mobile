@@ -22,6 +22,7 @@ dependencies:
   carousel_slider: ^4.2.1
   http: ^0.13.5
   flutter_paystack: ^1.0.7
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:

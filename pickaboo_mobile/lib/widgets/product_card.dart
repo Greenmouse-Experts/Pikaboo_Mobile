@@ -74,8 +74,9 @@ class ProductGridCard extends StatelessWidget {
             border: Border.all(color: AppColors.primary)),
         child: Column(
           children: [
-            Image.asset('assets/images/dummy_prod.png'),
-            //   SizedBox(height: height(context) * 0.01),
+            SizedBox(
+                width: width(context) * 0.35,
+                child: Image.asset('assets/images/dummy_prod.png')),
             Container(
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(5)),

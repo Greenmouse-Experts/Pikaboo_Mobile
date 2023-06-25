@@ -5,7 +5,7 @@ import '../modules/anon_dashboard/anon_dashboard_view.dart';
 import '../modules/anon_dashboard/choose_sign_in_view.dart';
 import '../modules/authentication/views.dart';
 import '../modules/driver_dashboard/driver_dashboard_view.dart';
-import '../modules/faq/faq_view.dart';
+import '../modules/faq/views.dart';
 import '../modules/fund/fund_status_view.dart';
 import '../modules/fund/fund_view.dart';
 import '../modules/fund/transactions_history_view.dart';
@@ -47,6 +47,7 @@ class AppRouter {
   static const String accountView = 'accountView';
   static const String addressView = 'addressView';
   static const String driverLogin = 'driverLogin';
+  static const String feedbackStatus = 'feedbackStatusViiew';
 }
 
 final GoRouter _router = GoRouter(routes: <RouteBase>[
@@ -172,6 +173,10 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             name: AppRouter.accountView,
             path: AppRouter.accountView,
             builder: (context, state) => const AccountView()),
+        GoRoute(
+            name: AppRouter.feedbackStatus,
+            path: AppRouter.feedbackStatus,
+            builder: (context, state) => const FeedbackStatusView()),
       ]),
 ]);
 

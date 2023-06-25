@@ -48,11 +48,50 @@ class ProfileTile extends StatelessWidget {
                       .copyWith(color: Colors.black.withOpacity(0.4))),
             ),
           ),
-          SizedBox(height: height(context) * 0.002),
+          SizedBox(height: height(context) * 0.001),
           isLast
-              ? const SizedBox()
+              ? const SizedBox(height: 4)
               : Divider(color: Colors.black.withOpacity(0.15))
         ],
+      ),
+    );
+  }
+}
+
+class ServiceProfileTile extends StatelessWidget {
+  final IconData icon;
+  final String title, subTitle;
+
+  final VoidCallback onPressed;
+  const ServiceProfileTile(
+      {super.key,
+      required this.icon,
+      required this.title,
+      required this.subTitle,
+      required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: height(context) * 0.007),
+      child: ListTile(
+        onTap: onPressed,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        tileColor: AppColors.fadeGreen2,
+        leading: Icon(
+          icon,
+          size: width(context) * 0.06,
+          color: AppColors.altAsh,
+        ),
+        title: Text(title, style: medium13(context)),
+        subtitle: Text(subTitle,
+            maxLines: 1,
+            style: regular12(context)
+                .copyWith(color: Colors.black.withOpacity(0.4))),
+        trailing: IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.arrow_forward_ios_outlined,
+                size: width(context) * 0.05, color: AppColors.altAsh)),
       ),
     );
   }

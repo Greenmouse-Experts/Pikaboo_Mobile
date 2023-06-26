@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pickaboo_mobile/controllers/auth/auth_controller.dart';
 
 import '../utilities/utilities.dart';
 import 'app_button.dart';
@@ -62,7 +64,8 @@ class AppOverlays {
         });
   }
 
-  static void showLogOutDialog({required BuildContext context}) {
+  static void showLogOutDialog(
+      {required BuildContext context, required WidgetRef ref}) {
     showDialog(
         context: context,
         builder: (context) {
@@ -102,8 +105,11 @@ class AppOverlays {
                               )),
                           SizedBox(width: width(context) * 0.04),
                           ElevatedButton(
-                              onPressed: () =>
-                                  context.goNamed(AppRouter.dashboard),
+                              onPressed: () {
+                                ref
+                                    .read(authProvider.notifier)
+                                    .logout(context: context);
+                              },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.primary),
                               child: Text(
@@ -165,5 +171,106 @@ class AppOverlays {
             ),
           );
         });
+  }
+
+  static void loadingDialog({required BuildContext context}) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: const CircularProgressIndicator.adaptive(
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(AppColors.primary),
+                  ),
+                ),
+              ],
+            ));
+  }
+
+  static void showErrorDialog({required BuildContext context, dynamic error}) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return IntrinsicHeight(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: overlayPadding(context),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: width(context) * 0.1,
+                      vertical: height(context) * 0.02),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Column(
+                    children: [
+                      const CloseButton(),
+                      Text('Error', style: semi20(context)),
+                      SizedBox(height: height(context) * 0.01),
+                      Text(
+                        error == null
+                            ? 'An unknown error occurred'
+                            : error.toString(),
+                        style: regular14(context),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: height(context) * 0.025),
+                      ElevatedButton(
+                          onPressed: () {
+                            context.pop();
+                          },
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30)),
+                              fixedSize:
+                                  Size(width(context), height(context) * 0.06),
+                              backgroundColor: AppColors.primary),
+                          child: Text(
+                            'Continue',
+                            style: regular15(context)
+                                .copyWith(color: Colors.white),
+                          )),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        });
+  }
+}
+
+class CloseButton extends StatelessWidget {
+  final VoidCallback? onPressed;
+  const CloseButton({super.key, this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: GestureDetector(
+        onTap: () {
+          if (onPressed != null) {
+            onPressed!();
+          } else {
+            context.pop();
+          }
+        },
+        child: Icon(
+          Icons.close,
+          size: width(context) * 0.06,
+          color: Colors.red,
+        ),
+      ),
+    );
   }
 }

@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../controllers/auth/auth_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
-class AddressView extends StatefulWidget {
+class AddressView extends ConsumerStatefulWidget {
   const AddressView({super.key});
 
   @override
-  State<AddressView> createState() => _AddressViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _AddressViewState();
 }
 
-class _AddressViewState extends State<AddressView> {
+class _AddressViewState extends ConsumerState<AddressView> {
   final TextEditingController _oldAddress = TextEditingController();
   final TextEditingController _newAddress = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    _oldAddress.text = 'Akuku Ewan';
+    final homeOwner = ref.watch(authProvider).homeOwner;
+    _oldAddress.text = homeOwner?.address ?? 'No Address yet';
     return Scaffold(
       appBar: customAppBar5(context, hasElevation: false),
       body: SafeArea(

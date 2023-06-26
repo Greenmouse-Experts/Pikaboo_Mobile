@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../controllers/auth/auth_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 import '../driver_dashboard/driver_dashboard_vm.dart';
@@ -13,6 +14,7 @@ class UserProfileview extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final homeOwner = ref.watch(authProvider).homeOwner;
     return Scaffold(
       appBar: customAppBar6(context, hasElevation: false, onLeadingPressed: () {
         if (isUser) {
@@ -26,15 +28,18 @@ class UserProfileview extends ConsumerWidget {
         child: SafeArea(
             child: CustomBackground3(
           child: Padding(
-            padding: screenPadding(context),
+            padding: horizontalPadding(context),
             child: Column(
               children: [
                 SizedBox(width: width(context)),
-                CircleAvatar(
-                    radius: width(context) * 0.065,
-                    backgroundColor: AppColors.lightAsh),
+                AppAvatar(
+                  imgUrl: homeOwner?.avatar ?? '',
+                  radius: width(context) * 0.05,
+                  selectedImg: null,
+                  name: homeOwner?.ownersName ?? '',
+                ),
                 SizedBox(height: height(context) * 0.01),
-                Text('Victor Osborne',
+                Text('${homeOwner?.ownersName}',
                     style: semi20(context).copyWith(color: Colors.white)),
                 SizedBox(height: height(context) * 0.01),
                 Text('Home Resident',
@@ -47,7 +52,7 @@ class UserProfileview extends ConsumerWidget {
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: width(context) * 0.06,
-                        vertical: width(context) * 0.01),
+                        vertical: width(context) * 0.005),
                     child: Column(
                       children: [
                         ProfileTile(
@@ -62,7 +67,7 @@ class UserProfileview extends ConsumerWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: height(context) * 0.02),
+                SizedBox(height: height(context) * 0.012),
                 Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(
@@ -70,7 +75,7 @@ class UserProfileview extends ConsumerWidget {
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: width(context) * 0.06,
-                        vertical: width(context) * 0.01),
+                        vertical: width(context) * 0.002),
                     child: Column(
                       children: [
                         ProfileTile(
@@ -78,10 +83,10 @@ class UserProfileview extends ConsumerWidget {
                                 context.pushNamed(AppRouter.addressView),
                             icon: Icons.location_history,
                             title: 'My Address',
-                            subTitle:
-                                'Richard Moore estate, Victoria island. Lagos state'),
+                            subTitle: homeOwner?.address ?? ''),
                         ProfileTile(
-                            onPressed: () {},
+                            onPressed: () =>
+                                context.pushNamed(AppRouter.notifications),
                             icon: Icons.notifications,
                             title: 'Notification',
                             subTitle:
@@ -96,13 +101,14 @@ class UserProfileview extends ConsumerWidget {
                             onPressed: () {},
                             icon: Icons.wallet,
                             title: 'My Wallet',
+                            isLast: true,
                             subTitle:
                                 'View and top up available wallet balance.'),
                       ],
                     ),
                   ),
                 ),
-                SizedBox(height: height(context) * 0.015),
+                SizedBox(height: height(context) * 0.012),
                 Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(
@@ -114,8 +120,8 @@ class UserProfileview extends ConsumerWidget {
                     child: Column(
                       children: [
                         ProfileTile(
-                            onPressed: () =>
-                                AppOverlays.showLogOutDialog(context: context),
+                            onPressed: () => AppOverlays.showLogOutDialog(
+                                context: context, ref: ref),
                             icon: Icons.logout,
                             title: 'Logout',
                             isLast: true,

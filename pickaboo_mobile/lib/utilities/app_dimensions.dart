@@ -12,6 +12,9 @@ double adjustedHeight(BuildContext context) =>
 EdgeInsets screenPadding(BuildContext context) => EdgeInsets.symmetric(
     vertical: height(context) * 0.01, horizontal: width(context) * 0.04);
 
+EdgeInsets overlayPadding(BuildContext context) => EdgeInsets.symmetric(
+    vertical: height(context) * 0.01, horizontal: width(context) * 0.1);
+
 EdgeInsets horizontalPadding(BuildContext context) =>
     EdgeInsets.symmetric(horizontal: width(context) * 0.04);
 

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../controllers/auth/auth_controller.dart';
 import '../../../utilities/utilities.dart';
 import '../../../widgets/widgets.dart';
 
-class UserHomeView extends StatelessWidget {
+class UserHomeView extends ConsumerWidget {
   const UserHomeView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final homeOwner = ref.watch(authProvider).homeOwner;
     return Scaffold(
       appBar: customAppBar2(context,
           hasElevation: false,
@@ -43,7 +46,8 @@ class UserHomeView extends StatelessWidget {
                         child: Text('Welcome 👋',
                             style: regular20(context)
                                 .copyWith(color: AppColors.primary))),
-                    subtitle: Text('Victor .O.',
+                    subtitle: Text(
+                        '${homeOwner?.firstName ?? ''} .${(homeOwner?.surname!.capitalizeFirstLetter ?? '')}.',
                         style: medium13(context)
                             .copyWith(color: Colors.black.withOpacity(0.7))),
                     trailing: Icon(Icons.location_pin,

@@ -90,8 +90,8 @@ class DriverProfileView extends ConsumerWidget {
                     icon: Icons.logout,
                     title: 'Logout',
                     subTitle: 'Logout of your account',
-                    onPressed: () =>
-                        AppOverlays.showLogOutDialog(context: context)),
+                    onPressed: () => AppOverlays.showLogOutDialog(
+                        context: context, ref: ref)),
               ],
             ),
           )

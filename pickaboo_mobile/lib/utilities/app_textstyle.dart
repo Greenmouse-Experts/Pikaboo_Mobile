@@ -8,11 +8,11 @@ TextStyle appTextStyle(
     required double fontSize,
     required BuildContext context}) {
   return GoogleFonts.poppins(
-    fontWeight: fontWeight,
-    fontSize: calculateTextSize(context, fontSize),
-    color: Colors.black,
-    fontStyle: FontStyle.normal,
-  );
+      fontWeight: fontWeight,
+      fontSize: calculateTextSize(context, fontSize),
+      color: Colors.black,
+      fontStyle: FontStyle.normal,
+      decoration: TextDecoration.none);
 }
 
 TextStyle regular36(BuildContext context) =>

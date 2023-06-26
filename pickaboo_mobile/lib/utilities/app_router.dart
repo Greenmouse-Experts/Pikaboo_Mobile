@@ -85,8 +85,10 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             builder: (context, state) => const ForgotPasswordView()),
         GoRoute(
             name: AppRouter.resetStatus,
-            path: AppRouter.resetStatus,
-            builder: (context, state) => const ResetStatusView()),
+            path: '${AppRouter.resetStatus}/:phone',
+            builder: (context, state) => ResetStatusView(
+                  phone: state.pathParameters['phone']!,
+                )),
         GoRoute(
             name: AppRouter.userDashboard,
             path: AppRouter.userDashboard,

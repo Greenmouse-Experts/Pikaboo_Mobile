@@ -5,7 +5,8 @@ import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
 class ResetStatusView extends StatelessWidget {
-  const ResetStatusView({super.key});
+  final String phone;
+  const ResetStatusView({super.key, required this.phone});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class ResetStatusView extends StatelessWidget {
           SizedBox(
             width: width(context) * 0.7,
             child: Text(
-              'We have sent an sms to 07012345678 containing your new password details.',
+              'We have sent an sms to $phone containing your new password details.',
               textAlign: TextAlign.center,
               style: medium13(context)
                   .copyWith(color: Colors.black.withOpacity(0.7)),
@@ -38,7 +39,7 @@ class ResetStatusView extends StatelessWidget {
           AppButton(
             text: 'Proceed to Login',
             onPressed: () {
-              context.goNamed(AppRouter.login);
+              context.pop();
             },
             buttonWidth: 0.35,
           ),

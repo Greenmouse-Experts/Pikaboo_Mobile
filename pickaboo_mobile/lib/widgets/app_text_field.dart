@@ -10,12 +10,14 @@ class AppTextField extends ConsumerWidget {
   final bool isPassword;
   final bool hasLabel;
   final TextInputType keyboardType;
+  final String? Function(String?)? validator;
   const AppTextField(
       {super.key,
       required this.label,
       required this.keyboardType,
       this.hintText = '',
       this.hasLabel = true,
+      this.validator,
       this.isPassword = false,
       required this.controller});
 
@@ -37,6 +39,7 @@ class AppTextField extends ConsumerWidget {
             obscureText: isPassword ? isVisible : false,
             obscuringCharacter: "*",
             keyboardType: keyboardType,
+            validator: validator,
             decoration: InputDecoration(
               hintText: hintText,
               suffixIcon: isPassword
@@ -63,9 +66,12 @@ class AppTextField extends ConsumerWidget {
                           ),
                         )
                       : null,
+              focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: AppColors.error)),
               errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(color: AppColors.darkGreen)),
+                  borderSide: const BorderSide(color: AppColors.error)),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: const BorderSide(color: AppColors.darkGreen)),
@@ -305,14 +311,12 @@ class _DateTextFieldState extends State<DateTextField> {
                   return Theme(
                     data: Theme.of(context).copyWith(
                       colorScheme: const ColorScheme.light(
-                        primary: AppColors.primary, // <-- SEE HERE
-                        onPrimary: Colors.white, // <-- SEE HERE
-                        onSurface: Colors.black, // <-- SEE HERE
+                        primary: AppColors.primary,
+                        onPrimary: Colors.white,
+                        onSurface: Colors.black,
                       ),
                       textButtonTheme: TextButtonThemeData(
-                        style: TextButton.styleFrom(
-                            // foregroundColor: AppColors.primary, // button text color
-                            ),
+                        style: TextButton.styleFrom(),
                       ),
                     ),
                     child: child!,

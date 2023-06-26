@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../controllers/auth/auth_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
@@ -17,10 +21,23 @@ class _AccountViewState extends ConsumerState<AccountView> {
   final TextEditingController _phone = TextEditingController();
 
   @override
+  void dispose() {
+    _name.dispose();
+    _email.dispose();
+    _phone.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    _name.text = 'Victor Osborne';
-    _phone.text = '+234 700 1234 566';
-    _email.text = 'victor@gmail.com';
+    final homeOwner = ref.watch(authProvider).homeOwner;
+    _name.text = homeOwner?.ownersName ?? '';
+    _phone.text = homeOwner?.phone ?? '';
+    _email.text = homeOwner?.email ?? '';
+
+    String? selectedImg;
+    // File? pickedImage;
+
     return Scaffold(
       appBar: customAppBar5(
         context,
@@ -39,15 +56,34 @@ class _AccountViewState extends ConsumerState<AccountView> {
                 Stack(
                   alignment: Alignment.bottomCenter,
                   children: [
-                    CircleAvatar(
+                    // CircleAvatar(
+                    //     radius: width(context) * 0.08,
+                    //     backgroundColor: AppColors.lightAsh,
+                    //     child: SizedBox(
+                    //       width: width(context) * 0.16,
+                    //       height: width(context) * 0.16,
+                    //       child: Image.asset('assets/images/dummy_icon.png',
+                    //           fit: BoxFit.cover),
+                    //     )),
+                    InkWell(
+                      onTap: () async {
+                        FilePickerResult? result =
+                            await FilePicker.platform.pickFiles();
+                        if (result != null) {
+                          File file = File(result.files.single.path.toString());
+                          //  pickedImage = file;
+                          setState(() {
+                            selectedImg = file.path;
+                          });
+                        }
+                      },
+                      child: AppAvatar(
+                        imgUrl: homeOwner?.avatar ?? '',
                         radius: width(context) * 0.08,
-                        backgroundColor: AppColors.lightAsh,
-                        child: SizedBox(
-                          width: width(context) * 0.16,
-                          height: width(context) * 0.16,
-                          child: Image.asset('assets/images/dummy_icon.png',
-                              fit: BoxFit.cover),
-                        )),
+                        selectedImg: selectedImg,
+                        name: homeOwner?.ownersName ?? '',
+                      ),
+                    ),
                     Positioned(
                         top: width(context) * 0.12,
                         child: Container(
@@ -99,7 +135,8 @@ class _AccountViewState extends ConsumerState<AccountView> {
                       .copyWith(color: Colors.black.withOpacity(0.4)),
                 ),
                 Consumer(builder: (context, ref, child) {
-                  final gender = ref.watch(genderProvider);
+                  final gender =
+                      ref.watch(genderProvider(homeOwner?.gender ?? ''));
 
                   return Row(
                     children: [
@@ -113,8 +150,10 @@ class _AccountViewState extends ConsumerState<AccountView> {
                             groupValue: gender,
                             onChanged: (String? newVal) {
                               // onChanged: (String newVal) {
+
                               ref
-                                  .read(genderProvider.notifier)
+                                  .read(genderProvider(homeOwner?.gender ?? '')
+                                      .notifier)
                                   .updateGender(newVal ?? '');
                             }),
                       ),
@@ -128,14 +167,12 @@ class _AccountViewState extends ConsumerState<AccountView> {
                             groupValue: gender,
                             onChanged: (String? newVal) {
                               ref
-                                  .read(genderProvider.notifier)
+                                  .read(genderProvider(homeOwner?.gender ?? '')
+                                      .notifier)
                                   .updateGender(newVal ?? '');
                             }),
                       ),
                       SizedBox(width: width(context) * 0.22)
-                      // Expanded(
-                      //   flex: 2,
-                      //   child: SizedBox())
                     ],
                   );
                 }),
@@ -151,15 +188,28 @@ class _AccountViewState extends ConsumerState<AccountView> {
 }
 
 final genderProvider =
-    NotifierProvider<GenderNotifier, String>(GenderNotifier.new);
+    NotifierProviderFamily<GenderNotifier, String, String>(GenderNotifier.new);
 
-class GenderNotifier extends Notifier<String> {
+// final genderProvider =
+//     NotifierProvider<GenderNotifier, String>(GenderNotifier.new);
+
+class GenderNotifier extends FamilyNotifier<String, String> {
   @override
-  build() {
-    return '';
+  build(String arg) {
+    return arg;
   }
 
   void updateGender(String gender) {
     state = gender;
   }
 }
+// class GenderNotifier extends Notifier<String> {
+//   @override
+//   build() {
+//     return '';
+//   }
+
+//   void updateGender(String gender) {
+//     state = gender;
+//   }
+// }

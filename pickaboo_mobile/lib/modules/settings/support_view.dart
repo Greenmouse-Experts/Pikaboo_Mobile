@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../controllers/auth/auth_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
-class SupportView extends StatelessWidget {
+class SupportView extends ConsumerWidget {
   const SupportView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final homeOwner = ref.watch(authProvider).homeOwner;
     return Scaffold(
       appBar: customAppBar3(context,
           hasElevation: false,
@@ -33,8 +36,9 @@ class SupportView extends StatelessWidget {
                 children: [
                   Image.asset('assets/images/icons/support.png'),
                   SizedBox(width: width(context) * 0.05),
-                  const PageHeader(
-                      title: 'Hello, Victor Osborne', hasSearch: false)
+                  PageHeader(
+                      title: 'Hello, ${homeOwner?.ownersName ?? ''}',
+                      hasSearch: false)
                 ],
               ),
             ),

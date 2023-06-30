@@ -17,43 +17,47 @@ class FaqView extends StatelessWidget {
       backgroundColor: AppColors.fadeGreen,
       appBar: customAppBar3(context,
           bgColor: AppColors.fadeGreen, hasElevation: false),
-      body: SafeArea(
-          child: Padding(
-        padding: screenPadding(context),
-        child: DefaultTabController(
-          length: 3,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const PageHeader(
-                title: 'FAQs',
-                hasSearch: false,
-              ),
-              TabBar(
-                  labelColor: Colors.black,
-                  unselectedLabelColor: Colors.black.withOpacity(0.4),
-                  labelStyle: medium13(context),
-                  unselectedLabelStyle: medium13(context)
-                      .copyWith(color: Colors.black.withOpacity(0.4)),
-                  indicatorColor: AppColors.darkGreen,
-                  tabs: const [
-                    Tab(text: 'FAQs'),
-                    Tab(text: 'Feedback'),
-                    Tab(text: 'What’s new'),
-                  ]),
-              SizedBox(
-                  height: Platform.isIOS
-                      ? adjustedHeight(context) * 0.88
-                      : adjustedHeight(context) * 0.92,
-                  child: const TabBarView(children: [
-                    FaqWidget(),
-                    FeedbackWidget(),
-                    Center(child: Text('What’s new'))
-                  ]))
-            ],
+      body: SingleChildScrollView(
+        child: SafeArea(
+            child: Padding(
+          padding: screenPadding(context),
+          child: DefaultTabController(
+            length: 3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const PageHeader(
+                  title: 'FAQs',
+                  hasSearch: false,
+                ),
+                TabBar(
+                    labelColor: Colors.black,
+                    unselectedLabelColor: Colors.black.withOpacity(0.4),
+                    labelStyle: medium13(context),
+                    unselectedLabelStyle: medium13(context)
+                        .copyWith(color: Colors.black.withOpacity(0.4)),
+                    indicatorColor: AppColors.darkGreen,
+                    tabs: const [
+                      Tab(text: 'FAQs'),
+                      Tab(text: 'Feedback'),
+                      Tab(text: 'What’s new'),
+                    ]),
+                SizedBox(
+                    height: !isMobile(context)
+                        ? height(context) * 0.805
+                        : Platform.isIOS
+                            ? adjustedHeight(context) * 0.88
+                            : adjustedHeight(context) * 0.92,
+                    child: const TabBarView(children: [
+                      FaqWidget(),
+                      FeedbackWidget(),
+                      Center(child: Text('What’s new'))
+                    ]))
+              ],
+            ),
           ),
-        ),
-      )),
+        )),
+      ),
     );
   }
 }
@@ -113,7 +117,7 @@ class FeedbackWidget extends ConsumerWidget {
               text: 'Submit',
               onPressed: () {
                 context.pushReplacementNamed(AppRouter.feedbackStatus);
-              })
+              }),
         ],
       ),
     );

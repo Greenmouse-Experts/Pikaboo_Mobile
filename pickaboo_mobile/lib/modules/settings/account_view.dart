@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../controllers/auth/auth_controller.dart';
 import '../../utilities/utilities.dart';
@@ -34,10 +34,6 @@ class _AccountViewState extends ConsumerState<AccountView> {
     _name.text = homeOwner?.ownersName ?? '';
     _phone.text = homeOwner?.phone ?? '';
     _email.text = homeOwner?.email ?? '';
-
-    String? selectedImg;
-    // File? pickedImage;
-
     return Scaffold(
       appBar: customAppBar5(
         context,
@@ -53,50 +49,9 @@ class _AccountViewState extends ConsumerState<AccountView> {
             child: Column(
               children: [
                 SizedBox(width: width(context)),
-                Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    // CircleAvatar(
-                    //     radius: width(context) * 0.08,
-                    //     backgroundColor: AppColors.lightAsh,
-                    //     child: SizedBox(
-                    //       width: width(context) * 0.16,
-                    //       height: width(context) * 0.16,
-                    //       child: Image.asset('assets/images/dummy_icon.png',
-                    //           fit: BoxFit.cover),
-                    //     )),
-                    InkWell(
-                      onTap: () async {
-                        FilePickerResult? result =
-                            await FilePicker.platform.pickFiles();
-                        if (result != null) {
-                          File file = File(result.files.single.path.toString());
-                          //  pickedImage = file;
-                          setState(() {
-                            selectedImg = file.path;
-                          });
-                        }
-                      },
-                      child: AppAvatar(
-                        imgUrl: homeOwner?.avatar ?? '',
-                        radius: width(context) * 0.08,
-                        selectedImg: selectedImg,
-                        name: homeOwner?.ownersName ?? '',
-                      ),
-                    ),
-                    Positioned(
-                        top: width(context) * 0.12,
-                        child: Container(
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.white),
-                            padding: const EdgeInsets.all(1.5),
-                            child: Icon(
-                              Icons.camera_alt,
-                              size: width(context) * 0.04,
-                              color: AppColors.primary,
-                            )))
-                  ],
-                ),
+                _ImageSelector(
+                    imgUrl: homeOwner?.avatar ?? '',
+                    name: homeOwner?.ownersName),
                 SizedBox(height: height(context) * 0.01, width: width(context)),
                 Text('Home Resident',
                     style:
@@ -187,11 +142,64 @@ class _AccountViewState extends ConsumerState<AccountView> {
   }
 }
 
+class _ImageSelector extends StatefulWidget {
+  final String imgUrl;
+  final String? name;
+  const _ImageSelector({required this.imgUrl, required this.name});
+
+  @override
+  State<_ImageSelector> createState() => __ImageSelectorState();
+}
+
+class __ImageSelectorState extends State<_ImageSelector> {
+  final ImagePicker _picker = ImagePicker();
+  String? selectedImg;
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        InkWell(
+          onTap: () async {
+            try {
+              final image =
+                  await _picker.pickImage(source: ImageSource.gallery);
+              if (image != null) {
+                final imageTemp = File(image.path);
+
+                setState(() {
+                  selectedImg = imageTemp.path;
+                });
+              }
+            } catch (e) {
+              AppOverlays.showErrorDialog(context: context, error: e);
+            }
+          },
+          child: AppAvatar(
+            imgUrl: widget.imgUrl,
+            radius: width(context) * 0.08,
+            selectedImg: selectedImg,
+            name: widget.name ?? 'h',
+          ),
+        ),
+        Positioned(
+            top: width(context) * 0.12,
+            child: Container(
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.white),
+                padding: const EdgeInsets.all(1.5),
+                child: Icon(
+                  Icons.camera_alt,
+                  size: width(context) * 0.04,
+                  color: AppColors.primary,
+                )))
+      ],
+    );
+  }
+}
+
 final genderProvider =
     NotifierProviderFamily<GenderNotifier, String, String>(GenderNotifier.new);
-
-// final genderProvider =
-//     NotifierProvider<GenderNotifier, String>(GenderNotifier.new);
 
 class GenderNotifier extends FamilyNotifier<String, String> {
   @override
@@ -203,13 +211,3 @@ class GenderNotifier extends FamilyNotifier<String, String> {
     state = gender;
   }
 }
-// class GenderNotifier extends Notifier<String> {
-//   @override
-//   build() {
-//     return '';
-//   }
-
-//   void updateGender(String gender) {
-//     state = gender;
-//   }
-// }

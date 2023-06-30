@@ -17,10 +17,14 @@ class NotificationTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(500),
           color: AppColors.primary,
         ),
-        width: width(context) * 0.125,
-        height: width(context) * 0.125,
+        width:
+            isMobile(context) ? width(context) * 0.125 : width(context) * 0.07,
+        height:
+            isMobile(context) ? width(context) * 0.125 : width(context) * 0.07,
         child: Padding(
-            padding: EdgeInsets.all(width(context) * 0.035),
+            padding: EdgeInsets.all(isMobile(context)
+                ? width(context) * 0.035
+                : width(context) * 0.01),
             child: Image.asset('assets/images/icons/notification.png')),
       ),
       title: Text(

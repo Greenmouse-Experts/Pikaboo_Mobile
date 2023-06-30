@@ -19,6 +19,8 @@ class UserDashboardView extends ConsumerWidget {
         return true;
       },
       child: Scaffold(
+        key: ref.watch(userMenuProvider).scaffoldKey,
+        drawer: const UserDrawer(),
         body: Consumer(
           builder: (context, ref, child) => UserDashboardViewModel.pages[index],
         ),

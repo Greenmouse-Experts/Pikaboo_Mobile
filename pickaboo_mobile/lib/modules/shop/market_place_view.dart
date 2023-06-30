@@ -71,7 +71,9 @@ class MarketPlaceView extends ConsumerWidget {
                         icon: Icon(
                           Icons.bookmark_outline_outlined,
                           color: Colors.black,
-                          size: width(context) * 0.06,
+                          size: isMobile(context)
+                              ? width(context) * 0.06
+                              : width(context) * 0.05,
                         ),
                         label: Text(
                           'Saved',
@@ -83,17 +85,21 @@ class MarketPlaceView extends ConsumerWidget {
                           ref.read(switchProvider.notifier).switchToSingle();
                         },
                         child: AppSvgImage(
-                          imageWidth: width(context) * 0.09,
+                          imageWidth: isMobile(context)
+                              ? width(context) * 0.09
+                              : width(context) * 0.07,
                           image: 'assets/images/icons/single.svg',
                           color: isSingle ? AppColors.primary : Colors.grey,
                         )),
-                    const SizedBox(width: 10),
+                    SizedBox(width: width(context) * 0.02),
                     InkWell(
                         onTap: () {
                           ref.read(switchProvider.notifier).switchToDouble();
                         },
                         child: AppSvgImage(
-                          imageWidth: width(context) * 0.065,
+                          imageWidth: isMobile(context)
+                              ? width(context) * 0.065
+                              : width(context) * 0.05,
                           image: 'assets/images/icons/double.svg',
                           color: !isSingle ? AppColors.primary : Colors.grey,
                         )),

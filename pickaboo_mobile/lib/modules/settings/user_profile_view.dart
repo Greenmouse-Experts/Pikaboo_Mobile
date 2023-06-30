@@ -36,10 +36,10 @@ class UserProfileview extends ConsumerWidget {
                   imgUrl: homeOwner?.avatar ?? '',
                   radius: width(context) * 0.05,
                   selectedImg: null,
-                  name: homeOwner?.ownersName ?? '',
+                  name: homeOwner?.ownersName ?? 'h',
                 ),
                 SizedBox(height: height(context) * 0.01),
-                Text('${homeOwner?.ownersName}',
+                Text(homeOwner?.ownersName ?? "",
                     style: semi20(context).copyWith(color: Colors.white)),
                 SizedBox(height: height(context) * 0.01),
                 Text('Home Resident',
@@ -67,7 +67,10 @@ class UserProfileview extends ConsumerWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: height(context) * 0.012),
+                SizedBox(
+                    height: isMobile(context)
+                        ? height(context) * 0.012
+                        : height(context) * 0.025),
                 Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(
@@ -98,7 +101,7 @@ class UserProfileview extends ConsumerWidget {
                             title: 'My Requests',
                             subTitle: 'View all live requests.'),
                         ProfileTile(
-                            onPressed: () {},
+                            onPressed: () => context.pushNamed(AppRouter.fund),
                             icon: Icons.wallet,
                             title: 'My Wallet',
                             isLast: true,
@@ -108,7 +111,10 @@ class UserProfileview extends ConsumerWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: height(context) * 0.012),
+                SizedBox(
+                    height: isMobile(context)
+                        ? height(context) * 0.012
+                        : height(context) * 0.025),
                 Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(

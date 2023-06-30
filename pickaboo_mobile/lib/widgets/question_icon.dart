@@ -10,14 +10,17 @@ class QuestionIcon extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: Container(
-        width: width(context) * 0.07,
-        height: width(context) * 0.07,
+        width:
+            isMobile(context) ? width(context) * 0.07 : width(context) * 0.06,
+        height:
+            isMobile(context) ? width(context) * 0.07 : width(context) * 0.06,
         decoration: const BoxDecoration(
             color: AppColors.newAsh, shape: BoxShape.circle),
         child: Icon(
           Icons.question_mark_outlined,
           color: AppColors.error,
-          size: width(context) * 0.05,
+          size:
+              isMobile(context) ? width(context) * 0.05 : width(context) * 0.04,
         ),
       ),
     );

@@ -130,7 +130,9 @@ class ChooseSignIn extends StatelessWidget {
         children: [
           Icon(
             Icons.arrow_forward_outlined,
-            size: width(context) * 0.06,
+            size: isMobile(context)
+                ? width(context) * 0.06
+                : width(context) * 0.04,
             color: AppColors.darkGreen,
           ),
         ],

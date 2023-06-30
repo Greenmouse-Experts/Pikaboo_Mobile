@@ -33,8 +33,10 @@ class WalletCard extends StatelessWidget {
                 IconButton(
                     onPressed: () {},
                     icon: Icon(Icons.visibility_outlined,
-                    color: Colors.white,
-                        size: width(context) * 0.06))
+                        color: Colors.white,
+                        size: isMobile(context)
+                            ? width(context) * 0.06
+                            : width(context) * 0.04))
               ],
             ),
             Text('Upcoming Payment',

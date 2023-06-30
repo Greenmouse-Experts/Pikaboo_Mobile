@@ -28,6 +28,12 @@
 		<string>LaunchScreen</string>
 		<key>UIMainStoryboardFile</key>
 		<string>Main</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+    <string>Pikaboo requires access to the photo library.</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Pikaboo does not require access to the microphone.</string>
+		<key>NSCameraUsageDescription</key>
+		<string>Pikaboo requires access to the camera.</string>
 		<key>UISupportedInterfaceOrientations</key>
 		<array>
 			<string>UIInterfaceOrientationPortrait</string>

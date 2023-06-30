@@ -14,7 +14,9 @@ class PickupTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       minVerticalPadding: 0,
-      contentPadding: EdgeInsets.zero,
+      contentPadding: isMobile(context)
+          ? EdgeInsets.zero
+          : EdgeInsets.symmetric(vertical: height(context) * 0.006),
       leading: Column(
         children: [
           !isFirst ? const DotLine() : SizedBox(height: height(context) * 0.01),
@@ -26,7 +28,9 @@ class PickupTile extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: Padding(
-              padding: EdgeInsets.all(width(context) * 0.015),
+              padding: EdgeInsets.all(isMobile(context)
+                  ? width(context) * 0.015
+                  : width(context) * 0.012),
               child: Container(
                 width: width(context) * 0.05,
                 height: width(context) * 0.05,
@@ -63,15 +67,20 @@ class PickupTile extends StatelessWidget {
           style:
               medium11(context).copyWith(color: Colors.black.withOpacity(0.4))),
       trailing: Container(
-        width: width(context) * 0.06,
-        height: width(context) * 0.06,
+        width:
+            isMobile(context) ? width(context) * 0.06 : width(context) * 0.05,
+        height:
+            isMobile(context) ? width(context) * 0.06 : width(context) * 0.05,
         alignment: Alignment.center,
         decoration: const BoxDecoration(
           shape: BoxShape.circle,
           color: AppColors.primary,
         ),
-        child:
-            Icon(Icons.check, size: width(context) * 0.05, color: Colors.white),
+        child: Icon(Icons.check,
+            size: isMobile(context)
+                ? width(context) * 0.05
+                : width(context) * 0.04,
+            color: Colors.white),
       ),
     );
   }

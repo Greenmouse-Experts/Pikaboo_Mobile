@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -14,37 +15,56 @@ class OnBoardingView extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          PageView(
-            controller: controller,
-            children: [
-              OnBoardingWidget(
-                  painter: OnboardingCurve1(),
-                  header: 'Get Hired as a Waste Truck Driver',
-                  content:
-                      'Sign in to your dashboard as a waste truck driver and get daily pickup tasks posted by the waste manager.',
-                  image: '1',
-                  imageWidth: 0.8,
-                  imageHeight: 0.25,
-                  imageTop: height(context) * 0.3),
-              OnBoardingWidget(
-                  painter: OnboardingCurve2(),
-                  header: 'Continue as a Household Owner',
-                  image: '2',
-                  content:
-                      'Get the opportunity to request for garbage pick-up in your homes, offices and environment as a Household owner.',
-                  imageWidth: 0.9,
-                  imageHeight: 0.35,
-                  imageTop: height(context) * 0.25),
-              OnBoardingWidget(
-                  painter: OnboardingCurve3(),
-                  header: 'Sign up to your Niche ',
-                  image: '3',
-                  imageWidth: 0.5,
-                  content:
-                      'Choose the dashboard that suits your needs, either as a truck driver or as a household owner.',
-                  imageHeight: 0.35,
-                  imageTop: height(context) * 0.25),
-            ],
+          CarouselSlider.builder(
+            itemCount: 3,
+            itemBuilder: (context, index, i) {
+              return index == 0
+                  ? OnBoardingWidget(
+                      painter: OnboardingCurve1(),
+                      header: 'Get Hired as a Service Personnel',
+                      content:
+                          'Sign in to your dashboard as a service personel and get daily pickup tasks posted by the waste manager.',
+                      image: '1',
+                      imageWidth: 0.8,
+                      imageHeight: 0.25,
+                      imageTop: height(context) * 0.3)
+                  : index == 1
+                      ? OnBoardingWidget(
+                          painter: OnboardingCurve2(),
+                          header: 'Continue as Home Residents',
+                          image: '2',
+                          content:
+                              'Get the opportunity to request for garbage pick-up in your homes, offices and environment as a Home resident.',
+                          imageWidth: 0.9,
+                          imageHeight: 0.35,
+                          imageTop: height(context) * 0.25)
+                      : OnBoardingWidget(
+                          painter: OnboardingCurve3(),
+                          header: 'Sign up to your Niche ',
+                          image: '3',
+                          imageWidth: 0.5,
+                          content:
+                              'Choose the dashboard that suits your needs, either as a service personel or as a home resident.',
+                          imageHeight: 0.35,
+                          imageTop: height(context) * 0.25);
+            },
+            options: CarouselOptions(
+              onPageChanged: (index, reason) {
+                controller.jumpToPage(index);
+              },
+              height: height(context),
+              viewportFraction: 1,
+              enableInfiniteScroll: false,
+              enlargeCenterPage: false,
+              autoPlay: true,
+            ),
+          ),
+          SizedBox(
+            height: 0,
+            child: PageView(
+              controller: controller,
+              children: const [SizedBox(), SizedBox(), SizedBox()],
+            ),
           ),
           Positioned(
               top: height(context) * 0.075,

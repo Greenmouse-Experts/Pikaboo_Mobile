@@ -18,7 +18,7 @@ class TermsCard extends StatelessWidget {
           SizedBox(height: height(context) * 0.015),
           Text(answer,
               style: regular14(context)
-                  .copyWith(color: Colors.black.withOpacity(0.4)))
+                  .copyWith(color: Colors.black.withOpacity(0.7)))
         ],
       ),
     );

@@ -12,7 +12,7 @@ import '../modules/fund/transactions_history_view.dart';
 import '../modules/history/driver_history_view.dart';
 import '../modules/history/history_view.dart';
 import '../modules/notifications/notifications_view.dart';
-import '../modules/onboarding/onboarding_view.dart';
+import '../modules/onboarding/views.dart';
 import '../modules/requests/views.dart';
 import '../modules/settings/views.dart';
 import '../modules/shop/market_place_view.dart';
@@ -20,6 +20,7 @@ import '../modules/shop/product_view.dart';
 import '../modules/user_dashboard/user_dashboard_view.dart';
 
 class AppRouter {
+  static const String splash = 'splash';
   static const String onboarding = 'onboarding';
   static const String dashboard = 'dashboard';
   static const String login = 'login';
@@ -54,7 +55,7 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
   GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return const OnBoardingView();
+        return const SplashView();
       },
       routes: <RouteBase>[
         GoRoute(

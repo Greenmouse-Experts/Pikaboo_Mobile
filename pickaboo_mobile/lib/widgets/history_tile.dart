@@ -10,8 +10,10 @@ class HistoryTile extends StatelessWidget {
     return ListTile(
       horizontalTitleGap: 0,
       leading: Container(
-        width: width(context) * 0.05,
-        height: width(context) * 0.05,
+        width:
+            isMobile(context) ? width(context) * 0.05 : width(context) * 0.0325,
+        height:
+            isMobile(context) ? width(context) * 0.05 : width(context) * 0.0325,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             border: Border.all(color: Colors.black.withOpacity(0.4))),
@@ -23,7 +25,10 @@ class HistoryTile extends StatelessWidget {
       trailing: IconButton(
           onPressed: () {},
           icon: Icon(Icons.more_vert_outlined,
-              size: width(context) * 0.06, color: Colors.black)),
+              size: isMobile(context)
+                  ? width(context) * 0.06
+                  : width(context) * 0.045,
+              color: Colors.black)),
     );
   }
 }

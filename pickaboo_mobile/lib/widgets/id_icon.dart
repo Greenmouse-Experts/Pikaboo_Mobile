@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../utilities/utilities.dart';
+import 'widgets.dart';
 
 class IdIcon extends StatelessWidget {
   const IdIcon({super.key});
@@ -9,12 +10,9 @@ class IdIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading:  CircleAvatar(
-        radius: width(context) * 0.06,
-        child: SizedBox(
-          width: width(context) * 0.12,
-          height: width(context) * 0.12,
-          child: Image.asset('assets/images/dummy_icon.png', fit: BoxFit.cover)),
+      leading: AppAvatar(
+        name: 'name',
+        radius: width(context) * 0.07,
       ),
       title: Text(
         'Welcome Ibiwari .V. ',

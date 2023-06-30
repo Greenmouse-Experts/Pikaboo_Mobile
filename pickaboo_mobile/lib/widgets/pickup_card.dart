@@ -50,7 +50,7 @@ class PickUpPreview extends StatelessWidget {
                       onPressed: () {},
                       buttonColor: AppColors.lightGreen,
                       buttonWidth: 0.15,
-                      buttonHeight: 0.025,
+                      buttonHeight: isMobile(context) ? 0.025 : 0.022,
                       textStyle:
                           medium11(context).copyWith(color: AppColors.primary),
                     ),
@@ -60,7 +60,7 @@ class PickUpPreview extends StatelessWidget {
                       onPressed: () {},
                       buttonColor: AppColors.lightYellow2,
                       buttonWidth: 0.15,
-                      buttonHeight: 0.025,
+                      buttonHeight: isMobile(context) ? 0.025 : 0.022,
                       textStyle:
                           medium11(context).copyWith(color: AppColors.yellow),
                     ),

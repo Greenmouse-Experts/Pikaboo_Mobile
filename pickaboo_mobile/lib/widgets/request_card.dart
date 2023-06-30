@@ -44,7 +44,9 @@ class RequestCard extends StatelessWidget {
                         Icon(
                           Icons.arrow_forward_ios_outlined,
                           color: AppColors.primary,
-                          size: width(context) * 0.04,
+                          size: isMobile(context)
+                              ? width(context) * 0.04
+                              : width(context) * 0.03,
                         )
                       ],
                     ),

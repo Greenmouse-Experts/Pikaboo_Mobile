@@ -128,7 +128,9 @@ class SearchTextField extends StatelessWidget {
           prefixIcon: Icon(
             Icons.search,
             color: AppColors.primary,
-            size: width(context) * 0.06,
+            size: isMobile(context)
+                ? width(context) * 0.06
+                : width(context) * 0.04,
           )),
     );
   }
@@ -394,7 +396,10 @@ class _EditableTextFieldState extends State<EditableTextField> {
                           isEditMode = true;
                         });
                       },
-                      icon: Icon(Icons.edit_sharp, size: width(context) * 0.05))
+                      icon: Icon(Icons.edit_sharp,
+                          size: isMobile(context)
+                              ? width(context) * 0.05
+                              : width(context) * 0.04))
                 ],
               ),
         const Divider(color: AppColors.lightAsh)

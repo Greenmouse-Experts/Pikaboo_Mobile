@@ -1,6 +1,6 @@
 name: pickaboo_mobile
 description: A new Flutter project.
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -26,6 +26,9 @@ dependencies:
   dio: ^5.2.1+1
   cached_network_image: ^3.2.3
   file_picker: ^5.3.2
+  animations: ^2.0.7
+  flutter_animate: ^4.2.0
+  image_picker: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -35,13 +38,15 @@ dev_dependencies:
 flutter_native_splash:
   android: true
   ios: true
-  
-  background_image: 'assets/images/splash_screen.png'
+
+  color: "#ffffff"
+  image: assets/images/pickaboo_logo.png
+  image_dark: "assets/images/pickaboo_logo.png"
 
   android12:
-    image: 'assets/images/pickaboo_logo.png'
+    image: "assets/images/pickaboo_logo.png"
     icon_background_color: "#ffffff"
-    image_dark: 'assets/images/pickaboo_logo.png'
+    image_dark: "assets/images/pickaboo_logo.png"
 
 flutter:
   uses-material-design: true

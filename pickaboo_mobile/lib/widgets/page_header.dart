@@ -19,7 +19,14 @@ class PageHeader extends StatelessWidget {
           style: semi20(context).copyWith(color: AppColors.darkGreen),
         ),
         hasSearch
-            ? IconButton(onPressed: () {}, icon: const Icon(Icons.search))
+            ? IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.search,
+                  size: isMobile(context)
+                      ? width(context) * 0.06
+                      : width(context) * 0.045,
+                ))
             : const SizedBox()
       ],
     );

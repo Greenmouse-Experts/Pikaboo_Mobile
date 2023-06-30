@@ -10,13 +10,13 @@ class HomeOwnerSchema {
   String? title;
   String? firstName;
   String? middleName;
-  String? surname;
+  String? lastName;
   String? email;
   String? phone;
   dynamic phone2;
   dynamic gender;
   dynamic dob;
-  String? avatar;
+  dynamic avatar;
   DateTime? emailVerifiedAt;
   String? currentPassword;
   dynamic role;
@@ -29,6 +29,7 @@ class HomeOwnerSchema {
   String? facilityType;
   String? ownersName;
   String? status;
+  String? isVerified;
   DateTime? createdAt;
 
   HomeOwnerSchema({
@@ -37,7 +38,7 @@ class HomeOwnerSchema {
     this.title,
     this.firstName,
     this.middleName,
-    this.surname,
+    this.lastName,
     this.email,
     this.phone,
     this.phone2,
@@ -56,6 +57,7 @@ class HomeOwnerSchema {
     this.facilityType,
     this.ownersName,
     this.status,
+    this.isVerified,
     this.createdAt,
   });
 
@@ -71,7 +73,7 @@ class HomeOwnerSchema {
         title: json["title"],
         firstName: json["first_name"],
         middleName: json["middle_name"],
-        surname: json["surname"],
+        lastName: json["last_name"],
         email: json["email"],
         phone: json["phone"],
         phone2: json["phone2"],
@@ -92,6 +94,7 @@ class HomeOwnerSchema {
         facilityType: json["facility_type"],
         ownersName: json["owners_name"],
         status: json["status"],
+        isVerified: json["isVerified"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
@@ -103,7 +106,7 @@ class HomeOwnerSchema {
         "title": title,
         "first_name": firstName,
         "middle_name": middleName,
-        "surname": surname,
+        "last_name": lastName,
         "email": email,
         "phone": phone,
         "phone2": phone2,
@@ -122,6 +125,7 @@ class HomeOwnerSchema {
         "facility_type": facilityType,
         "owners_name": ownersName,
         "status": status,
+        "isVerified": isVerified,
         "created_at": createdAt?.toIso8601String(),
       };
 }

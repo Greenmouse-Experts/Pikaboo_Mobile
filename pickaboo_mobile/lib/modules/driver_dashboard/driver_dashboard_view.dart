@@ -19,6 +19,8 @@ class DriverDashboardView extends ConsumerWidget {
         return true;
       },
       child: Scaffold(
+        key: ref.watch(driverMenuProvider).scaffoldKey,
+        drawer: const DriverDrawer(),
         body: Consumer(
           builder: (context, ref, child) =>
               DriverDashboardViewModel.pages[index],

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../modules/driver_dashboard/driver_dashboard_vm.dart';
+import '../modules/user_dashboard/user_dashboard_vm.dart';
 import '../utilities/utilities.dart';
 
 AppBar customAppBar(BuildContext context,
@@ -40,6 +43,9 @@ AppBar customAppBar2(
   BuildContext context, {
   bool? implyLeading,
   bool? hasElevation,
+  bool? hasHamburger,
+  required WidgetRef ref,
+  required bool isUser,
   List<Widget>? actions,
 }) =>
     AppBar(
@@ -51,12 +57,31 @@ AppBar customAppBar2(
             : hasElevation
                 ? 4
                 : 0,
-        leadingWidth: width(context) * 0.4,
+        leadingWidth: width(context) * 0.45,
         leading: SizedBox(
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(width: width(context) * 0.04),
+              hasHamburger == null || hasHamburger == false
+                  ? const SizedBox()
+                  : Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          if (isUser) {
+                            ref.read(userMenuProvider.notifier).controlMenu();
+                          } else {
+                            ref.read(driverMenuProvider.notifier).controlMenu();
+                          }
+                        },
+                        child: Icon(
+                          Icons.menu_outlined,
+                          color: Colors.white,
+                          size: width(context) * 0.06,
+                        ),
+                      ),
+                    ),
               Container(
                   height: 35,
                   width: 35,
@@ -84,22 +109,28 @@ AppBar customAppBar3(BuildContext context,
               padding: EdgeInsets.all(width(context) * 0.02),
               child: InkWell(
                 onTap: () => context.pop(),
-                child: Container(
-                  decoration: BoxDecoration(
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                          color: AppColors.primary.withOpacity(0.4),
-                          blurRadius: 5,
+                child: isMobile(context)
+                    ? Container(
+                        decoration: BoxDecoration(
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                color: AppColors.primary.withOpacity(0.4),
+                                blurRadius: 5,
+                              ),
+                            ],
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Icon(
+                          Icons.adaptive.arrow_back_rounded,
+                          color: Colors.white,
+                          size: width(context) * 0.06,
                         ),
-                      ],
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(50)),
-                  child: Icon(
-                    Icons.adaptive.arrow_back_rounded,
-                    color: Colors.white,
-                    size: width(context) * 0.06,
-                  ),
-                ),
+                      )
+                    : Icon(
+                        Icons.adaptive.arrow_back,
+                        color: Colors.black,
+                        size: width(context) * 0.04,
+                      ),
               ),
             ),
       foregroundColor: Colors.black,
@@ -164,22 +195,28 @@ AppBar customAppBar5(BuildContext context,
               onLeadingPressed();
             }
           },
-          child: Container(
-            decoration: BoxDecoration(
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: AppColors.primary.withOpacity(0.4),
-                    blurRadius: 5,
+          child: isMobile(context)
+              ? Container(
+                  decoration: BoxDecoration(
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                          color: AppColors.primary.withOpacity(0.4),
+                          blurRadius: 5,
+                        ),
+                      ],
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(50)),
+                  child: Icon(
+                    Icons.adaptive.arrow_back_rounded,
+                    color: Colors.white,
+                    size: width(context) * 0.06,
                   ),
-                ],
-                color: AppColors.primary,
-                borderRadius: BorderRadius.circular(50)),
-            child: Icon(
-              Icons.adaptive.arrow_back_rounded,
-              color: Colors.white,
-              size: width(context) * 0.06,
-            ),
-          ),
+                )
+              : Icon(
+                  Icons.adaptive.arrow_back,
+                  color: Colors.black,
+                  size: width(context) * 0.04,
+                ),
         ),
       ),
       centerTitle: true,
@@ -253,22 +290,28 @@ AppBar customAppBar7(BuildContext context,
               onLeadingPressed();
             }
           },
-          child: Container(
-            decoration: BoxDecoration(
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: AppColors.primary.withOpacity(0.4),
-                    blurRadius: 5,
+          child: isMobile(context)
+              ? Container(
+                  decoration: BoxDecoration(
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                          color: AppColors.primary.withOpacity(0.4),
+                          blurRadius: 5,
+                        ),
+                      ],
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(50)),
+                  child: Icon(
+                    Icons.adaptive.arrow_back_rounded,
+                    color: AppColors.primary,
+                    size: width(context) * 0.06,
                   ),
-                ],
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(50)),
-            child: Icon(
-              Icons.adaptive.arrow_back_rounded,
-              color: AppColors.primary,
-              size: width(context) * 0.06,
-            ),
-          ),
+                )
+              : Icon(
+                  Icons.adaptive.arrow_back,
+                  color: Colors.black,
+                  size: width(context) * 0.04,
+                ),
         ),
       ),
       centerTitle: true,

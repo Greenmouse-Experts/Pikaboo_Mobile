@@ -72,7 +72,9 @@ class _CheckoutModalState extends State<CheckoutModal> {
                     },
                     icon: Icon(
                       Icons.close,
-                      size: width(context) * 0.06,
+                      size: isMobile(context)
+                          ? width(context) * 0.06
+                          : width(context) * 0.045,
                     )),
               ],
             ),
@@ -84,7 +86,10 @@ class _CheckoutModalState extends State<CheckoutModal> {
                       Border.all(width: 0.25, color: const Color(0xFF007004))),
               child: ListTile(
                 leading: Icon(Icons.location_on,
-                    size: width(context) * 0.08, color: Colors.black),
+                    size: isMobile(context)
+                        ? width(context) * 0.08
+                        : width(context) * 0.055,
+                    color: Colors.black),
                 title: Text('Delivery Address', style: medium16(context)),
                 subtitle: Text('Richard Moore estate, Victoria island.',
                     style: regular13(context)
@@ -96,7 +101,9 @@ class _CheckoutModalState extends State<CheckoutModal> {
                     icon: Icon(
                       Icons.mode_edit_outline_sharp,
                       color: Colors.black,
-                      size: width(context) * 0.05,
+                      size: isMobile(context)
+                          ? width(context) * 0.05
+                          : width(context) * 0.04,
                     )),
               ),
             ),

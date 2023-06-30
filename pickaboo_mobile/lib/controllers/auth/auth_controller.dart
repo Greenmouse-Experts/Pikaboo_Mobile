@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -42,6 +45,25 @@ class _AuthNotifier extends ChangeNotifier {
     }
   }
 
+  Future<void> updateProfilePhoto(
+      {required BuildContext context, required File pickedFile}) async {
+    AppOverlays.loadingDialog(context: context);
+    try {
+      final payload = _getProfilePhotoPaylooad(pickedFile: pickedFile);
+      _repo.updateProfilePicture(payload).then((response) {
+        if (response.isSuccessful) {
+          AppOverlays.showSuccessDialog(
+              context: context,
+              content:
+                  response.message ?? 'Profile Photo Updated successfully');
+        } else {}
+      });
+    } catch (e) {
+      context.pop();
+      AppOverlays.showErrorDialog(context: context, error: e);
+    }
+  }
+
   Future<void> forgotPassword(
       {required BuildContext context, required String phone}) async {
     AppOverlays.loadingDialog(context: context);
@@ -73,5 +95,14 @@ class _AuthNotifier extends ChangeNotifier {
     required String otp,
   }) {
     return {'phone_number': phone, 'otp': otp};
+  }
+
+  Future<FormData> _getProfilePhotoPaylooad({required File pickedFile}) async {
+    return FormData.fromMap({
+      'avatar': [
+        await MultipartFile.fromFile(pickedFile.path,
+            filename: pickedFile.path.split('/').last)
+      ]
+    });
   }
 }

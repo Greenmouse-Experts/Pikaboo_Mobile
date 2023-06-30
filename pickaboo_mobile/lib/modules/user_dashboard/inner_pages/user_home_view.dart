@@ -15,7 +15,9 @@ class UserHomeView extends ConsumerWidget {
     return Scaffold(
       appBar: customAppBar2(context,
           hasElevation: false,
-          implyLeading: false,
+          isUser: true,
+          ref: ref,
+          hasHamburger: true,
           actions: [
             CircleAvatar(
               radius: width(context) * 0.04,
@@ -47,7 +49,7 @@ class UserHomeView extends ConsumerWidget {
                             style: regular20(context)
                                 .copyWith(color: AppColors.primary))),
                     subtitle: Text(
-                        '${homeOwner?.firstName ?? ''} .${(homeOwner?.surname!.capitalizeFirstLetter ?? '')}.',
+                        '${homeOwner?.firstName ?? ''} .${(homeOwner?.lastName?.capitalizeFirstLetter ?? '')}.',
                         style: medium13(context)
                             .copyWith(color: Colors.black.withOpacity(0.7))),
                     trailing: Icon(Icons.location_pin,
@@ -78,7 +80,9 @@ class UserHomeView extends ConsumerWidget {
                               onPressed: () {},
                               icon: Icon(
                                 Icons.visibility_outlined,
-                                size: width(context) * 0.05,
+                                size: isMobile(context)
+                                    ? width(context) * 0.05
+                                    : width(context) * 0.04,
                               ))
                         ],
                       ),
@@ -140,8 +144,9 @@ class UserHomeView extends ConsumerWidget {
                   Column(
                     children: [
                       ActionCard(
-                        onPressed: () =>
-                            context.pushNamed(AppRouter.preRequest),
+                        onPressed: () => context.pushNamed(
+                            AppRouter.requestPickupView,
+                            pathParameters: {'isSpecial': 'yes'}),
                         color: AppColors.fadeGreen2,
                         title: 'Request Pick',
                         content: 'Order for waste pickup.',

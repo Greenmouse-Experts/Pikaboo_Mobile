@@ -18,7 +18,9 @@ class ProductCard extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           elevation: 2,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: isMobile(context)
+                ? const EdgeInsets.all(8.0)
+                : EdgeInsets.all(width(context) * 0.02),
             child: Row(
               children: [
                 const ProductImage(),

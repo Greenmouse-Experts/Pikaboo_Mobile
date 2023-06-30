@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../settings/user_profile_view.dart';
@@ -27,5 +28,20 @@ class DashBoardPageNotifier extends Notifier<int> {
 
   updateIndex(int i) {
     state = i;
+  }
+}
+
+final userMenuProvider = ChangeNotifierProvider<UserMenuNotifier>((ref) {
+  return UserMenuNotifier();
+});
+
+class UserMenuNotifier extends ChangeNotifier {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
+
+  void controlMenu() {
+    if (!_scaffoldKey.currentState!.isDrawerOpen) {
+      _scaffoldKey.currentState!.openDrawer();
+    }
   }
 }

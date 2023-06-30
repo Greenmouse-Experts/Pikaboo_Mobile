@@ -15,4 +15,10 @@ class AuthRepository {
         _api.postData('/auth/mobile/password/email', data: {'phone': phone});
     return response;
   }
+
+  Future<ApiResponse> updateProfilePicture(dynamic data) async {
+    final response =
+        _api.postData('/profile/upload/profile-picture', data: data);
+    return response;
+  }
 }

@@ -90,7 +90,9 @@ class CustomBackground3 extends StatelessWidget {
       height:
           // height(context) < 850
           //  ?
-          height(context) * 0.82,
+          height(context) < 700
+              ? height(context) * 0.95
+              : height(context) * 0.82,
       // : height(context) * 0.8,
       child: Stack(
         children: [

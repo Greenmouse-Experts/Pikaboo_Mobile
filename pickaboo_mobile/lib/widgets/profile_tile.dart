@@ -26,7 +26,9 @@ class ProfileTile extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                size: width(context) * 0.06,
+                size: isMobile(context)
+                    ? width(context) * 0.06
+                    : width(context) * 0.045,
                 color: AppColors.altAsh,
               ),
               SizedBox(width: width(context) * 0.04),
@@ -35,7 +37,10 @@ class ProfileTile extends StatelessWidget {
               IconButton(
                   onPressed: () {},
                   icon: Icon(Icons.arrow_forward_ios_outlined,
-                      size: width(context) * 0.05, color: AppColors.altAsh)),
+                      size: isMobile(context)
+                          ? width(context) * 0.05
+                          : width(context) * 0.04,
+                      color: AppColors.altAsh)),
             ],
           ),
           Padding(
@@ -75,12 +80,18 @@ class ServiceProfileTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: height(context) * 0.007),
       child: ListTile(
+        contentPadding: isMobile(context)
+            ? null
+            : EdgeInsets.symmetric(
+                vertical: height(context) * 0.007, horizontal: 16),
         onTap: onPressed,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         tileColor: AppColors.fadeGreen2,
         leading: Icon(
           icon,
-          size: width(context) * 0.06,
+          size: isMobile(context)
+              ? width(context) * 0.06
+              : width(context) * 0.045,
           color: AppColors.altAsh,
         ),
         title: Text(title, style: medium13(context)),
@@ -91,7 +102,10 @@ class ServiceProfileTile extends StatelessWidget {
         trailing: IconButton(
             onPressed: () {},
             icon: Icon(Icons.arrow_forward_ios_outlined,
-                size: width(context) * 0.05, color: AppColors.altAsh)),
+                size: isMobile(context)
+                    ? width(context) * 0.05
+                    : width(context) * 0.04,
+                color: AppColors.altAsh)),
       ),
     );
   }

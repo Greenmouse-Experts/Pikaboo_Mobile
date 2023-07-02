@@ -38,7 +38,7 @@ class _CheckoutModalState extends State<CheckoutModal> {
     plugin
         .checkout(
       context,
-      method: CheckoutMethod.selectable,
+      method: CheckoutMethod.card,
       charge: charge,
       fullscreen: true,
     )

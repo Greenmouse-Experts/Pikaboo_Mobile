@@ -11,16 +11,16 @@ class QuestionIcon extends StatelessWidget {
       onTap: () {},
       child: Container(
         width:
-            isMobile(context) ? width(context) * 0.07 : width(context) * 0.06,
+            isMobile(context) ? width(context) * 0.09 : width(context) * 0.06,
         height:
-            isMobile(context) ? width(context) * 0.07 : width(context) * 0.06,
+            isMobile(context) ? width(context) * 0.09 : width(context) * 0.06,
         decoration: const BoxDecoration(
             color: AppColors.newAsh, shape: BoxShape.circle),
         child: Icon(
           Icons.question_mark_outlined,
           color: AppColors.error,
           size:
-              isMobile(context) ? width(context) * 0.05 : width(context) * 0.04,
+              isMobile(context) ? width(context) * 0.06 : width(context) * 0.04,
         ),
       ),
     );

@@ -20,18 +20,22 @@ class _AuthNotifier extends ChangeNotifier {
   HomeOwnerSchema? _homeOwner;
   HomeOwnerSchema? get homeOwner => _homeOwner;
 
-  Future<void> homeOwnerLogin({
-    required BuildContext context,
-    required String phone,
-    required String otp,
-  }) async {
+  String? _token;
+  String? get token => _token;
+
+  Future<void> homeOwnerLogin(
+      {required BuildContext context,
+      required String phone,
+      required String otp,
+      required WidgetRef ref}) async {
     AppOverlays.loadingDialog(context: context);
     try {
       final payload = _getUserLoginPayload(phone: phone, otp: otp);
-      _repo.login(payload).then((response) {
+      _repo.login(payload, ref).then((response) {
         if (response.isSuccessful) {
-          context.pop();
+          _token = response.token;
           _homeOwner = HomeOwnerSchema.fromJson(response.data);
+          context.pop();
           context.goNamed(AppRouter.userDashboard);
         } else {
           context.pop();
@@ -46,17 +50,26 @@ class _AuthNotifier extends ChangeNotifier {
   }
 
   Future<void> updateProfilePhoto(
-      {required BuildContext context, required File pickedFile}) async {
+      {required BuildContext context,
+      required File pickedFile,
+      required WidgetRef ref}) async {
     AppOverlays.loadingDialog(context: context);
     try {
-      final payload = _getProfilePhotoPaylooad(pickedFile: pickedFile);
-      _repo.updateProfilePicture(payload).then((response) {
+      final payload = await _getProfilePhotoPaylooad(pickedFile: pickedFile);
+      _repo.updateProfilePicture(payload, ref).then((response) {
         if (response.isSuccessful) {
+          context.pop();
+          _homeOwner = HomeOwnerSchema.fromJson(response.data);
+          notifyListeners();
           AppOverlays.showSuccessDialog(
               context: context,
               content:
                   response.message ?? 'Profile Photo Updated successfully');
-        } else {}
+        } else {
+          context.pop();
+          AppOverlays.showErrorDialog(
+              context: context, error: response.message ?? 'An error occurred');
+        }
       });
     } catch (e) {
       context.pop();
@@ -65,10 +78,12 @@ class _AuthNotifier extends ChangeNotifier {
   }
 
   Future<void> forgotPassword(
-      {required BuildContext context, required String phone}) async {
+      {required BuildContext context,
+      required String phone,
+      required WidgetRef ref}) async {
     AppOverlays.loadingDialog(context: context);
     try {
-      _repo.forgotPassword(phone).then((response) {
+      _repo.forgotPassword(phone, ref).then((response) {
         if (response.isSuccessful) {
           context.pop();
           context.pushReplacementNamed(AppRouter.resetStatus,

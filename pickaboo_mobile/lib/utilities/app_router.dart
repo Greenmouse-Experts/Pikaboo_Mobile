@@ -130,8 +130,10 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
                 )),
         GoRoute(
             name: AppRouter.productPage,
-            path: AppRouter.productPage,
-            builder: (context, state) => const ProductView()),
+            path: '${AppRouter.productPage}/:productId',
+            builder: (context, state) => ProductView(
+                  productId: state.pathParameters['productId']!,
+                )),
         GoRoute(
             name: AppRouter.driverHistory,
             path: AppRouter.driverHistory,

@@ -1,18 +1,25 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../data/models/models.dart';
 import '../utilities/utilities.dart';
 import 'app_button.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key});
+  final ProductsSchema product;
+  const ProductCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
+    final image = product.images == null || product.images!.isEmpty
+        ? 'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png'
+        : product.images![0];
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: InkWell(
-        onTap: () => context.pushNamed(AppRouter.productPage),
+        onTap: () => context.pushNamed(AppRouter.productPage,
+            pathParameters: {'productId': product.id.toString()}),
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -23,7 +30,9 @@ class ProductCard extends StatelessWidget {
                 : EdgeInsets.all(width(context) * 0.02),
             child: Row(
               children: [
-                const ProductImage(),
+                ProductImage(
+                  image: image,
+                ),
                 SizedBox(width: width(context) * 0.04),
                 Expanded(
                   child: SizedBox(
@@ -32,15 +41,15 @@ class ProductCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text('Green Container', style: medium13(context)),
-                        Text(
-                            'Limited to food waste, green waste, other organic materials.',
+                        Text(product.name ?? '', style: medium13(context)),
+                        Text(product.description ?? '',
                             style: regular11(context).copyWith(
                                 color: Colors.black.withOpacity(0.4))),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('NGN 6,000', style: medium13(context)),
+                            Text('NGN ${product.price ?? ''}',
+                                style: medium13(context)),
                             AppButton(
                               text: 'Buy',
                               onPressed: () {},
@@ -63,7 +72,8 @@ class ProductCard extends StatelessWidget {
 }
 
 class ProductGridCard extends StatelessWidget {
-  const ProductGridCard({super.key});
+  final ProductsSchema product;
+  const ProductGridCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +107,8 @@ class ProductGridCard extends StatelessWidget {
 }
 
 class ProductImage extends StatelessWidget {
-  const ProductImage({super.key});
+  final String image;
+  const ProductImage({super.key, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +118,18 @@ class ProductImage extends StatelessWidget {
       color: AppColors.fadeGreen,
       child: Padding(
         padding: EdgeInsets.all(width(context) * 0.01),
-        child: Image.asset('assets/images/dummy_prod.png'),
+        child: CachedNetworkImage(
+            imageUrl: image,
+            errorWidget: (context, url, error) {
+              return Image.asset('assets/images/pickaboo_logo.png');
+            },
+            progressIndicatorBuilder: (context, url, progress) => Center(
+                  child: CircularProgressIndicator(
+                    value: progress.progress,
+                    valueColor:
+                        const AlwaysStoppedAnimation<Color>(AppColors.primary),
+                  ),
+                )),
       ),
     );
   }

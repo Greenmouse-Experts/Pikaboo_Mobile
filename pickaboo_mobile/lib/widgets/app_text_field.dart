@@ -374,6 +374,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: height(context) * 0.005),
         Text(
           widget.label,
           style:
@@ -390,18 +391,19 @@ class _EditableTextFieldState extends State<EditableTextField> {
                 children: [
                   Text(widget.controller.text, style: medium14(context)),
                   const Spacer(),
-                  IconButton(
-                      onPressed: () {
-                        setState(() {
-                          isEditMode = true;
-                        });
-                      },
-                      icon: Icon(Icons.edit_sharp,
-                          size: isMobile(context)
-                              ? width(context) * 0.05
-                              : width(context) * 0.04))
+                  // IconButton(
+                  //     onPressed: () {
+                  //       setState(() {
+                  //         isEditMode = true;
+                  //       });
+                  //     },
+                  //     icon: Icon(Icons.edit_sharp,
+                  //         size: isMobile(context)
+                  //             ? width(context) * 0.05
+                  //             : width(context) * 0.04))
                 ],
               ),
+        SizedBox(height: height(context) * 0.005),
         const Divider(color: AppColors.lightAsh)
       ],
     );

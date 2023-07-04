@@ -36,10 +36,11 @@ class UserProfileview extends ConsumerWidget {
                   imgUrl: homeOwner?.avatar ?? '',
                   radius: width(context) * 0.05,
                   selectedImg: null,
-                  name: homeOwner?.ownersName ?? 'h',
+                  name: homeOwner?.firstName ?? 'h',
                 ),
                 SizedBox(height: height(context) * 0.01),
-                Text(homeOwner?.ownersName ?? "",
+                Text(
+                    '${homeOwner?.firstName ?? ''} ${homeOwner?.lastName ?? ''}',
                     style: semi20(context).copyWith(color: Colors.white)),
                 SizedBox(height: height(context) * 0.01),
                 Text('Home Resident',

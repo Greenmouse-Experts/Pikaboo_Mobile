@@ -6,6 +6,7 @@ import 'dart:convert';
 
 class HomeOwnerSchema {
   int? id;
+  String? pikabooId;
   String? accountType;
   String? title;
   String? firstName;
@@ -20,20 +21,20 @@ class HomeOwnerSchema {
   DateTime? emailVerifiedAt;
   String? currentPassword;
   dynamic role;
-  dynamic wallet;
+  String? wallet;
   dynamic fcmToken;
   dynamic meansOfIdentification;
   String? address;
   dynamic unitOfOperation;
-  String? typeOfBuilding;
-  String? facilityType;
-  String? ownersName;
+  dynamic truckId;
   String? status;
   String? isVerified;
   DateTime? createdAt;
+  String? createdByWho;
 
   HomeOwnerSchema({
     this.id,
+    this.pikabooId,
     this.accountType,
     this.title,
     this.firstName,
@@ -53,12 +54,11 @@ class HomeOwnerSchema {
     this.meansOfIdentification,
     this.address,
     this.unitOfOperation,
-    this.typeOfBuilding,
-    this.facilityType,
-    this.ownersName,
+    this.truckId,
     this.status,
     this.isVerified,
     this.createdAt,
+    this.createdByWho,
   });
 
   factory HomeOwnerSchema.fromRawJson(String str) =>
@@ -69,6 +69,7 @@ class HomeOwnerSchema {
   factory HomeOwnerSchema.fromJson(Map<String, dynamic> json) =>
       HomeOwnerSchema(
         id: json["id"],
+        pikabooId: json["pikaboo_id"],
         accountType: json["account_type"],
         title: json["title"],
         firstName: json["first_name"],
@@ -90,18 +91,18 @@ class HomeOwnerSchema {
         meansOfIdentification: json["means_of_identification"],
         address: json["address"],
         unitOfOperation: json["unit_of_operation"],
-        typeOfBuilding: json["type_of_building"],
-        facilityType: json["facility_type"],
-        ownersName: json["owners_name"],
+        truckId: json["truck_id"],
         status: json["status"],
         isVerified: json["isVerified"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
+        createdByWho: json["created_by_who"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "pikaboo_id": pikabooId,
         "account_type": accountType,
         "title": title,
         "first_name": firstName,
@@ -121,11 +122,10 @@ class HomeOwnerSchema {
         "means_of_identification": meansOfIdentification,
         "address": address,
         "unit_of_operation": unitOfOperation,
-        "type_of_building": typeOfBuilding,
-        "facility_type": facilityType,
-        "owners_name": ownersName,
+        "truck_id": truckId,
         "status": status,
         "isVerified": isVerified,
         "created_at": createdAt?.toIso8601String(),
+        "created_by_who": createdByWho,
       };
 }

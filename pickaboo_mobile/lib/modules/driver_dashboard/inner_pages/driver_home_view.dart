@@ -54,7 +54,7 @@ class DriverHomeView extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: height(context) * 0.01),
-                        const IdIcon(),
+                        const IdIcon(imageUrl: ''),
                         height(context) < 700
                             ? const SizedBox()
                             : SizedBox(height: adjustedHeight(context) * 0.02),

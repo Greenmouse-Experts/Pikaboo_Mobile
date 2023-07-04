@@ -4,7 +4,8 @@ import '../utilities/utilities.dart';
 import 'widgets.dart';
 
 class IdIcon extends StatelessWidget {
-  const IdIcon({super.key});
+  final String imageUrl;
+  const IdIcon({super.key, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +13,7 @@ class IdIcon extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       leading: AppAvatar(
         name: 'name',
+        imgUrl: imageUrl,
         radius: width(context) * 0.07,
       ),
       title: Text(

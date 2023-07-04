@@ -67,7 +67,7 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         ref.read(authProvider.notifier).forgotPassword(
-                            context: context, phone: _phone.text);
+                            ref: ref, context: context, phone: _phone.text);
                       }
                     })
               ],

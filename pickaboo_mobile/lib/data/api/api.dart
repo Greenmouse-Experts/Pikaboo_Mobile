@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pickaboo_mobile/controllers/auth/auth_controller.dart';
 
 import '../constants.dart';
 import 'api_response.dart';
@@ -22,14 +24,19 @@ class Api {
 
   Future<ApiResponse> getData(String endpoint,
       {Map<String, dynamic>? queryParameters,
+      required WidgetRef ref,
       CancelToken? cancelToken,
       bool hasHeader = true}) async {
     try {
-      final response = await _dio.get(
-        endpoint,
-        queryParameters: queryParameters,
-        cancelToken: cancelToken,
-      );
+      final authToken = ref.watch(authProvider).token;
+      final authorization = {
+        'Authorization': 'Bearer $authToken',
+      };
+
+      final response = await _dio.get(endpoint,
+          queryParameters: queryParameters,
+          cancelToken: cancelToken,
+          options: Options(headers: hasHeader ? authorization : null));
 
       return ApiResponse.fromResponse(response);
     } on DioException catch (error) {
@@ -40,6 +47,31 @@ class Api {
   }
 
   Future<ApiResponse> postData(String endpoint,
+      {required dynamic data,
+      required WidgetRef ref,
+      CancelToken? cancelToken,
+      bool hasHeader = true}) async {
+    try {
+      final authToken = ref.watch(authProvider).token;
+
+      final authorization = {
+        'Authorization': 'Bearer $authToken',
+      };
+
+      final response = await _dio.post(endpoint,
+          data: data,
+          cancelToken: cancelToken,
+          options: Options(headers: hasHeader ? authorization : null));
+
+      return ApiResponse.fromResponse(response);
+    } on DioException catch (error) {
+      return error.toApiError(cancelToken: CancelToken());
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ApiResponse> postFileData(String endpoint,
       {required dynamic data,
       CancelToken? cancelToken,
       bool hasHeader = true}) async {

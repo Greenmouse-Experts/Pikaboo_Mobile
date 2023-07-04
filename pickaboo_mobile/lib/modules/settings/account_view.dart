@@ -28,10 +28,16 @@ class _AccountViewState extends ConsumerState<AccountView> {
     super.dispose();
   }
 
+  File? pickedFile;
+
+  void updateImage(File chosenFile) {
+    pickedFile = chosenFile;
+  }
+
   @override
   Widget build(BuildContext context) {
     final homeOwner = ref.watch(authProvider).homeOwner;
-    _name.text = homeOwner?.ownersName ?? '';
+    _name.text = '${homeOwner?.firstName ?? ''} ${homeOwner?.lastName ?? ''} ';
     _phone.text = homeOwner?.phone ?? '';
     _email.text = homeOwner?.email ?? '';
     return Scaffold(
@@ -51,7 +57,8 @@ class _AccountViewState extends ConsumerState<AccountView> {
                 SizedBox(width: width(context)),
                 _ImageSelector(
                     imgUrl: homeOwner?.avatar ?? '',
-                    name: homeOwner?.ownersName),
+                    updateImage: updateImage,
+                    name: homeOwner?.firstName),
                 SizedBox(height: height(context) * 0.01, width: width(context)),
                 Text('Home Resident',
                     style:
@@ -132,7 +139,15 @@ class _AccountViewState extends ConsumerState<AccountView> {
                   );
                 }),
                 SizedBox(height: height(context) * 0.05),
-                AppButton(text: 'Save Changes', onPressed: () {}),
+                AppButton(
+                    text: 'Save Changes',
+                    onPressed: () {
+                      if (pickedFile == null) {
+                        return;
+                      }
+                      ref.read(authProvider.notifier).updateProfilePhoto(
+                          ref: ref, context: context, pickedFile: pickedFile!);
+                    }),
               ],
             ),
           )
@@ -145,7 +160,9 @@ class _AccountViewState extends ConsumerState<AccountView> {
 class _ImageSelector extends StatefulWidget {
   final String imgUrl;
   final String? name;
-  const _ImageSelector({required this.imgUrl, required this.name});
+  final Function updateImage;
+  const _ImageSelector(
+      {required this.imgUrl, required this.name, required this.updateImage});
 
   @override
   State<_ImageSelector> createState() => __ImageSelectorState();
@@ -169,6 +186,7 @@ class __ImageSelectorState extends State<_ImageSelector> {
 
                 setState(() {
                   selectedImg = imageTemp.path;
+                  widget.updateImage(imageTemp);
                 });
               }
             } catch (e) {

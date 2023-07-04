@@ -95,6 +95,7 @@ class AppAvatar extends StatelessWidget {
                     );
                   },
                   width: radius * 2,
+                  height: radius * 2,
                 )
               : Image.file(
                   File(selectedImg!),

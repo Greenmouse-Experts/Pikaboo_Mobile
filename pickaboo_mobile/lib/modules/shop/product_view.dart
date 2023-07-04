@@ -5,7 +5,8 @@ import '../../widgets/check_out_modal.dart';
 import '../../widgets/widgets.dart';
 
 class ProductView extends StatelessWidget {
-  const ProductView({super.key});
+  final String productId;
+  const ProductView({super.key, required this.productId});
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +87,10 @@ class ProductView extends StatelessWidget {
                         itemBuilder: (context, i) => Padding(
                               padding:
                                   EdgeInsets.only(right: width(context) * 0.02),
-                              child: const ProductImage(),
+                              child: const ProductImage(
+                                image:
+                                    'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png',
+                              ),
                             )),
                   ),
                   Row(children: [

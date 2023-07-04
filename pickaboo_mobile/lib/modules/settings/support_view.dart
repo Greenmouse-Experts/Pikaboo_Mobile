@@ -37,7 +37,8 @@ class SupportView extends ConsumerWidget {
                   Image.asset('assets/images/icons/support.png'),
                   SizedBox(width: width(context) * 0.05),
                   PageHeader(
-                      title: 'Hello, ${homeOwner?.ownersName ?? ''}',
+                      title:
+                          'Hello, ${homeOwner?.firstName ?? ''} ${homeOwner?.lastName ?? ''}',
                       hasSearch: false)
                 ],
               ),

@@ -5,7 +5,8 @@ import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
 class RequestDetailsView extends StatelessWidget {
-  const RequestDetailsView({super.key});
+  final bool isActive;
+  const RequestDetailsView({super.key, required this.isActive});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,22 @@ class RequestDetailsView extends StatelessWidget {
           const Spacer(),
           Padding(
             padding: screenPadding(context),
-            child: AppButton(text: 'Close', onPressed: () => context.pop()),
+            child: isActive
+                ? Row(
+                    children: [
+                      Expanded(
+                          child: AppButton(
+                              text: 'Close', onPressed: () => context.pop())),
+                      SizedBox(width: width(context) * 0.05),
+                      Expanded(
+                        child: AppButton(
+                            text: 'Trackk',
+                            onPressed: () =>
+                                context.pushNamed(AppRouter.mapView)),
+                      )
+                    ],
+                  )
+                : AppButton(text: 'Close', onPressed: () => context.pop()),
           )
         ],
       )),

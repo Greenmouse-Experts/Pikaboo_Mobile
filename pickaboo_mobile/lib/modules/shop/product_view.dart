@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../data/models/models.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/check_out_modal.dart';
 import '../../widgets/widgets.dart';
@@ -20,6 +22,12 @@ class ProductView extends StatelessWidget {
             return const CheckoutModal();
           });
     }
+
+    final product = ProductsSchema.fromRawJson(productId);
+    final images = product.images ?? [];
+    final image = product.images == null || product.images!.isEmpty
+        ? 'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png'
+        : product.images![0];
 
     return Scaffold(
       appBar: customAppBar3(context,
@@ -42,7 +50,23 @@ class ProductView extends StatelessWidget {
             Column(
               children: [
                 SizedBox(height: height(context) * 0.04),
-                Image.asset('assets/images/dummy_prod.png'),
+                SizedBox(
+                  height: height(context) * 0.275,
+                  width: width(context),
+                  child: CachedNetworkImage(
+                      imageUrl: image,
+                      errorWidget: (context, url, error) {
+                        return Image.asset('assets/images/pickaboo_logo.png');
+                      },
+                      progressIndicatorBuilder: (context, url, progress) =>
+                          Center(
+                            child: CircularProgressIndicator(
+                              value: progress.progress,
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                  AppColors.primary),
+                            ),
+                          )),
+                ),
                 SizedBox(height: height(context) * 0.04),
               ],
             ),
@@ -60,39 +84,28 @@ class ProductView extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text('Green Container', style: semi20(context)),
+                      Text(product.name ?? '', style: semi20(context)),
                       const Spacer(),
-                      TextButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.bookmark_outline_outlined,
-                            color: Colors.black,
-                            size: width(context) * 0.05,
-                          ),
-                          label: Text(
-                            'Save',
-                            style: regular13(context),
-                          )),
                     ],
                   ),
-                  Text(
-                      'Limited to food waste, yard waste, green waste, other organic materials.',
+                  Text(product.description ?? '',
                       style: medium13(context)
                           .copyWith(color: Colors.black.withOpacity(0.4))),
-                  SizedBox(
-                    height: width(context) * 0.33,
-                    child: ListView.builder(
-                        itemCount: 5,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, i) => Padding(
-                              padding:
-                                  EdgeInsets.only(right: width(context) * 0.02),
-                              child: const ProductImage(
-                                image:
-                                    'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png',
-                              ),
-                            )),
-                  ),
+                  images.isEmpty
+                      ? const SizedBox()
+                      : SizedBox(
+                          height: width(context) * 0.33,
+                          child: ListView.builder(
+                              itemCount: images.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, i) => Padding(
+                                    padding: EdgeInsets.only(
+                                        right: width(context) * 0.02),
+                                    child: ProductImage(
+                                      image: images[i],
+                                    ),
+                                  )),
+                        ),
                   Row(children: [
                     Text('Color', style: medium13(context)),
                     SizedBox(width: width(context) * 0.05),

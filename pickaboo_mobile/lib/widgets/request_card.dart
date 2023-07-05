@@ -32,7 +32,8 @@ class RequestCard extends StatelessWidget {
                   const LocationText(),
                   const Spacer(),
                   InkWell(
-                    onTap: () => context.pushNamed(AppRouter.requstDetails),
+                    onTap: () => context.pushNamed(AppRouter.requstDetails,
+                        pathParameters: {'isActive': 'yes'}),
                     child: Row(
                       children: [
                         Text(

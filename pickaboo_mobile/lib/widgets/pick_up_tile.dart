@@ -130,7 +130,8 @@ class PickUpCard extends StatelessWidget {
             ),
             const Spacer(),
             InkWell(
-              onTap: () => context.pushNamed(AppRouter.requstDetails),
+              onTap: () => context.pushNamed(AppRouter.requstDetails,
+                  pathParameters: {'isActive': 'yes'}),
               child: Row(
                 children: [
                   isActive

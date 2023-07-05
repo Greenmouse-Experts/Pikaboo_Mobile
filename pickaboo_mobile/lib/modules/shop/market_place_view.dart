@@ -13,7 +13,7 @@ class MarketPlaceView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final poductNotifier = ref.watch(
+    final productNotifier = ref.watch(
       productProvider,
     );
     return Scaffold(
@@ -46,7 +46,7 @@ class MarketPlaceView extends ConsumerWidget {
             child: Padding(
                 padding: screenPadding(context),
                 child: FutureBuilder(
-                    future: poductNotifier.getAllProducts(ref: ref),
+                    future: productNotifier.getAllProducts(ref: ref),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const PageLoader();
@@ -80,23 +80,35 @@ class MarketPlaceView extends ConsumerWidget {
                               return Row(
                                 children: [
                                   IconButton(
-                                      onPressed: () {},
+                                      onPressed:
+                                          productNotifier.links?.next == null
+                                              ? null
+                                              : () {},
                                       icon: Icon(
                                         Icons.skip_previous,
-                                        color: AppColors.primary,
+                                        color:
+                                            productNotifier.links?.next == null
+                                                ? null
+                                                : AppColors.primary,
                                         size: isMobile(context)
                                             ? width(context) * 0.06
                                             : width(context) * 0.05,
                                       )),
                                   Text(
-                                    'Page 1 / 1',
+                                    'Page ${productNotifier.meta?.currentPage ?? '1'} / ${productNotifier.meta?.lastPage ?? '1'}',
                                     style: regular14(context),
                                   ),
                                   IconButton(
-                                      onPressed: () {},
+                                      onPressed:
+                                          productNotifier.links?.next == null
+                                              ? null
+                                              : () {},
                                       icon: Icon(
                                         Icons.skip_next,
-                                        color: AppColors.primary,
+                                        color:
+                                            productNotifier.links?.next == null
+                                                ? null
+                                                : AppColors.primary,
                                         size: isMobile(context)
                                             ? width(context) * 0.06
                                             : width(context) * 0.05,

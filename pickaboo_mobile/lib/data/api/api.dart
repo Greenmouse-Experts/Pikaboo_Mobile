@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pickaboo_mobile/controllers/auth/auth_controller.dart';
 
+import '../../controllers/auth/auth_controller.dart';
 import '../constants.dart';
 import 'api_response.dart';
 

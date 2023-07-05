@@ -11,6 +11,7 @@ import '../modules/fund/fund_view.dart';
 import '../modules/fund/transactions_history_view.dart';
 import '../modules/history/driver_history_view.dart';
 import '../modules/history/history_view.dart';
+import '../modules/map/map_view.dart';
 import '../modules/notifications/notifications_view.dart';
 import '../modules/onboarding/views.dart';
 import '../modules/requests/views.dart';
@@ -49,6 +50,7 @@ class AppRouter {
   static const String addressView = 'addressView';
   static const String driverLogin = 'driverLogin';
   static const String feedbackStatus = 'feedbackStatusViiew';
+  static const String mapView = 'mapViiew';
 }
 
 final GoRouter _router = GoRouter(routes: <RouteBase>[
@@ -168,8 +170,10 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             builder: (context, state) => const UserRequestsView()),
         GoRoute(
             name: AppRouter.requstDetails,
-            path: AppRouter.requstDetails,
-            builder: (context, state) => const RequestDetailsView()),
+            path: '${AppRouter.requstDetails}/:isActive',
+            builder: (context, state) => RequestDetailsView(
+                  isActive: state.pathParameters['isActive']! == 'yes',
+                )),
         GoRoute(
             name: AppRouter.addressView,
             path: AppRouter.addressView,
@@ -182,6 +186,10 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             name: AppRouter.feedbackStatus,
             path: AppRouter.feedbackStatus,
             builder: (context, state) => const FeedbackStatusView()),
+        GoRoute(
+            name: AppRouter.mapView,
+            path: AppRouter.mapView,
+            builder: (context, state) => const AppMapView()),
       ]),
 ]);
 

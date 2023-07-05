@@ -11,4 +11,10 @@ class ProductRepository {
     final response = _api.getData('/home-residence/get/products', ref: ref);
     return response;
   }
+
+  Future<ApiResponse> handlePagination(
+      {required WidgetRef ref, required String endpoint}) async {
+    final response = _api.getData(endpoint, ref: ref);
+    return response;
+  }
 }

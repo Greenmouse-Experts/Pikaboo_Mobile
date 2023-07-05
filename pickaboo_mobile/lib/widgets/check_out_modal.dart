@@ -21,10 +21,7 @@ class _CheckoutModalState extends State<CheckoutModal> {
   @override
   void initState() {
     super.initState();
-    //  plugin.
-    plugin.initialize(
-      publicKey: publicKey,
-    );
+    plugin.initialize(publicKey: publicKey);
   }
 
   void checkout() async {
@@ -32,16 +29,11 @@ class _CheckoutModalState extends State<CheckoutModal> {
       ..amount = 600000
       ..reference = 'TR-${DateTime.now().millisecondsSinceEpoch}'
       ..email = 'greenmouseapp@gmail.com'
-      ..accessCode = 'sk_test_bcfe24dd9cd0ec46cd0a06637406ea3b7333b9bd'
       ..currency = "NGN";
 
     plugin
-        .checkout(
-      context,
-      method: CheckoutMethod.card,
-      charge: charge,
-      fullscreen: true,
-    )
+        .checkout(context,
+            method: CheckoutMethod.card, charge: charge, fullscreen: true)
         .then((value) {
       if (value.status == true) {
         context.pop();

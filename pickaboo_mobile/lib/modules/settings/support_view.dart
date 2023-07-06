@@ -11,17 +11,21 @@ class SupportView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final homeOwner = ref.watch(authProvider).homeOwner;
+    final homeOwner = ref.watch(authProvider).user;
+    final name = homeOwner?.firstName ?? '';
+    final image = homeOwner?.avatar ?? '';
     return Scaffold(
       appBar: customAppBar3(context,
           hasElevation: false,
           bgColor: AppColors.fadeGreen,
           actions: [
-            CircleAvatar(
-                radius: width(context) * 0.04,
-                backgroundColor: AppColors.lightAsh,
-                child: Image.asset('assets/images/dummy_icon.png',
-                    fit: BoxFit.cover)),
+            AppAvatar(
+              name: name,
+              imgUrl: image,
+              radius: isMobile(context)
+                  ? width(context) * 0.045
+                  : width(context) * 0.04,
+            ),
             SizedBox(width: width(context) * 0.04)
           ]),
       body: Column(

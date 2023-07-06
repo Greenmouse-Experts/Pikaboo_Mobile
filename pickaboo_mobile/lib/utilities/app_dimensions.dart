@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 const double baseScreenWidth = 430;
 
-double width(BuildContext context) => MediaQuery.of(context).size.width;
+double width(BuildContext context) => MediaQuery.sizeOf(context).width;
 
-double height(BuildContext context) => MediaQuery.of(context).size.height;
+double height(BuildContext context) => MediaQuery.sizeOf(context).height;
 
 double adjustedHeight(BuildContext context) =>
-    MediaQuery.of(context).size.height - (height(context) * 0.1) - 56;
+    MediaQuery.sizeOf(context).height - (height(context) * 0.1) - 56;
 
 EdgeInsets screenPadding(BuildContext context) => EdgeInsets.symmetric(
     vertical: height(context) * 0.01, horizontal: width(context) * 0.04);
@@ -26,4 +26,4 @@ double calculateTextSize(BuildContext context, double fontSize) {
   return calculatedFontSize;
 }
 
-bool isMobile(BuildContext context) => MediaQuery.of(context).size.width < 480;
+bool isMobile(BuildContext context) => MediaQuery.sizeOf(context).width < 480;

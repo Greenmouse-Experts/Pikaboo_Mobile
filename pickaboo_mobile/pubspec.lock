@@ -33,6 +33,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
+  badges:
+    dependency: "direct main"
+    description:
+      name: badges
+      sha256: "6e7f3ec561ec08f47f912cfe349d4a1707afdc8dda271e17b046aa6d42c89e77"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -258,10 +266,18 @@ packages:
     dependency: transitive
     description:
       name: flutter_cache_manager
-      sha256: "32cd900555219333326a2d0653aaaf8671264c29befa65bbd9856d204a4c9fb3"
+      sha256: "8207f27539deb83732fdda03e259349046a39a4c767269285f449ade355d54ba"
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.0"
+    version: "3.3.1"
+  flutter_google_map_polyline_point:
+    dependency: "direct main"
+    description:
+      name: flutter_google_map_polyline_point
+      sha256: da6101ca04fd8ab928cf944c3d053c4cfa29532dd5ae8e19d7bd56f5edf2c555
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -286,14 +302,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
-  flutter_paystack:
-    dependency: "direct main"
-    description:
-      name: flutter_paystack
-      sha256: b2038c8f0cfa5a3bdb7b0e2016ceaedbc57e4445180ce6aea56cb0d83a016973
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.7"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -348,10 +356,10 @@ packages:
     dependency: "direct main"
     description:
       name: google_fonts
-      sha256: "6b6f10f0ce3c42f6552d1c70d2c28d764cf22bb487f50f66cca31dcd5194f4d6"
+      sha256: "2776c66b3e97c6cdd58d1bd3281548b074b64f1fd5c8f82391f7456e38849567"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.4"
+    version: "4.0.5"
   google_maps:
     dependency: transitive
     description:
@@ -412,10 +420,10 @@ packages:
     dependency: "direct main"
     description:
       name: http
-      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
+      sha256: "759d1a329847dd0f39226c688d3e06a6b8679668e350e2891a6474f8b4bb8525"
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.6"
+    version: "1.1.0"
   http_parser:
     dependency: transitive
     description:
@@ -497,7 +505,7 @@ packages:
     source: hosted
     version: "0.2.1"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"
@@ -536,6 +544,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  location:
+    dependency: "direct main"
+    description:
+      name: location
+      sha256: "9051959f6f2ccadd887b28b66e9cbbcc25b6838e37cf9e894c421ccc0ebf80b5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.4.0"
+  location_platform_interface:
+    dependency: transitive
+    description:
+      name: location_platform_interface
+      sha256: "62eeaf1658e92e4459b727f55a3c328eccbac8ba043fa6d262ac5286ad48384c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
+  location_web:
+    dependency: transitive
+    description:
+      name: location_web
+      sha256: "6c08c408a040534c0269c4ff9fe17eebb5a36dea16512fbaf116b9c8bc21545b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   logging:
     dependency: transitive
     description:
@@ -648,14 +680,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.7"
-  pedantic:
-    dependency: transitive
-    description:
-      name: pedantic
-      sha256: "67fc27ed9639506c856c840ccce7594d0bdcd91bc8d53d6e52359449a1d50602"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.11.1"
   petitparser:
     dependency: transitive
     description:
@@ -966,5 +990,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.0.0 <4.0.0"
+  dart: ">=3.0.5 <4.0.0"
   flutter: ">=3.10.0"

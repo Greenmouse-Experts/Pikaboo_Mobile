@@ -26,4 +26,10 @@ class AuthRepository {
         _api.postData('/profile/upload/profile-picture', data: data, ref: ref);
     return response;
   }
+
+  Future<ApiResponse> topupWallet(String reference, WidgetRef ref) async {
+    final response = _api.postData('/top-up/using/paystack',
+        data: {'ref_id': reference}, ref: ref);
+    return response;
+  }
 }

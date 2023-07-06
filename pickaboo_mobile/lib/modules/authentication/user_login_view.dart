@@ -117,13 +117,12 @@ class _UserLoginViewState extends ConsumerState<UserLoginView> {
                               text: 'Login',
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  ref
-                                      .read(authProvider.notifier)
-                                      .homeOwnerLogin(
-                                          context: context,
-                                          phone: _phone.text,
-                                          ref: ref,
-                                          otp: _otp.text);
+                                  ref.read(authProvider.notifier).userLogin(
+                                      context: context,
+                                      phone: _phone.text,
+                                      isUser: true,
+                                      ref: ref,
+                                      otp: _otp.text);
                                 }
                               }),
                           SizedBox(height: height(context) * 0.03),

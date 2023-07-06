@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../controllers/auth/auth_controller.dart';
 import '../../controllers/products/product_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
@@ -16,6 +17,9 @@ class MarketPlaceView extends ConsumerWidget {
     final productNotifier = ref.watch(
       productProvider,
     );
+    final homeOwner = ref.watch(authProvider).user;
+    final name = homeOwner?.firstName ?? '';
+    final image = homeOwner?.avatar ?? '';
     return Scaffold(
       appBar: customAppBar5(context,
           hasElevation: false,
@@ -33,11 +37,12 @@ class MarketPlaceView extends ConsumerWidget {
                           .updateIndex(0);
                     },
           actions: [
-            CircleAvatar(
-              radius: width(context) * 0.04,
-              backgroundColor: AppColors.lightAsh,
-              child: Image.asset('assets/images/dummy_icon.png',
-                  fit: BoxFit.cover),
+            AppAvatar(
+              name: name,
+              imgUrl: image,
+              radius: isMobile(context)
+                  ? width(context) * 0.045
+                  : width(context) * 0.04,
             ),
             SizedBox(width: width(context) * 0.04)
           ]),
@@ -154,32 +159,44 @@ class MarketPlaceView extends ConsumerWidget {
                               final products =
                                   ref.watch(productProvider).products;
 
-                              return isSingle
-                                  ? ListView.builder(
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount: products.length,
-                                      itemBuilder: (context, i) => ProductCard(
-                                            product: products[i],
-                                          ))
-                                  : GridView.builder(
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              childAspectRatio: 0.92,
-                                              crossAxisSpacing:
-                                                  width(context) * 0.05,
-                                              mainAxisSpacing:
-                                                  height(context) * 0.02),
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount: products.length,
-                                      itemBuilder: (context, i) =>
-                                          ProductGridCard(
-                                            product: products[i],
-                                          ));
+                              return ref.watch(productProvider).products.isEmpty
+                                  ? Container(
+                                      alignment: Alignment.center,
+                                      height: height(context) * 0.4,
+                                      child: Center(
+                                          child: Text(
+                                        'No products available currently, Check again later',
+                                        textAlign: TextAlign.center,
+                                        style: medium16(context),
+                                      )),
+                                    )
+                                  : isSingle
+                                      ? ListView.builder(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemCount: products.length,
+                                          itemBuilder: (context, i) =>
+                                              ProductCard(
+                                                product: products[i],
+                                              ))
+                                      : GridView.builder(
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2,
+                                                  childAspectRatio: 0.92,
+                                                  crossAxisSpacing:
+                                                      width(context) * 0.05,
+                                                  mainAxisSpacing:
+                                                      height(context) * 0.02),
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemCount: products.length,
+                                          itemBuilder: (context, i) =>
+                                              ProductGridCard(
+                                                product: products[i],
+                                              ));
                             })
                           ],
                         );

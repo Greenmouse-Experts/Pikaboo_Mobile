@@ -11,7 +11,10 @@ class UserHomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final homeOwner = ref.watch(authProvider).homeOwner;
+    final homeOwner = ref.watch(authProvider).user;
+    final name = homeOwner?.firstName ?? '';
+    final image = homeOwner?.avatar ?? '';
+    final notificationCount = homeOwner?.notificationsCount;
     return Scaffold(
       appBar: customAppBar2(context,
           hasElevation: false,
@@ -19,11 +22,12 @@ class UserHomeView extends ConsumerWidget {
           ref: ref,
           hasHamburger: true,
           actions: [
-            CircleAvatar(
-              radius: width(context) * 0.04,
-              backgroundColor: AppColors.lightAsh,
-              child: Image.asset('assets/images/dummy_icon.png',
-                  fit: BoxFit.cover),
+            AppAvatar(
+              name: name,
+              imgUrl: image,
+              radius: isMobile(context)
+                  ? width(context) * 0.045
+                  : width(context) * 0.04,
             ),
             SizedBox(width: width(context) * 0.04)
           ]),
@@ -69,23 +73,35 @@ class UserHomeView extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(width: width(context)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'NGN 13,000',
-                            style: medium20(context),
-                          ),
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.visibility_outlined,
-                                size: isMobile(context)
-                                    ? width(context) * 0.05
-                                    : width(context) * 0.04,
-                              ))
-                        ],
-                      ),
+                      Consumer(builder: (context, ref, child) {
+                        final amount = ref.watch(authProvider).wallet ?? '0.00';
+                        final isVisible = ref.watch(_visibleProvider);
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              isVisible
+                                  ? 'NGN ${amount.formatWithCommas}'
+                                  : 'NGN *****',
+                              style: medium20(context),
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  ref
+                                      .read(_visibleProvider.notifier)
+                                      .switchVisibility();
+                                },
+                                icon: Icon(
+                                  !isVisible
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                                  size: isMobile(context)
+                                      ? width(context) * 0.05
+                                      : width(context) * 0.04,
+                                ))
+                          ],
+                        );
+                      }),
                       SizedBox(height: height(context) * 0.003),
                       Text.rich(
                         TextSpan(
@@ -123,10 +139,11 @@ class UserHomeView extends ConsumerWidget {
                             title: 'History',
                             image: 'history',
                           ),
-                          UserRowIcon(
+                          NootificationIcon(
                             onTap: () =>
                                 context.pushNamed(AppRouter.notifications),
                             bgColor: AppColors.orange,
+                            notification: notificationCount,
                             title: 'Notification',
                             image: 'notification',
                           )
@@ -193,5 +210,19 @@ class UserHomeView extends ConsumerWidget {
         ))),
       ),
     );
+  }
+}
+
+final _visibleProvider =
+    NotifierProvider<_VisibleNotifier, bool>(_VisibleNotifier.new);
+
+class _VisibleNotifier extends Notifier<bool> {
+  @override
+  build() {
+    return false;
+  }
+
+  void switchVisibility() {
+    state = !state;
   }
 }

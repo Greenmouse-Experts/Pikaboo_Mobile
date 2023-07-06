@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../controllers/auth/auth_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 import '../driver_dashboard/driver_dashboard_vm.dart';
@@ -12,6 +13,9 @@ class TermsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(authProvider).user;
+    final firstName = user?.firstName ?? '';
+    final image = user?.avatar ?? '';
     return Scaffold(
       backgroundColor: AppColors.altWhite,
       appBar: customAppBar5(context,
@@ -23,11 +27,9 @@ class TermsView extends ConsumerWidget {
           ref.read(DriverDashboardViewModel.provider.notifier).updateIndex(0);
         }
       }, actions: [
-        CircleAvatar(
-          radius: width(context) * 0.04,
-          backgroundColor: AppColors.lightAsh,
-          child: Image.asset('assets/images/dummy_icon.png', fit: BoxFit.cover),
-        ),
+        isAnon == 'yes'
+            ? const QuestionIcon()
+            : AppBarIcon(name: firstName, image: image),
         SizedBox(width: width(context) * 0.04)
       ]),
       body: SingleChildScrollView(

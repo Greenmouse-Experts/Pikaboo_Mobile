@@ -17,30 +17,84 @@ final authProvider = ChangeNotifierProvider<_AuthNotifier>((ref) {
 class _AuthNotifier extends ChangeNotifier {
   final _repo = AuthRepository();
 
-  HomeOwnerSchema? _homeOwner;
-  HomeOwnerSchema? get homeOwner => _homeOwner;
+  UserSchema? _user;
+  UserSchema? get user => _user;
 
   String? _token;
   String? get token => _token;
 
-  Future<void> homeOwnerLogin(
+  String? _wallet;
+  String? get wallet => _wallet;
+
+  Future<void> userLogin(
       {required BuildContext context,
       required String phone,
       required String otp,
+      required bool isUser,
       required WidgetRef ref}) async {
     AppOverlays.loadingDialog(context: context);
     try {
       final payload = _getUserLoginPayload(phone: phone, otp: otp);
       _repo.login(payload, ref).then((response) {
         if (response.isSuccessful) {
+          _user = UserSchema.fromJson(response.data);
+
+          if (!isUser) {
+            if (_user?.accountType != 'Service Personnel') {
+              context.pop();
+              AppOverlays.showErrorDialog(
+                  context: context,
+                  error:
+                      "Your account is a Home Resident account, You can't login as a Service Personnel");
+              return;
+            }
+          } else {
+            if (_user?.accountType == 'Service Personnel') {
+              context.pop();
+              AppOverlays.showErrorDialog(
+                  context: context,
+                  error:
+                      "Your account is a Service Personnel account, You can't login as a Home Resident");
+              return;
+            }
+          }
+
           _token = response.token;
-          _homeOwner = HomeOwnerSchema.fromJson(response.data);
+          _wallet = _user?.wallet;
           context.pop();
-          context.goNamed(AppRouter.userDashboard);
+          context.goNamed(
+              isUser ? AppRouter.userDashboard : AppRouter.driverDashboard);
         } else {
           context.pop();
           AppOverlays.showErrorDialog(
               context: context, error: response.message);
+        }
+      });
+    } catch (e) {
+      context.pop();
+      AppOverlays.showErrorDialog(context: context, error: e);
+    }
+  }
+
+  Future<void> topupWallet(
+      {required BuildContext context,
+      required String reference,
+      required WidgetRef ref}) async {
+    AppOverlays.loadingDialog(context: context);
+    try {
+      _repo.topupWallet(reference, ref).then((response) {
+        if (response.isSuccessful) {
+          context.pop();
+          _wallet = response.data.toString();
+          notifyListeners();
+          AppOverlays.showSuccessDialog(
+              context: context,
+              content: response.message ?? 'Balance updated successfully');
+        } else {
+          context.pop();
+          AppOverlays.showErrorDialog(
+              context: context,
+              error: response.message ?? 'An unknown error occurred');
         }
       });
     } catch (e) {
@@ -59,7 +113,7 @@ class _AuthNotifier extends ChangeNotifier {
       _repo.updateProfilePicture(payload, ref).then((response) {
         if (response.isSuccessful) {
           context.pop();
-          _homeOwner = HomeOwnerSchema.fromJson(response.data);
+          _user = UserSchema.fromJson(response.data);
           notifyListeners();
           AppOverlays.showSuccessDialog(
               context: context,
@@ -102,7 +156,7 @@ class _AuthNotifier extends ChangeNotifier {
 
   void logout({required BuildContext context}) {
     context.goNamed(AppRouter.dashboard);
-    _homeOwner == null;
+    _user == null;
   }
 
   Map<String, String> _getUserLoginPayload({

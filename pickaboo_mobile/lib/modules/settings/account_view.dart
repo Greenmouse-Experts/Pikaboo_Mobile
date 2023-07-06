@@ -36,10 +36,10 @@ class _AccountViewState extends ConsumerState<AccountView> {
 
   @override
   Widget build(BuildContext context) {
-    final homeOwner = ref.watch(authProvider).homeOwner;
-    _name.text = '${homeOwner?.firstName ?? ''} ${homeOwner?.lastName ?? ''} ';
-    _phone.text = homeOwner?.phone ?? '';
-    _email.text = homeOwner?.email ?? '';
+    final user = ref.watch(authProvider).user;
+    _name.text = '${user?.firstName ?? ''} ${user?.lastName ?? ''} ';
+    _phone.text = user?.phone ?? '';
+    _email.text = user?.email ?? '';
     return Scaffold(
       appBar: customAppBar5(
         context,
@@ -56,9 +56,9 @@ class _AccountViewState extends ConsumerState<AccountView> {
               children: [
                 SizedBox(width: width(context)),
                 _ImageSelector(
-                    imgUrl: homeOwner?.avatar ?? '',
+                    imgUrl: user?.avatar ?? '',
                     updateImage: updateImage,
-                    name: homeOwner?.firstName),
+                    name: user?.firstName),
                 SizedBox(height: height(context) * 0.01, width: width(context)),
                 Text('Home Resident',
                     style:
@@ -97,8 +97,8 @@ class _AccountViewState extends ConsumerState<AccountView> {
                       .copyWith(color: Colors.black.withOpacity(0.4)),
                 ),
                 Consumer(builder: (context, ref, child) {
-                  final gender =
-                      ref.watch(genderProvider(homeOwner?.gender ?? ''));
+                  final gender = ref
+                      .watch(genderProvider(user?.gender?.toLowerCase() ?? ''));
 
                   return Row(
                     children: [
@@ -110,14 +110,7 @@ class _AccountViewState extends ConsumerState<AccountView> {
                             title: Text('Male', style: medium14(context)),
                             value: 'male',
                             groupValue: gender,
-                            onChanged: (String? newVal) {
-                              // onChanged: (String newVal) {
-
-                              ref
-                                  .read(genderProvider(homeOwner?.gender ?? '')
-                                      .notifier)
-                                  .updateGender(newVal ?? '');
-                            }),
+                            onChanged: (String? newVal) {}),
                       ),
                       Expanded(
                         flex: 1,
@@ -127,12 +120,7 @@ class _AccountViewState extends ConsumerState<AccountView> {
                             title: Text('Female', style: medium14(context)),
                             value: 'female',
                             groupValue: gender,
-                            onChanged: (String? newVal) {
-                              ref
-                                  .read(genderProvider(homeOwner?.gender ?? '')
-                                      .notifier)
-                                  .updateGender(newVal ?? '');
-                            }),
+                            onChanged: (String? newVal) {}),
                       ),
                       SizedBox(width: width(context) * 0.22)
                     ],
@@ -171,47 +159,49 @@ class _ImageSelector extends StatefulWidget {
 class __ImageSelectorState extends State<_ImageSelector> {
   final ImagePicker _picker = ImagePicker();
   String? selectedImg;
+
+  Future<void> _selectImage() async {
+    try {
+      final image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        final imageTemp = File(image.path);
+
+        setState(() {
+          selectedImg = imageTemp.path;
+          widget.updateImage(imageTemp);
+        });
+      }
+    } catch (e) {
+      AppOverlays.showErrorDialog(context: context, error: e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        InkWell(
-          onTap: () async {
-            try {
-              final image =
-                  await _picker.pickImage(source: ImageSource.gallery);
-              if (image != null) {
-                final imageTemp = File(image.path);
-
-                setState(() {
-                  selectedImg = imageTemp.path;
-                  widget.updateImage(imageTemp);
-                });
-              }
-            } catch (e) {
-              AppOverlays.showErrorDialog(context: context, error: e);
-            }
-          },
-          child: AppAvatar(
+    return InkWell(
+      onTap: _selectImage,
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          AppAvatar(
             imgUrl: widget.imgUrl,
             radius: width(context) * 0.08,
             selectedImg: selectedImg,
             name: widget.name ?? 'h',
           ),
-        ),
-        Positioned(
-            top: width(context) * 0.12,
-            child: Container(
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.white),
-                padding: const EdgeInsets.all(1.5),
-                child: Icon(
-                  Icons.camera_alt,
-                  size: width(context) * 0.04,
-                  color: AppColors.primary,
-                )))
-      ],
+          Positioned(
+              top: width(context) * 0.12,
+              child: Container(
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.white),
+                  padding: const EdgeInsets.all(1.5),
+                  child: Icon(
+                    Icons.camera_alt,
+                    size: width(context) * 0.04,
+                    color: AppColors.primary,
+                  )))
+        ],
+      ),
     );
   }
 }

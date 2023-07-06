@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../controllers/auth/auth_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 import '../driver_dashboard/driver_dashboard_vm.dart';
@@ -10,6 +12,10 @@ class DriverProfileView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(authProvider).user;
+    final firstName = user?.firstName ?? '';
+    final lastName = user?.lastName ?? '';
+    final image = user?.avatar ?? '';
     return Scaffold(
       appBar: customAppBar7(context, hasElevation: false, onLeadingPressed: () {
         ref.read(DriverDashboardViewModel.provider.notifier).updateIndex(0);
@@ -32,15 +38,10 @@ class DriverProfileView extends ConsumerWidget {
                   Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
-                      CircleAvatar(
-                          radius: width(context) * 0.08,
-                          backgroundColor: AppColors.lightAsh,
-                          child: SizedBox(
-                            width: width(context) * 0.16,
-                            height: width(context) * 0.16,
-                            child: Image.asset('assets/images/dummy_icon.png',
-                                fit: BoxFit.cover),
-                          )),
+                      AppAvatar(
+                          name: firstName,
+                          imgUrl: image,
+                          radius: width(context) * 0.08),
                       Positioned(
                           top: width(context) * 0.125,
                           child: Container(
@@ -55,7 +56,7 @@ class DriverProfileView extends ConsumerWidget {
                     ],
                   ),
                   SizedBox(height: height(context) * 0.015),
-                  Text('Ibiwari Victor',
+                  Text('$firstName $lastName',
                       style: medium20(context).copyWith(color: Colors.white)),
                   SizedBox(height: height(context) * 0.01),
                   Text('Service Personnel',
@@ -73,17 +74,14 @@ class DriverProfileView extends ConsumerWidget {
                       icon: Icons.people,
                       title: 'Account',
                       subTitle: 'Name, Email address, Phone number, Card...',
-                      onPressed: () {}),
-                  ServiceProfileTile(
-                      icon: Icons.location_pin,
-                      title: 'My Address',
-                      subTitle: 'Name, Email address, Phone number, Card...',
-                      onPressed: () {}),
+                      onPressed: () =>
+                          context.pushNamed(AppRouter.accountView)),
                   ServiceProfileTile(
                       icon: Icons.notifications,
                       title: 'Notifications',
-                      subTitle: 'Name, Email address, Phone number, Card...',
-                      onPressed: () {}),
+                      subTitle: 'View all your notifications',
+                      onPressed: () =>
+                          context.pushNamed(AppRouter.notifications)),
                   ServiceProfileTile(
                       icon: Icons.support_agent,
                       title: 'Support',

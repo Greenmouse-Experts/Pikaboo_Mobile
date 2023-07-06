@@ -1,6 +1,6 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_paystack/flutter_paystack.dart';
+//import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:go_router/go_router.dart';
 
 import '../data/constants.dart';
@@ -15,31 +15,31 @@ class CheckoutModal extends StatefulWidget {
 }
 
 class _CheckoutModalState extends State<CheckoutModal> {
-  final plugin = PaystackPlugin();
-  final publicKey = Constants.paystackPublicKey;
+  // final plugin = PaystackPlugin();
+  // final publicKey = Constants.paystackPublicKey;
 
   @override
   void initState() {
     super.initState();
-    plugin.initialize(publicKey: publicKey);
+    // plugin.initialize(publicKey: publicKey);
   }
 
   void checkout() async {
-    Charge charge = Charge()
-      ..amount = 600000
-      ..reference = 'TR-${DateTime.now().millisecondsSinceEpoch}'
-      ..email = 'greenmouseapp@gmail.com'
-      ..currency = "NGN";
+    // Charge charge = Charge()
+    //   ..amount = 600000
+    //   ..reference = 'TR-${DateTime.now().millisecondsSinceEpoch}'
+    //   ..email = 'greenmouseapp@gmail.com'
+    //   ..currency = "NGN";
 
-    plugin
-        .checkout(context,
-            method: CheckoutMethod.card, charge: charge, fullscreen: true)
-        .then((value) {
-      if (value.status == true) {
-        context.pop();
-        context.pushNamed(AppRouter.fundStatus);
-      } else {}
-    });
+    // plugin
+    //     .checkout(context,
+    //         method: CheckoutMethod.card, charge: charge, fullscreen: true)
+    //     .then((value) {
+    //   if (value.status == true) {
+    //     context.pop();
+    //     context.pushNamed(AppRouter.fundStatus);
+    //   } else {}
+    // });
   }
 
   @override

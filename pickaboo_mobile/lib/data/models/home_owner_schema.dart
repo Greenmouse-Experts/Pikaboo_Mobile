@@ -1,23 +1,23 @@
 // To parse this JSON data, do
 //
-//     final homeOwnerSchema = homeOwnerSchemaFromJson(jsonString);
+//     final userSchema = userSchemaFromJson(jsonString);
 
 import 'dart:convert';
 
-class HomeOwnerSchema {
+class UserSchema {
   int? id;
   String? pikabooId;
   String? accountType;
   String? title;
   String? firstName;
-  String? middleName;
+  dynamic middleName;
   String? lastName;
   String? email;
   String? phone;
-  dynamic phone2;
-  dynamic gender;
+  String? phone2;
+  String? gender;
   dynamic dob;
-  dynamic avatar;
+  String? avatar;
   DateTime? emailVerifiedAt;
   String? currentPassword;
   dynamic role;
@@ -25,14 +25,16 @@ class HomeOwnerSchema {
   dynamic fcmToken;
   dynamic meansOfIdentification;
   String? address;
-  dynamic unitOfOperation;
+  dynamic zoneId;
   dynamic truckId;
   String? status;
   String? isVerified;
   DateTime? createdAt;
   String? createdByWho;
+  Zone? zone;
+  int? notificationsCount;
 
-  HomeOwnerSchema({
+  UserSchema({
     this.id,
     this.pikabooId,
     this.accountType,
@@ -53,21 +55,22 @@ class HomeOwnerSchema {
     this.fcmToken,
     this.meansOfIdentification,
     this.address,
-    this.unitOfOperation,
+    this.zoneId,
     this.truckId,
     this.status,
     this.isVerified,
     this.createdAt,
     this.createdByWho,
+    this.zone,
+    this.notificationsCount,
   });
 
-  factory HomeOwnerSchema.fromRawJson(String str) =>
-      HomeOwnerSchema.fromJson(json.decode(str));
+  factory UserSchema.fromRawJson(String str) =>
+      UserSchema.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory HomeOwnerSchema.fromJson(Map<String, dynamic> json) =>
-      HomeOwnerSchema(
+  factory UserSchema.fromJson(Map<String, dynamic> json) => UserSchema(
         id: json["id"],
         pikabooId: json["pikaboo_id"],
         accountType: json["account_type"],
@@ -90,7 +93,7 @@ class HomeOwnerSchema {
         fcmToken: json["fcm_token"],
         meansOfIdentification: json["means_of_identification"],
         address: json["address"],
-        unitOfOperation: json["unit_of_operation"],
+        zoneId: json["zone_id"],
         truckId: json["truck_id"],
         status: json["status"],
         isVerified: json["isVerified"],
@@ -98,6 +101,8 @@ class HomeOwnerSchema {
             ? null
             : DateTime.parse(json["created_at"]),
         createdByWho: json["created_by_who"],
+        zone: json["zone"] == null ? null : Zone.fromJson(json["zone"]),
+        notificationsCount: json["notifications_count"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -121,11 +126,37 @@ class HomeOwnerSchema {
         "fcm_token": fcmToken,
         "means_of_identification": meansOfIdentification,
         "address": address,
-        "unit_of_operation": unitOfOperation,
+        "zone_id": zoneId,
         "truck_id": truckId,
         "status": status,
         "isVerified": isVerified,
         "created_at": createdAt?.toIso8601String(),
         "created_by_who": createdByWho,
+        "zone": zone?.toJson(),
+        "notifications_count": notificationsCount,
+      };
+}
+
+class Zone {
+  String? zoneId;
+  String? name;
+
+  Zone({
+    this.zoneId,
+    this.name,
+  });
+
+  factory Zone.fromRawJson(String str) => Zone.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Zone.fromJson(Map<String, dynamic> json) => Zone(
+        zoneId: json["zone_id"],
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "zone_id": zoneId,
+        "name": name,
       };
 }

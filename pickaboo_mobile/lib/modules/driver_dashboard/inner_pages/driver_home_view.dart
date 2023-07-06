@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../controllers/auth/auth_controller.dart';
 import '../../../utilities/utilities.dart';
 import '../../../widgets/widgets.dart';
 
@@ -10,6 +11,12 @@ class DriverHomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(authProvider).user;
+    final firstName = user?.firstName ?? '';
+    final lastName = user?.lastName ?? '';
+    final image = user?.avatar ?? '';
+    final notificationCount = user?.notificationsCount;
+
     return Scaffold(
       backgroundColor: AppColors.primary,
       appBar: customAppBar2(context,
@@ -20,10 +27,18 @@ class DriverHomeView extends ConsumerWidget {
           actions: [
             IconButton(
                 onPressed: () => context.pushNamed(AppRouter.notifications),
-                icon: Icon(
-                  Icons.notifications,
-                  size: width(context) * 0.05,
-                  color: AppColors.gold,
+                icon: Badge(
+                  label: notificationCount == null
+                      ? null
+                      : Text('$notificationCount'),
+                  backgroundColor:
+                      notificationCount == null ? Colors.transparent : null,
+                  padding: const EdgeInsets.all(3),
+                  child: Icon(
+                    Icons.notifications,
+                    size: width(context) * 0.05,
+                    color: AppColors.gold,
+                  ),
                 )),
             SizedBox(width: width(context) * 0.04)
           ]),
@@ -54,7 +69,10 @@ class DriverHomeView extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: height(context) * 0.01),
-                        const IdIcon(imageUrl: ''),
+                        IdIcon(
+                            imageUrl: image,
+                            firstName: firstName,
+                            lastName: lastName),
                         height(context) < 700
                             ? const SizedBox()
                             : SizedBox(height: adjustedHeight(context) * 0.02),
@@ -115,9 +133,11 @@ class DriverHomeView extends ConsumerWidget {
                             onTap: () => context.pushNamed(AppRouter.faq)),
                       ],
                     ),
-                    SizedBox(height: height(context) * 0.015),
-                    Text('Pick Up Alert', style: medium13(context)),
-                    SizedBox(height: height(context) * 0.015),
+                    SizedBox(height: height(context) * 0.02),
+                    Align(
+                        alignment: Alignment.center,
+                        child: Text('Pick Up Alert', style: medium13(context))),
+                    SizedBox(height: height(context) * 0.01),
                     const PickUpPreview(),
                     SizedBox(height: height(context) * 0.03),
                     Text('Stay In Touch', style: medium13(context)),

@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../controllers/auth/auth_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
-class RequestPickupView extends StatefulWidget {
+class RequestPickupView extends ConsumerStatefulWidget {
   final bool isSpecialRequest;
   const RequestPickupView({super.key, required this.isSpecialRequest});
 
   @override
-  State<RequestPickupView> createState() => _RequestPickupViewState();
+  ConsumerState<RequestPickupView> createState() =>
+      _RequestPickupViewConsumerState();
 }
 
-class _RequestPickupViewState extends State<RequestPickupView> {
+class _RequestPickupViewConsumerState extends ConsumerState<RequestPickupView> {
   TextEditingController nameController = TextEditingController();
   TextEditingController numberController = TextEditingController();
   TextEditingController addressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final homeOwner = ref.watch(authProvider).user;
+    final name = homeOwner?.firstName ?? '';
+    final image = homeOwner?.avatar ?? '';
     return Scaffold(
       appBar: customAppBar5(context, hasElevation: false, actions: [
-        CircleAvatar(
-          radius: width(context) * 0.04,
-          backgroundColor: AppColors.lightAsh,
-          child: Image.asset('assets/images/dummy_icon.png', fit: BoxFit.cover),
-        ),
+        AppBarIcon(name: name, image: image),
         SizedBox(width: width(context) * 0.04)
       ]),
       body: SingleChildScrollView(

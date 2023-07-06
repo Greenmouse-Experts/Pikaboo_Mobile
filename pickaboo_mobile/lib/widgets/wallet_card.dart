@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../utilities/utilities.dart';
 
 class WalletCard extends StatelessWidget {
-  const WalletCard({super.key});
+  final String amount;
+  const WalletCard({super.key, required this.amount});
 
   @override
   Widget build(BuildContext context) {
@@ -25,25 +27,53 @@ class WalletCard extends StatelessWidget {
           children: [
             Text('Balance',
                 style: medium13(context).copyWith(color: Colors.white)),
-            Row(
-              children: [
-                Text('NGN 13,000',
-                    style: medium20(context).copyWith(color: Colors.white)),
-                SizedBox(width: width(context) * 0.05),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.visibility_outlined,
-                        color: Colors.white,
-                        size: isMobile(context)
-                            ? width(context) * 0.06
-                            : width(context) * 0.04))
-              ],
-            ),
+            Consumer(builder: (context, ref, child) {
+              final isVisible = ref.watch(_visibleProvider);
+              return Row(
+                children: [
+                  Text(
+                      isVisible
+                          ? 'NGN ${amount.formatWithCommas}'
+                          : 'NGN *****',
+                      style: medium20(context).copyWith(color: Colors.white)),
+                  SizedBox(
+                      width: isVisible
+                          ? width(context) * 0.05
+                          : width(context) * 0.15),
+                  IconButton(
+                      onPressed: () {
+                        ref.read(_visibleProvider.notifier).switchVisibility();
+                      },
+                      icon: Icon(
+                          !isVisible
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          color: Colors.white,
+                          size: isMobile(context)
+                              ? width(context) * 0.06
+                              : width(context) * 0.04))
+                ],
+              );
+            }),
             Text('Upcoming Payment',
                 style: medium13(context).copyWith(color: Colors.white)),
           ],
         ),
       ),
     );
+  }
+}
+
+final _visibleProvider =
+    NotifierProvider<_VisibleNotifier, bool>(_VisibleNotifier.new);
+
+class _VisibleNotifier extends Notifier<bool> {
+  @override
+  build() {
+    return false;
+  }
+
+  void switchVisibility() {
+    state = !state;
   }
 }

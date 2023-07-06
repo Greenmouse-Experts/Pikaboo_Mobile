@@ -1,30 +1,81 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+// import 'package:flutter_paystack/flutter_paystack.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../controllers/auth/auth_controller.dart';
+import '../../data/constants.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
-class FundView extends StatefulWidget {
+class FundView extends ConsumerStatefulWidget {
   const FundView({super.key});
 
   @override
-  State<FundView> createState() => _FundViewState();
+  ConsumerState<FundView> createState() => _FundViewConsumerState();
 }
 
-class _FundViewState extends State<FundView> {
+class _FundViewConsumerState extends ConsumerState<FundView> {
   TextEditingController fundController = TextEditingController();
+
+  // final plugin = PaystackPlugin();
+  // final publicKey = Constants.paystackPublicKey;
+
+  @override
+  void initState() {
+    super.initState();
+    //  plugin.initialize(publicKey: publicKey);
+  }
+
+  void _fundWallet() {
+    final homeOwner = ref.watch(authProvider).user;
+    final email = homeOwner?.email ?? 'greenmouseapp@gmail.com';
+
+    if (fundController.text.isEmpty) {
+      AppOverlays.showErrorSnackBar(
+          context: context,
+          message: 'Enter an amount to fund your wallet with');
+      return;
+    }
+
+    final amount = int.parse(fundController.text) * 100;
+
+    // Charge charge = Charge()
+    //   ..amount = amount
+    //   ..reference = 'TR-${DateTime.now().millisecondsSinceEpoch}'
+    //   ..email = email
+    //   ..currency = "NGN";
+
+    // plugin
+    //     .checkout(context,
+    //         method: CheckoutMethod.card, charge: charge, fullscreen: true)
+    //     .then((value) {
+    //   if (value.status == true) {
+    //     ref.read(authProvider.notifier).topupWallet(
+    //         context: context,
+    //         reference: value.reference ??
+    //             'TR-${DateTime.now().millisecondsSinceEpoch}',
+    //         ref: ref);
+    //   } else {}
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final homeOwner = ref.watch(authProvider).user;
+    final name = homeOwner?.firstName ?? '';
+    final image = homeOwner?.avatar ?? '';
+    final wallet = ref.watch(authProvider).wallet ?? '0.00';
     return Scaffold(
       appBar: customAppBar(context,
           implyLeading: true,
           hasElevation: false,
           actions: [
-            CircleAvatar(
-              radius: width(context) * 0.04,
-              backgroundColor: AppColors.lightAsh,
-              child: Image.asset('assets/images/dummy_icon.png',
-                  fit: BoxFit.cover),
+            AppAvatar(
+              name: name,
+              imgUrl: image,
+              radius: isMobile(context)
+                  ? width(context) * 0.045
+                  : width(context) * 0.04,
             ),
             SizedBox(width: width(context) * 0.04)
           ]),
@@ -35,7 +86,7 @@ class _FundViewState extends State<FundView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const WalletCard(),
+              WalletCard(amount: wallet),
               AppTextField(
                 label: 'min - 800',
                 hasLabel: false,
@@ -44,11 +95,7 @@ class _FundViewState extends State<FundView> {
                 hintText: 'Amount(NGN)',
               ),
               SizedBox(height: height(context) * 0.02),
-              AppButton(
-                  text: 'Top Up Now',
-                  onPressed: () {
-                    context.pushReplacementNamed(AppRouter.fundStatus);
-                  }),
+              AppButton(text: 'Top Up Now', onPressed: _fundWallet),
               SizedBox(height: height(context) * 0.02),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,

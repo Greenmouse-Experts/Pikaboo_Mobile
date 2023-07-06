@@ -5,23 +5,29 @@ import 'widgets.dart';
 
 class IdIcon extends StatelessWidget {
   final String imageUrl;
-  const IdIcon({super.key, required this.imageUrl});
+  final String firstName;
+  final String lastName;
+  const IdIcon(
+      {super.key,
+      required this.imageUrl,
+      required this.firstName,
+      required this.lastName});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: AppAvatar(
-        name: 'name',
+        name: firstName,
         imgUrl: imageUrl,
         radius: width(context) * 0.07,
       ),
       title: Text(
-        'Welcome Ibiwari .V. ',
+        'Welcome $firstName .${lastName.capitalizeFirstLetter}. ',
         style: semi20(context).copyWith(color: Colors.white),
       ),
       subtitle: Text(
-        'Waste Truck Driver',
+        'Service Personnel',
         style: medium14(context).copyWith(color: Colors.white),
       ),
     );

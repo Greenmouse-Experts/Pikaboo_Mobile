@@ -69,11 +69,15 @@ class DriverDrawer extends StatelessWidget {
               title: 'Support',
             ),
             const Spacer(),
-            DrawerTile(
-              icon: Icons.logout,
-              onPressed: () {},
-              title: 'Logout',
-            ),
+            Consumer(builder: (context, ref, child) {
+              return DrawerTile(
+                icon: Icons.logout,
+                onPressed: () {
+                  AppOverlays.showLogOutDialog(context: context, ref: ref);
+                },
+                title: 'Logout',
+              );
+            }),
             const SizedBox(height: 15)
           ],
         ),

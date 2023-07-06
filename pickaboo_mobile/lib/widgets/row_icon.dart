@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:badges/badges.dart' as badge;
 
 import '../utilities/utilities.dart';
 
@@ -7,11 +8,13 @@ class UserRowIcon extends StatelessWidget {
   final String title;
   final String image;
   final VoidCallback onTap;
+  final bool hasBadge;
   const UserRowIcon(
       {super.key,
       required this.bgColor,
       required this.title,
       required this.image,
+      this.hasBadge = false,
       required this.onTap});
 
   @override
@@ -35,6 +38,75 @@ class UserRowIcon extends StatelessWidget {
               ),
             ),
           ),
+        ),
+        SizedBox(height: height(context) * 0.007),
+        Text(
+          title,
+          style: medium11(context),
+        )
+      ],
+    );
+  }
+}
+
+class NootificationIcon extends StatelessWidget {
+  final Color bgColor;
+  final String title;
+  final String image;
+  final int? notification;
+  final VoidCallback onTap;
+
+  const NootificationIcon(
+      {super.key,
+      required this.bgColor,
+      required this.title,
+      required this.image,
+      required this.onTap,
+      this.notification});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        InkWell(
+          onTap: onTap,
+          child: notification == null
+              ? Container(
+                  width: width(context) * 0.12,
+                  height: width(context) * 0.12,
+                  decoration: BoxDecoration(
+                    color: bgColor,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(width(context) * 0.04),
+                    child: Image.asset(
+                      'assets/images/icons/$image.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )
+              : badge.Badge(
+                  badgeStyle:
+                      const badge.BadgeStyle(padding: EdgeInsets.all(5)),
+                  badgeContent: Text('$notification',
+                      style: regular14(context).copyWith(color: Colors.white)),
+                  child: Container(
+                    width: width(context) * 0.12,
+                    height: width(context) * 0.12,
+                    decoration: BoxDecoration(
+                      color: bgColor,
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(width(context) * 0.04),
+                      child: Image.asset(
+                        'assets/images/icons/$image.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
         ),
         SizedBox(height: height(context) * 0.007),
         Text(

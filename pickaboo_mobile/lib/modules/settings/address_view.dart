@@ -18,7 +18,7 @@ class _AddressViewState extends ConsumerState<AddressView> {
 
   @override
   Widget build(BuildContext context) {
-    final homeOwner = ref.watch(authProvider).homeOwner;
+    final homeOwner = ref.watch(authProvider).user;
     _oldAddress.text = homeOwner?.address ?? 'No Address yet';
     return Scaffold(
       appBar: customAppBar5(context, hasElevation: false),

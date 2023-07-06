@@ -14,7 +14,7 @@ class UserProfileview extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final homeOwner = ref.watch(authProvider).homeOwner;
+    final homeOwner = ref.watch(authProvider).user;
     return Scaffold(
       appBar: customAppBar6(context, hasElevation: false, onLeadingPressed: () {
         if (isUser) {

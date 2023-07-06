@@ -108,3 +108,19 @@ class AppAvatar extends StatelessWidget {
     );
   }
 }
+
+class AppBarIcon extends StatelessWidget {
+  final String name;
+  final String image;
+  const AppBarIcon({super.key, required this.name, required this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppAvatar(
+      name: name,
+      imgUrl: image,
+      radius:
+          isMobile(context) ? width(context) * 0.045 : width(context) * 0.04,
+    );
+  }
+}

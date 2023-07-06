@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../data/models/notification_schema.dart';
 import '../utilities/utilities.dart';
 
 class NotificationTile extends StatelessWidget {
   final bool isUnread;
-  const NotificationTile({super.key, this.isUnread = true});
+  final NotificationSchema notification;
+  const NotificationTile(
+      {super.key, this.isUnread = true, required this.notification});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class NotificationTile extends StatelessWidget {
             child: Image.asset('assets/images/icons/notification.png')),
       ),
       title: Text(
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eros ligula.',
+        notification.body ?? '',
         style: medium13(context).copyWith(color: Colors.black.withOpacity(0.4)),
       ),
       trailing: IconButton(

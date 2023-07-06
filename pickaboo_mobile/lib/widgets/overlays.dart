@@ -64,6 +64,17 @@ class AppOverlays {
         });
   }
 
+  static void showErrorSnackBar(
+      {required BuildContext context, required String message}) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.red,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   static void showLogOutDialog(
       {required BuildContext context, required WidgetRef ref}) {
     showDialog(

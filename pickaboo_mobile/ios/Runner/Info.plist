@@ -34,6 +34,8 @@
 		<string>Pikaboo requires access to the microphone.</string>
 		<key>NSCameraUsageDescription</key>
 		<string>Pikaboo requires access to the camera.</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>Pikaboo requires access to your location</string>
 		<key>UISupportedInterfaceOrientations</key>
 		<array>
 			<string>UIInterfaceOrientationPortrait</string>

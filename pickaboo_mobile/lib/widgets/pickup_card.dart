@@ -20,8 +20,8 @@ class PickUpPreview extends StatelessWidget {
             bottom: height(context) * 0.01,
           ),
           leading: Container(
-              width: width(context) * 0.135,
-              height: width(context) * 0.135,
+              width: width(context) * 0.12,
+              height: width(context) * 0.12,
               decoration: BoxDecoration(
                 color: AppColors.lightGreen,
                 borderRadius: BorderRadius.circular(10),
@@ -66,16 +66,14 @@ class PickUpPreview extends StatelessWidget {
                     ),
                   ],
                 ),
-                IconButton(
-                  onPressed: () {},
-                  splashRadius: width(context) * 0.05,
-                  iconSize: width(context) * 0.05,
-                  icon: Icon(
+                InkWell(
+                  onTap: () {},
+                  child: Icon(
                     Icons.arrow_forward_ios_outlined,
                     size: width(context) * 0.05,
                     color: Colors.black,
                   ),
-                )
+                ),
               ],
             ),
           )),

@@ -49,7 +49,7 @@ class DriverHomeView extends ConsumerWidget {
           height: height(context) < 700
               ? height(context) * 0.865
               : isMobile(context)
-                  ? height(context) * 0.797
+                  ? height(context) * 0.805
                   : height(context) * 0.834,
           decoration: const BoxDecoration(
             gradient: LinearGradient(

@@ -1,45 +1,53 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:badges/badges.dart' as badge;
+import 'package:go_router/go_router.dart';
 
+import '../../controllers/cart/cart_controller.dart';
 import '../../data/models/models.dart';
 import '../../utilities/utilities.dart';
-import '../../widgets/check_out_modal.dart';
 import '../../widgets/widgets.dart';
 
 class ProductView extends StatelessWidget {
-  final String productId;
-  const ProductView({super.key, required this.productId});
+  final String product;
+  const ProductView({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
-    void showCheckOut() {
-      showModalBottomSheet(
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25), topRight: Radius.circular(25))),
-          context: context,
-          builder: (context) {
-            return const CheckoutModal();
-          });
-    }
-
-    final product = ProductsSchema.fromRawJson(productId);
-    final images = product.images ?? [];
-    final image = product.images == null || product.images!.isEmpty
+    final prod = ProductsSchema.fromRawJson(product);
+    final images = prod.images ?? [];
+    final price = prod.price ?? '0';
+    final image = prod.images == null || prod.images!.isEmpty
         ? 'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png'
-        : product.images![0];
+        : prod.images![0];
+
+    int quantity = 1;
+
+    int stock = int.parse(prod.stock ?? '0');
 
     return Scaffold(
       appBar: customAppBar3(context,
           bgColor: AppColors.fadeGreen,
           hasElevation: false,
           actions: [
-            CircleAvatar(
-              radius: width(context) * 0.04,
-              backgroundColor: AppColors.lightAsh,
-              child: Image.asset('assets/images/dummy_icon.png',
-                  fit: BoxFit.cover),
-            ),
+            Consumer(builder: (context, ref, _) {
+              return IconButton(
+                  onPressed: () => context.pushNamed(AppRouter.cartView),
+                  icon: badge.Badge(
+                    badgeContent: Text(
+                        '${ref.watch(cartProvider).localCart.length}',
+                        style:
+                            regular14(context).copyWith(color: Colors.white)),
+                    child: Icon(
+                      Icons.shopping_cart_checkout,
+                      color: AppColors.primary,
+                      size: isMobile(context)
+                          ? width(context) * 0.06
+                          : width(context) * 0.045,
+                    ),
+                  ));
+            }),
             SizedBox(width: width(context) * 0.04)
           ]),
       body: SafeArea(
@@ -84,19 +92,27 @@ class ProductView extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(product.name ?? '', style: semi20(context)),
+                      Text(prod.name ?? '', style: semi20(context)),
                       const Spacer(),
                     ],
                   ),
-                  Text(product.description ?? '',
-                      style: medium13(context)
-                          .copyWith(color: Colors.black.withOpacity(0.4))),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    height: height(context) * 0.07,
+                    width: width(context),
+                    child: Text(prod.description ?? 'Very wonderful product',
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: medium13(context)
+                            .copyWith(color: Colors.black.withOpacity(0.4))),
+                  ),
                   images.isEmpty
                       ? const SizedBox()
                       : SizedBox(
                           height: width(context) * 0.33,
                           child: ListView.builder(
                               itemCount: images.length,
+                              physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, i) => Padding(
                                     padding: EdgeInsets.only(
@@ -106,62 +122,106 @@ class ProductView extends StatelessWidget {
                                     ),
                                   )),
                         ),
+                  StatefulBuilder(builder: (context, setStater) {
+                    return Row(children: [
+                      Text('Color', style: medium13(context)),
+                      SizedBox(width: width(context) * 0.05),
+                      CircleAvatar(
+                          radius: width(context) * 0.01,
+                          backgroundColor: AppColors.primary),
+                      SizedBox(width: width(context) * 0.02),
+                      CircleAvatar(
+                          radius: width(context) * 0.01,
+                          backgroundColor: Colors.black),
+                      const Spacer(),
+                      Text('Quantity', style: medium13(context)),
+                      SizedBox(width: width(context) * 0.01),
+                      Container(
+                        width: width(context) * 0.32,
+                        height: height(context) * 0.05,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: AppColors.lightAsh),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                if (quantity == 1) {
+                                  AppOverlays.showErrorSnackBar(
+                                      context: context,
+                                      message: "You can't order less than one");
+                                  return;
+                                }
+                                setStater(() {
+                                  quantity--;
+                                });
+                              },
+                              icon: Icon(Icons.remove,
+                                  size: width(context) * 0.06),
+                            ),
+                            Text('$quantity', style: medium16(context)),
+                            IconButton(
+                                onPressed: () {
+                                  if (quantity == stock) {
+                                    AppOverlays.showErrorSnackBar(
+                                        context: context,
+                                        message:
+                                            "You can't order more than the available stock");
+                                    return;
+                                  }
+                                  setStater(() {
+                                    quantity++;
+                                  });
+                                },
+                                icon: Icon(Icons.add,
+                                    size: width(context) * 0.06)),
+                          ],
+                        ),
+                      )
+                    ]);
+                  }),
                   Row(children: [
-                    Text('Color', style: medium13(context)),
-                    SizedBox(width: width(context) * 0.05),
-                    CircleAvatar(
-                        radius: width(context) * 0.01,
-                        backgroundColor: AppColors.primary),
-                    SizedBox(width: width(context) * 0.02),
-                    CircleAvatar(
-                        radius: width(context) * 0.01,
-                        backgroundColor: Colors.black),
+                    Text('NGN ${price.formatWithCommas}',
+                        style: semi20(context)),
                     const Spacer(),
-                    Text('Quantity', style: medium13(context)),
+                    Text('Stock', style: medium13(context)),
                     SizedBox(width: width(context) * 0.01),
                     Container(
                       width: width(context) * 0.18,
                       height: height(context) * 0.025,
+                      alignment: Alignment.center,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: AppColors.lightAsh),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Icon(Icons.remove, size: width(context) * 0.04),
-                          Text('1', style: medium13(context)),
-                          Icon(Icons.add, size: width(context) * 0.04),
-                        ],
-                      ),
+                      child: Text('$stock', style: medium14(context)),
                     )
                   ]),
-                  Row(children: [
-                    Text('NGN 6,000', style: semi20(context)),
-                    const Spacer(),
-                    Container(
-                      width: width(context) * 0.18,
-                      height: height(context) * 0.025,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColors.lightAsh),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.star,
-                              color: AppColors.gold,
-                              size: width(context) * 0.04),
-                          const SizedBox(width: 2),
-                          Text('4.5', style: medium13(context))
-                        ],
-                      ),
-                    )
-                  ]),
-                  AppButton(
-                      text: 'Buy',
-                      onPressed: () {
-                        showCheckOut();
-                      },
-                      buttonHeight: 0.06)
+                  Consumer(builder: (context, ref, _) {
+                    final cartWatcher = ref.watch(cartProvider).localCart;
+
+                    final isInCart = cartWatcher.contains(prod.id.toString());
+
+                    return ref.watch(cartProvider).isButtonLoading
+                        ? const Align(
+                            alignment: Alignment.center,
+                            child: CircularProgressIndicator(
+                              color: AppColors.primary,
+                            ),
+                          )
+                        : AppButton(
+                            text: isInCart ? 'Proceed to cart' : 'Add to Cart',
+                            onPressed: isInCart
+                                ? () => context.pushNamed(AppRouter.cartView)
+                                : () {
+                                    ref.read(cartProvider.notifier).addToCart(
+                                        context: context,
+                                        ref: ref,
+                                        productId: prod.id.toString(),
+                                        quantity: quantity.toString());
+                                  },
+                            buttonHeight: 0.06);
+                  })
                 ],
               ),
             ))

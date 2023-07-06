@@ -12,6 +12,7 @@ class ApiResponse {
   final bool isSuccessful;
   String? message;
   String? token;
+  dynamic error;
 
   ApiResponse({
     this.code,
@@ -19,6 +20,7 @@ class ApiResponse {
     this.data,
     required this.isSuccessful,
     this.token,
+    this.error,
   });
 
   factory ApiResponse.fromResponse(Response response) {
@@ -28,18 +30,19 @@ class ApiResponse {
         message: json['message'],
         isSuccessful: json['success'],
         data: json['data'],
-        token: json['token']);
+        token: json['token'],
+        error: json['error']);
   }
 
   factory ApiResponse.fromBody(String json, bool success, [String? token]) {
     final jsonD = jsonDecode(json);
 
     return ApiResponse(
-      message: jsonD['message'],
-      isSuccessful: success,
-      data: jsonD['data'],
-      token: token,
-    );
+        message: jsonD['message'],
+        isSuccessful: success,
+        data: jsonD['data'],
+        token: token,
+        error: jsonD['error']);
   }
 
   factory ApiResponse.timeout() {

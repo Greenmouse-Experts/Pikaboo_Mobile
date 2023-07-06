@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../controllers/auth/auth_controller.dart';
 import '../utilities/utilities.dart';
@@ -66,13 +68,23 @@ class AppOverlays {
 
   static void showErrorSnackBar(
       {required BuildContext context, required String message}) {
-    final snackBar = SnackBar(
-      content: Text(message),
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.red,
+    showTopSnackBar(
+      Overlay.of(context),
+      CustomSnackBar.error(
+        message: message,
+      ),
     );
+  }
 
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  static void showSuccessSnackBar(
+      {required BuildContext context, required String message}) {
+    showTopSnackBar(
+      Overlay.of(context),
+      CustomSnackBar.success(
+        message: message,
+        backgroundColor: AppColors.primary,
+      ),
+    );
   }
 
   static void showLogOutDialog(

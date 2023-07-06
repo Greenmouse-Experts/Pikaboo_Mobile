@@ -40,38 +40,3 @@ class ProductNotifier extends ChangeNotifier {
     }
   }
 }
-
-
-
-// class Notifier extends FamilyAsyncNotifier<List<ProductsSchema>,WidgetRef > {
-
-//   final _repo = ProductRepository();
-
-//    void _getAllProducts(WidgetRef ref)async{
-//     state = const AsyncValue.loading();
-//     state = await AsyncValue.guard(() async {
-//     final data =  await _repo.getAllProducts(ref: ref, keyword: '');
-
-//     });
-//   }
-//   @override
-//   FutureOr<> build( arg) {
-//     return ;
-//   }
-// }
-
-// class NewProoductNotifier extends AsyncNotifier<List<ProductsSchema>> {
-//   final _repo = ProductRepository();
-
-//   void _getAllProducts()async{
-//     state = const AsyncValue.loading();
-//     state = await AsyncValue.guard(() async {
-//       await _repo.getAllProducts(ref: ref, keyword: '');
-//       return _fetchTodo();
-//     });
-//   }
-//   @override
-//   FutureOr<> build() {
-//     return ;
-//   }
-// }

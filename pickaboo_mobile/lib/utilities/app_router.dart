@@ -16,8 +16,7 @@ import '../modules/notifications/notifications_view.dart';
 import '../modules/onboarding/views.dart';
 import '../modules/requests/views.dart';
 import '../modules/settings/views.dart';
-import '../modules/shop/market_place_view.dart';
-import '../modules/shop/product_view.dart';
+import '../modules/shop/views.dart';
 import '../modules/user_dashboard/user_dashboard_view.dart';
 
 class AppRouter {
@@ -51,6 +50,7 @@ class AppRouter {
   static const String driverLogin = 'driverLogin';
   static const String feedbackStatus = 'feedbackStatusViiew';
   static const String mapView = 'mapViiew';
+  static const String cartView = 'cartView';
 }
 
 final GoRouter _router = GoRouter(routes: <RouteBase>[
@@ -132,9 +132,9 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
                 )),
         GoRoute(
             name: AppRouter.productPage,
-            path: '${AppRouter.productPage}/:productId',
+            path: '${AppRouter.productPage}/:product',
             builder: (context, state) => ProductView(
-                  productId: state.pathParameters['productId']!,
+                  product: state.pathParameters['product']!,
                 )),
         GoRoute(
             name: AppRouter.driverHistory,
@@ -190,6 +190,10 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             name: AppRouter.mapView,
             path: AppRouter.mapView,
             builder: (context, state) => const AppMapView()),
+        GoRoute(
+            name: AppRouter.cartView,
+            path: AppRouter.cartView,
+            builder: (context, state) => const CartView()),
       ]),
 ]);
 

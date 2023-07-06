@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../controllers/auth/auth_controller.dart';
 import '../../controllers/products/product_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
@@ -17,9 +16,7 @@ class MarketPlaceView extends ConsumerWidget {
     final productNotifier = ref.watch(
       productProvider,
     );
-    final homeOwner = ref.watch(authProvider).user;
-    final name = homeOwner?.firstName ?? '';
-    final image = homeOwner?.avatar ?? '';
+
     return Scaffold(
       appBar: customAppBar5(context,
           hasElevation: false,
@@ -37,13 +34,15 @@ class MarketPlaceView extends ConsumerWidget {
                           .updateIndex(0);
                     },
           actions: [
-            AppAvatar(
-              name: name,
-              imgUrl: image,
-              radius: isMobile(context)
-                  ? width(context) * 0.045
-                  : width(context) * 0.04,
-            ),
+            IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.shopping_cart_checkout,
+                  color: AppColors.primary,
+                  size: isMobile(context)
+                      ? width(context) * 0.06
+                      : width(context) * 0.045,
+                )),
             SizedBox(width: width(context) * 0.04)
           ]),
       body: SingleChildScrollView(

@@ -78,7 +78,7 @@ AppBar customAppBar2(
                         child: Icon(
                           Icons.menu_outlined,
                           color: Colors.white,
-                          size: width(context) * 0.06,
+                          size: width(context) * 0.07,
                         ),
                       ),
                     ),

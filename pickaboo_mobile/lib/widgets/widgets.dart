@@ -33,3 +33,4 @@ export './overlays.dart';
 export './question_icon.dart';
 export './drawers.dart';
 export './page_loader.dart';
+export './cart_card.dart';

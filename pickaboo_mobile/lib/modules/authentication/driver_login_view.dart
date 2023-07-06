@@ -118,7 +118,7 @@ class _DriverLoginViewConsumerState extends ConsumerState<DriverLoginView> {
                           SizedBox(height: height(context) * 0.02),
                           AppTextField(
                               controller: _password,
-                              keyboardType: TextInputType.visiblePassword,
+                              keyboardType: TextInputType.phone,
                               label: 'Password',
                               validator: Validations.validOtpPassword,
                               hintText: '*****',

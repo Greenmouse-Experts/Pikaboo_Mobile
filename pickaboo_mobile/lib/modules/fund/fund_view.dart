@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_paystack/flutter_paystack.dart';
+import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../controllers/auth/auth_controller.dart';
@@ -17,13 +17,13 @@ class FundView extends ConsumerStatefulWidget {
 class _FundViewConsumerState extends ConsumerState<FundView> {
   TextEditingController fundController = TextEditingController();
 
-  // final plugin = PaystackPlugin();
-  // final publicKey = Constants.paystackPublicKey;
+  final plugin = PaystackPlugin();
+  final publicKey = Constants.paystackPublicKey;
 
   @override
   void initState() {
     super.initState();
-    //  plugin.initialize(publicKey: publicKey);
+    plugin.initialize(publicKey: publicKey);
   }
 
   void _fundWallet() {
@@ -39,24 +39,24 @@ class _FundViewConsumerState extends ConsumerState<FundView> {
 
     final amount = int.parse(fundController.text) * 100;
 
-    // Charge charge = Charge()
-    //   ..amount = amount
-    //   ..reference = 'TR-${DateTime.now().millisecondsSinceEpoch}'
-    //   ..email = email
-    //   ..currency = "NGN";
+    Charge charge = Charge()
+      ..amount = amount
+      ..reference = 'TR-${DateTime.now().millisecondsSinceEpoch}'
+      ..email = email
+      ..currency = "NGN";
 
-    // plugin
-    //     .checkout(context,
-    //         method: CheckoutMethod.card, charge: charge, fullscreen: true)
-    //     .then((value) {
-    //   if (value.status == true) {
-    //     ref.read(authProvider.notifier).topupWallet(
-    //         context: context,
-    //         reference: value.reference ??
-    //             'TR-${DateTime.now().millisecondsSinceEpoch}',
-    //         ref: ref);
-    //   } else {}
-    // });
+    plugin
+        .checkout(context,
+            method: CheckoutMethod.card, charge: charge, fullscreen: true)
+        .then((value) {
+      if (value.status == true) {
+        ref.read(authProvider.notifier).topupWallet(
+            context: context,
+            reference: value.reference ??
+                'TR-${DateTime.now().millisecondsSinceEpoch}',
+            ref: ref);
+      } else {}
+    });
   }
 
   @override

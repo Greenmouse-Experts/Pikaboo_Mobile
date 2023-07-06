@@ -19,7 +19,7 @@ class ProductCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: InkWell(
         onTap: () => context.pushNamed(AppRouter.productPage,
-            pathParameters: {'productId': product.toRawJson()}),
+            pathParameters: {'product': product.toRawJson()}),
         child: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -79,7 +79,7 @@ class ProductGridCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => context.pushNamed(AppRouter.productPage,
-          pathParameters: {'productId': product.toRawJson()}),
+          pathParameters: {'product': product.toRawJson()}),
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),

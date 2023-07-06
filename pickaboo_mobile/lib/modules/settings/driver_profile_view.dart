@@ -35,26 +35,10 @@ class DriverProfileView extends ConsumerWidget {
                 children: [
                   SizedBox(
                       width: width(context), height: height(context) * 0.02),
-                  Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      AppAvatar(
-                          name: firstName,
-                          imgUrl: image,
-                          radius: width(context) * 0.08),
-                      Positioned(
-                          top: width(context) * 0.125,
-                          child: Container(
-                              decoration: const BoxDecoration(
-                                  shape: BoxShape.circle, color: Colors.white),
-                              padding: const EdgeInsets.all(1.5),
-                              child: Icon(
-                                Icons.camera_alt,
-                                size: width(context) * 0.04,
-                                color: AppColors.primary,
-                              )))
-                    ],
-                  ),
+                  AppAvatar(
+                      name: firstName,
+                      imgUrl: image,
+                      radius: width(context) * 0.08),
                   SizedBox(height: height(context) * 0.015),
                   Text('$firstName $lastName',
                       style: medium20(context).copyWith(color: Colors.white)),

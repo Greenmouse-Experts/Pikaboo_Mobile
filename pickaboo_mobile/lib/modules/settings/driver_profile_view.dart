@@ -59,13 +59,13 @@ class DriverProfileView extends ConsumerWidget {
                       title: 'Account',
                       subTitle: 'Name, Email address, Phone number, Card...',
                       onPressed: () =>
-                          context.pushNamed(AppRouter.accountView)),
+                          context.pushNamed(AppRouter.driverAccountView)),
                   ServiceProfileTile(
                       icon: Icons.notifications,
                       title: 'Notifications',
                       subTitle: 'View all your notifications',
                       onPressed: () =>
-                          context.pushNamed(AppRouter.notifications)),
+                          context.pushNamed(AppRouter.driiverNotifications)),
                   ServiceProfileTile(
                       icon: Icons.support_agent,
                       title: 'Support',

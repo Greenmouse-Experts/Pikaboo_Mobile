@@ -28,7 +28,7 @@ class ApiResponse {
 
     return ApiResponse(
         message: json['message'],
-        isSuccessful: json['success'],
+        isSuccessful: json['success'] ?? json['status'],
         data: json['data'],
         token: json['token'],
         error: json['error']);

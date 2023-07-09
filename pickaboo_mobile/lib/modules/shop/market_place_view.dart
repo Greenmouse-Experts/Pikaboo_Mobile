@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:badges/badges.dart' as badge;
+import 'package:go_router/go_router.dart';
 
+import '../../controllers/cart/cart_controller.dart';
 import '../../controllers/products/product_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 import '../anon_dashboard/anon_dashboard_viewmodel.dart';
 import '../user_dashboard/user_dashboard_vm.dart';
+import 'product_search_view.dart';
 
 class MarketPlaceView extends ConsumerWidget {
   final String canGoBack;
@@ -34,15 +38,23 @@ class MarketPlaceView extends ConsumerWidget {
                           .updateIndex(0);
                     },
           actions: [
-            IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.shopping_cart_checkout,
-                  color: AppColors.primary,
-                  size: isMobile(context)
-                      ? width(context) * 0.06
-                      : width(context) * 0.045,
-                )),
+            Consumer(builder: (context, ref, _) {
+              return IconButton(
+                  onPressed: () => context.pushNamed(AppRouter.cartView),
+                  icon: badge.Badge(
+                    badgeContent: Text(
+                        '${ref.watch(cartProvider).localCart.length}',
+                        style:
+                            regular14(context).copyWith(color: Colors.white)),
+                    child: Icon(
+                      Icons.shopping_cart_checkout,
+                      color: AppColors.primary,
+                      size: isMobile(context)
+                          ? width(context) * 0.06
+                          : width(context) * 0.045,
+                    ),
+                  ));
+            }),
             SizedBox(width: width(context) * 0.04)
           ]),
       body: SingleChildScrollView(
@@ -57,6 +69,10 @@ class MarketPlaceView extends ConsumerWidget {
                       } else if (snapshot.hasError) {
                         return Text(snapshot.error.toString());
                       } else {
+                        final groupedProducts =
+                            ref.watch(productProvider).groupedProducts;
+                        final categories = groupedProducts.keys.toList();
+                        final products = groupedProducts.values.toList();
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -65,20 +81,33 @@ class MarketPlaceView extends ConsumerWidget {
                             Text('Search varieties of trash cans and bins',
                                 style: medium13(context)),
                             SizedBox(height: height(context) * 0.02),
-                            const SearchTextField(
-                                hintText: 'Search', islocation: true),
-                            SizedBox(height: height(context) * 0.02),
-                            SizedBox(
-                              height: height(context) * 0.05,
-                              child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: 5,
-                                  itemBuilder: (context, i) => CategorySelector(
-                                        title: 'All',
-                                        isSelected: i == 0,
-                                        onSelected: () {},
-                                      )),
+                            SearchTextField(
+                              hintText: 'Search',
+                              islocation: true,
+                              onTap: () => showSearch(
+                                  context: context,
+                                  delegate: ProductSearchDelegate()),
                             ),
+                            SizedBox(height: height(context) * 0.02),
+                            Consumer(builder: (context, ref, _) {
+                              return SizedBox(
+                                height: height(context) * 0.05,
+                                child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: groupedProducts.length,
+                                    itemBuilder: (context, i) =>
+                                        CategorySelector(
+                                          title: categories[i],
+                                          isSelected:
+                                              i == ref.watch(_pageProvider),
+                                          onSelected: () {
+                                            ref
+                                                .read(_pageProvider.notifier)
+                                                .updatePage(i);
+                                          },
+                                        )),
+                              );
+                            }),
                             Consumer(builder: (context, ref, child) {
                               final isSingle = ref.watch(switchProvider);
                               return Row(
@@ -153,49 +182,52 @@ class MarketPlaceView extends ConsumerWidget {
                               );
                             }),
                             SizedBox(height: height(context) * 0.01),
-                            Consumer(builder: (context, ref, child) {
-                              final isSingle = ref.watch(switchProvider);
-                              final products =
-                                  ref.watch(productProvider).products;
+                            Consumer(builder: (context, ref, _) {
+                              final page = ref.watch(_pageProvider);
 
-                              return ref.watch(productProvider).products.isEmpty
-                                  ? Container(
-                                      alignment: Alignment.center,
-                                      height: height(context) * 0.4,
-                                      child: Center(
-                                          child: Text(
-                                        'No products available currently, Check again later',
-                                        textAlign: TextAlign.center,
-                                        style: medium16(context),
-                                      )),
-                                    )
-                                  : isSingle
-                                      ? ListView.builder(
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: products.length,
-                                          itemBuilder: (context, i) =>
-                                              ProductCard(
-                                                product: products[i],
-                                              ))
-                                      : GridView.builder(
-                                          gridDelegate:
-                                              SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,
-                                                  childAspectRatio: 0.92,
-                                                  crossAxisSpacing:
-                                                      width(context) * 0.05,
-                                                  mainAxisSpacing:
-                                                      height(context) * 0.02),
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: products.length,
-                                          itemBuilder: (context, i) =>
-                                              ProductGridCard(
-                                                product: products[i],
-                                              ));
+                              return Consumer(builder: (context, ref, child) {
+                                final isSingle = ref.watch(switchProvider);
+                                final theproducts = products[page];
+
+                                return theproducts.isEmpty
+                                    ? Container(
+                                        alignment: Alignment.center,
+                                        height: height(context) * 0.4,
+                                        child: Center(
+                                            child: Text(
+                                          'No products available currently, Check again later',
+                                          textAlign: TextAlign.center,
+                                          style: medium16(context),
+                                        )),
+                                      )
+                                    : isSingle
+                                        ? ListView.builder(
+                                            shrinkWrap: true,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemCount: theproducts.length,
+                                            itemBuilder: (context, i) =>
+                                                ProductCard(
+                                                  product: theproducts[i],
+                                                ))
+                                        : GridView.builder(
+                                            gridDelegate:
+                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: 2,
+                                                    childAspectRatio: 0.92,
+                                                    crossAxisSpacing:
+                                                        width(context) * 0.05,
+                                                    mainAxisSpacing:
+                                                        height(context) * 0.02),
+                                            shrinkWrap: true,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemCount: theproducts.length,
+                                            itemBuilder: (context, i) =>
+                                                ProductGridCard(
+                                                  product: theproducts[i],
+                                                ));
+                              });
                             })
                           ],
                         );
@@ -219,5 +251,21 @@ class SwitchNotifier extends StateNotifier<bool> {
 
   void switchToDouble() {
     state = false;
+  }
+}
+
+final _pageProvider = NotifierProvider<_PageNotifier, int>(_PageNotifier.new);
+
+class _PageNotifier extends Notifier<int> {
+  @override
+  build() {
+    return 0;
+  }
+
+  void updatePage(int i) {
+    if (state == i) {
+    } else {
+      state = i;
+    }
   }
 }

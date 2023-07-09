@@ -13,6 +13,9 @@ final productProvider = ChangeNotifierProvider<ProductNotifier>((ref) {
 class ProductNotifier extends ChangeNotifier {
   final _repo = ProductRepository();
 
+  Map<String, List<ProductsSchema>> _groupedProducts = {};
+  Map<String, List<ProductsSchema>> get groupedProducts => _groupedProducts;
+
   List<ProductsSchema> _products = [];
   List<ProductsSchema> get products => _products;
   bool _isLoading = false;
@@ -33,10 +36,48 @@ class ProductNotifier extends ChangeNotifier {
         _products = data.data ?? [];
         _meta = data.meta;
         _links = data.links;
+        _groupedProducts = groupProductsByCategory(_products);
       }
     } catch (e) {
       _isLoading = false;
       rethrow;
     }
+  }
+
+  Future<List<ProductsSchema>> searchProducts(
+      {required WidgetRef ref, required String keyword}) async {
+    List<ProductsSchema> products = [];
+    if (keyword.isEmpty) {
+      return products;
+    }
+    try {
+      final response = await _repo.searchProducts(ref: ref, keyword: keyword);
+
+      if (response.isSuccessful) {
+        final data = MarketSchema.fromJson(response.data);
+        products = data.data ?? [];
+      } else {
+        products = [];
+      }
+      return products;
+    } catch (e) {
+      _isLoading = false;
+      rethrow;
+    }
+  }
+
+  Map<String, List<ProductsSchema>> groupProductsByCategory(
+      List<ProductsSchema> products) {
+    Map<String, List<ProductsSchema>> result = {'All': products};
+
+    for (ProductsSchema prod in products) {
+      String category = prod.name ?? '';
+      if (!result.containsKey(category)) {
+        result[category] = [];
+      }
+      result[category]?.add(prod);
+    }
+
+    return result;
   }
 }

@@ -120,7 +120,7 @@ class Api {
     }
   }
 
-  Future<ApiResponse> delete(String endpoint,
+  Future<ApiResponse> deleteData(String endpoint,
       {required dynamic data,
       CancelToken? cancelToken,
       bool hasHeader = true}) async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../utilities/utilities.dart';
+import 'overlays.dart';
 
 class QuestionIcon extends StatelessWidget {
   const QuestionIcon({super.key});
@@ -8,7 +9,9 @@ class QuestionIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        AppOverlays.showSignInDialog(context: context);
+      },
       child: Container(
         width:
             isMobile(context) ? width(context) * 0.09 : width(context) * 0.06,

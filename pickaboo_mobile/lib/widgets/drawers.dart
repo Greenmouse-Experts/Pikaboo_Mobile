@@ -133,7 +133,7 @@ class UserDrawer extends StatelessWidget {
               icon: Icons.account_circle,
               onPressed: () {
                 context.pop();
-                context.pushNamed(AppRouter.accountView);
+                context.pushNamed(AppRouter.userAccountView);
               },
               title: 'Account',
             ),
@@ -149,7 +149,7 @@ class UserDrawer extends StatelessWidget {
               icon: Icons.notifications,
               onPressed: () {
                 context.pop();
-                context.pushNamed(AppRouter.notifications);
+                context.pushNamed(AppRouter.userNotifications);
               },
               title: 'Notifications',
             ),
@@ -171,7 +171,10 @@ class UserDrawer extends StatelessWidget {
             ),
             DrawerTile(
               icon: Icons.support_agent,
-              onPressed: () {},
+              onPressed: () {
+                context.pop();
+                context.pushNamed(AppRouter.userSupport);
+              },
               title: 'Support',
             ),
             const Spacer(),

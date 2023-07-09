@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import '../data/models/models.dart';
 import '../utilities/utilities.dart';
-import 'app_button.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductsSchema product;
@@ -50,12 +49,6 @@ class ProductCard extends StatelessWidget {
                           children: [
                             Text('NGN ${product.price ?? ''}',
                                 style: medium13(context)),
-                            AppButton(
-                              text: 'Buy',
-                              onPressed: () {},
-                              buttonWidth: 0.16,
-                              buttonHeight: 0.035,
-                            ),
                           ],
                         )
                       ],
@@ -77,6 +70,9 @@ class ProductGridCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final image = product.images == null || product.images!.isEmpty
+        ? 'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png'
+        : product.images![0];
     return InkWell(
       onTap: () => context.pushNamed(AppRouter.productPage,
           pathParameters: {'product': product.toRawJson()}),
@@ -88,14 +84,30 @@ class ProductGridCard extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-                width: width(context) * 0.35,
-                child: Image.asset('assets/images/dummy_prod.png')),
+              width: width(context) * 0.35,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CachedNetworkImage(
+                    imageUrl: image,
+                    errorWidget: (context, url, error) {
+                      return Image.asset('assets/images/pickaboo_logo.png');
+                    },
+                    progressIndicatorBuilder: (context, url, progress) =>
+                        Center(
+                          child: CircularProgressIndicator(
+                            value: progress.progress,
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                                AppColors.primary),
+                          ),
+                        )),
+              ),
+            ),
             Container(
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(5)),
               padding: EdgeInsets.all(width(context) * 0.025),
               child: Text(
-                'Waste Container',
+                product.name ?? '',
                 style: medium13(context),
               ),
             ),

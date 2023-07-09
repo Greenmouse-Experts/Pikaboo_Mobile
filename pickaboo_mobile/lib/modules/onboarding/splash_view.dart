@@ -18,12 +18,12 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       setState(() {
         isLoading = false;
       });
     });
-    Future.delayed(const Duration(seconds: 6), () {
+    Future.delayed(const Duration(seconds: 5), () {
       context.goNamed(AppRouter.onboarding);
     });
   }
@@ -49,7 +49,7 @@ class _SplashViewState extends State<SplashView> {
                       height: height(context) * 0.1,
                       child: Image.asset('assets/images/pickaboo_alt_logo.png'),
                     ).animate().fade(duration: 200.ms).scale().move(
-                          delay: const Duration(seconds: 3, microseconds: 1000),
+                          delay: const Duration(seconds: 2, microseconds: 1000),
                           duration: 1200.ms,
                           begin: Offset(width(context) / 5, 0),
                         ),
@@ -70,7 +70,7 @@ class _SplashViewState extends State<SplashView> {
                         ],
                       ).animate().fade(duration: 500.ms).scale().move(
                             delay:
-                                const Duration(seconds: 3, microseconds: 800),
+                                const Duration(seconds: 2, microseconds: 800),
                             duration: 1300.ms,
                             begin: Offset(width(context), 0),
                           ),

@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../data/models/models.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
+import '../cart/cart_controller.dart';
 import 'auth_repo.dart';
 
 final authProvider = ChangeNotifierProvider<_AuthNotifier>((ref) {
@@ -26,6 +27,12 @@ class _AuthNotifier extends ChangeNotifier {
   String? _wallet;
   String? get wallet => _wallet;
 
+  int _notificationCount = 0;
+  int get notificationCount => _notificationCount;
+
+  String? _accountType;
+  String? get accountType => _accountType;
+
   Future<void> userLogin(
       {required BuildContext context,
       required String phone,
@@ -38,6 +45,7 @@ class _AuthNotifier extends ChangeNotifier {
       _repo.login(payload, ref).then((response) {
         if (response.isSuccessful) {
           _user = UserSchema.fromJson(response.data);
+          _notificationCount = _user?.notificationsCount ?? 0;
 
           if (!isUser) {
             if (_user?.accountType != 'Service Personnel') {
@@ -61,9 +69,17 @@ class _AuthNotifier extends ChangeNotifier {
 
           _token = response.token;
           _wallet = _user?.wallet;
-          context.pop();
-          context.goNamed(
-              isUser ? AppRouter.userDashboard : AppRouter.driverDashboard);
+          _accountType = _user?.accountType;
+
+          if (isUser) {
+            ref.watch(cartProvider).viewCart(ref: ref).then((value) {
+              context.pop();
+              context.goNamed(AppRouter.userDashboard);
+            });
+          } else {
+            context.pop();
+            context.goNamed(AppRouter.driverDashboard);
+          }
         } else {
           context.pop();
           AppOverlays.showErrorDialog(
@@ -101,6 +117,15 @@ class _AuthNotifier extends ChangeNotifier {
       context.pop();
       AppOverlays.showErrorDialog(context: context, error: e);
     }
+  }
+
+  void updateNotificationCount() async {
+    _notificationCount--;
+    notifyListeners();
+  }
+
+  void updateNotificationCountValue(int count) {
+    _notificationCount = count;
   }
 
   Future<void> updateProfilePhoto(

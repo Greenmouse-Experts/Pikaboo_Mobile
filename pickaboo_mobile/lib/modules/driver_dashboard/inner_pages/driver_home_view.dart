@@ -26,7 +26,8 @@ class DriverHomeView extends ConsumerWidget {
           isUser: false,
           actions: [
             IconButton(
-                onPressed: () => context.pushNamed(AppRouter.notifications),
+                onPressed: () =>
+                    context.pushNamed(AppRouter.driiverNotifications),
                 icon: Badge(
                   label: notificationCount == null
                       ? null
@@ -130,7 +131,8 @@ class DriverHomeView extends ConsumerWidget {
                             bgColor: AppColors.lightIndigo,
                             title: 'FAQs',
                             image: 'faqs',
-                            onTap: () => context.pushNamed(AppRouter.faq)),
+                            onTap: () =>
+                                context.pushNamed(AppRouter.driverFaq)),
                       ],
                     ),
                     SizedBox(height: height(context) * 0.02),

@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
+import '../controllers/auth/auth_controller.dart';
 import '../utilities/utilities.dart';
 
 class AppSvgImage extends StatelessWidget {
@@ -109,18 +112,29 @@ class AppAvatar extends StatelessWidget {
   }
 }
 
-class AppBarIcon extends StatelessWidget {
+class AppBarIcon extends ConsumerWidget {
   final String name;
   final String image;
   const AppBarIcon({super.key, required this.name, required this.image});
 
   @override
-  Widget build(BuildContext context) {
-    return AppAvatar(
-      name: name,
-      imgUrl: image,
-      radius:
-          isMobile(context) ? width(context) * 0.045 : width(context) * 0.04,
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final accountType = ref.watch(authProvider).accountType;
+    return Consumer(builder: (context, ref, _) {
+      return InkWell(
+        onTap: () => context.pushNamed(
+          accountType == 'Service Personnel'
+              ? AppRouter.driverAccountView
+              : AppRouter.userAccountView,
+        ),
+        child: AppAvatar(
+          name: name,
+          imgUrl: image,
+          radius: isMobile(context)
+              ? width(context) * 0.045
+              : width(context) * 0.04,
+        ),
+      );
+    });
   }
 }

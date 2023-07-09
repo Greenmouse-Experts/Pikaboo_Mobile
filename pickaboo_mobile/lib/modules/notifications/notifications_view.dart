@@ -14,6 +14,7 @@ class NotificationView extends ConsumerWidget {
     final homeOwner = ref.watch(authProvider).user;
     final name = homeOwner?.firstName ?? '';
     final image = homeOwner?.avatar ?? '';
+
     return Scaffold(
       appBar: customAppBar3(context, hasElevation: false, actions: [
         AppBarIcon(name: name, image: image),
@@ -39,9 +40,11 @@ class NotificationView extends ConsumerWidget {
                       ref.watch(notificationProvider).readNotifications;
                   return notifications.isEmpty
                       ? Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: width(context) * 0.04),
                           alignment: Alignment.center,
                           height: height(context) * 0.75,
-                          width: width(context) * 0.7,
+                          width: width(context),
                           child: Center(
                               child: Text(
                                   'You currently do not have any notifications',
@@ -68,6 +71,7 @@ class NotificationView extends ConsumerWidget {
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, i) => NotificationTile(
                                       notification: unreadNotifications[i],
+                                      id: unreadNotifications[i].id!,
                                     )),
                             Padding(
                               padding: screenPadding(context),
@@ -83,9 +87,9 @@ class NotificationView extends ConsumerWidget {
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, i) => NotificationTile(
-                                      isUnread: false,
-                                      notification: readNotifications[i],
-                                    )),
+                                    isUnread: false,
+                                    notification: readNotifications[i],
+                                    id: readNotifications[i].id!)),
                           ],
                         );
                 });

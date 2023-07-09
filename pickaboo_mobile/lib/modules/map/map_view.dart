@@ -90,26 +90,19 @@ class _AppMapViewState extends State<AppMapView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar5(context, hasElevation: false),
-      body: currentLocation == null
-          ? const PageLoader()
-          : GoogleMap(
-              onMapCreated: _onMapCreated,
-              initialCameraPosition: CameraPosition(
-                  target: LatLng(
-                      currentLocation!.latitude!, currentLocation!.longitude!),
-                  zoom: 12.5),
-              polylines: Set<Polyline>.of(polylines.values),
-              markers: {
-                Marker(
-                  markerId: const MarkerId('source'),
-                  position: LatLng(
-                      currentLocation!.latitude!, currentLocation!.longitude!),
-                ),
-                Marker(
-                    markerId: const MarkerId('destination'),
-                    position: _destination)
-              },
-            ),
+      body: GoogleMap(
+        onMapCreated: _onMapCreated,
+        initialCameraPosition: CameraPosition(target: _center, zoom: 12.5),
+        polylines: Set<Polyline>.of(polylines.values),
+        markers: {
+          Marker(
+            markerId: const MarkerId('source'),
+            position: _center,
+          ),
+          Marker(
+              markerId: const MarkerId('destination'), position: _destination)
+        },
+      ),
     );
   }
 }

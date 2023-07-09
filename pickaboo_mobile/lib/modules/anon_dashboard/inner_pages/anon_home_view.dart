@@ -47,7 +47,7 @@ class AnonHomeView extends StatelessWidget {
                   children: [
                     AppButton(
                       text: 'FAQs',
-                      onPressed: () => context.pushNamed(AppRouter.faq),
+                      onPressed: () => context.pushNamed(AppRouter.anonfaq),
                       buttonWidth: 0.23,
                       buttonHeight: 0.05,
                     ),

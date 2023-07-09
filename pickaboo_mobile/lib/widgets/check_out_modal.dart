@@ -15,7 +15,7 @@ class CheckoutModal extends StatefulWidget {
 
 class _CheckoutModalState extends State<CheckoutModal> {
   // final plugin = PaystackPlugin();
-  // final publicKey = Constants.paystackPublicKey;
+  // final publinncKey = Constants.paystackPublicKey;
 
   @override
   void initState() {

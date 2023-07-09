@@ -2,15 +2,34 @@ import 'package:flutter/material.dart';
 
 import '../data/models/notification_schema.dart';
 import '../utilities/utilities.dart';
+import 'notification_modal.dart';
 
 class NotificationTile extends StatelessWidget {
   final bool isUnread;
   final NotificationSchema notification;
+  final int id;
   const NotificationTile(
-      {super.key, this.isUnread = true, required this.notification});
+      {super.key,
+      this.isUnread = true,
+      required this.notification,
+      required this.id});
 
   @override
   Widget build(BuildContext context) {
+    void showNotificationModal() {
+      showModalBottomSheet(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+          context: context,
+          builder: (context) {
+            return NotificationModal(
+              id: id,
+              isRead: !isUnread,
+            );
+          });
+    }
+
     return ListTile(
       tileColor: isUnread ? AppColors.fadeGreen : Colors.white,
       contentPadding: EdgeInsets.symmetric(
@@ -35,7 +54,7 @@ class NotificationTile extends StatelessWidget {
         style: medium13(context).copyWith(color: Colors.black.withOpacity(0.4)),
       ),
       trailing: IconButton(
-          onPressed: () {},
+          onPressed: showNotificationModal,
           icon: const Icon(
             Icons.more_horiz_outlined,
             color: Colors.black,

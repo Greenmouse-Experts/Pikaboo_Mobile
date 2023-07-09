@@ -81,7 +81,7 @@ class RequestDetailsView extends ConsumerWidget {
                       SizedBox(width: width(context) * 0.05),
                       Expanded(
                         child: AppButton(
-                            text: 'Trackk',
+                            text: 'Track',
                             onPressed: () =>
                                 context.pushNamed(AppRouter.mapView)),
                       )

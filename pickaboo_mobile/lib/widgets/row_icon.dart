@@ -70,7 +70,7 @@ class NootificationIcon extends StatelessWidget {
       children: [
         InkWell(
           onTap: onTap,
-          child: notification == null
+          child: notification == null || notification == 0
               ? Container(
                   width: width(context) * 0.12,
                   height: width(context) * 0.12,
@@ -206,9 +206,15 @@ class RowTitle2 extends StatelessWidget {
                 .copyWith(color: Colors.black.withOpacity(0.4)),
           ),
           const Spacer(),
-          Text(
-            content,
-            style: medium16(context),
+          Container(
+            alignment: Alignment.centerRight,
+            width: width(context) * 0.7,
+            child: Text(
+              content,
+              style: medium16(context),
+              textAlign: TextAlign.end,
+              maxLines: 2,
+            ),
           )
         ],
       ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../controllers/auth/auth_controller.dart';
 import '../utilities/utilities.dart';
 import 'widgets.dart';
 
@@ -104,12 +106,13 @@ class DotLine extends StatelessWidget {
   }
 }
 
-class PickUpCard extends StatelessWidget {
+class PickUpCard extends ConsumerWidget {
   final bool isActive;
   const PickUpCard({super.key, required this.isActive});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final accountType = ref.watch(authProvider).accountType;
     return Column(
       children: [
         SizedBox(height: height(context) * 0.005),
@@ -130,7 +133,10 @@ class PickUpCard extends StatelessWidget {
             ),
             const Spacer(),
             InkWell(
-              onTap: () => context.pushNamed(AppRouter.requstDetails,
+              onTap: () => context.pushNamed(
+                  accountType == 'Service Personnel'
+                      ? AppRouter.driverRequstDetails
+                      : AppRouter.userRequstDetails,
                   pathParameters: {'isActive': 'yes'}),
               child: Row(
                 children: [

@@ -87,6 +87,76 @@ class AppOverlays {
     );
   }
 
+  static void showConfirmDialog(
+      {required BuildContext context,
+      required WidgetRef ref,
+      required VoidCallback confirmAction,
+      required String message,
+      Color? confirmColor,
+      String? confirmText,
+      String? cancelText}) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return IntrinsicHeight(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: screenPadding(context),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: width(context) * 0.1,
+                      vertical: height(context) * 0.04),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Column(
+                    children: [
+                      Text(
+                        message,
+                        style: regular16(context),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: height(context) * 0.025),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: OutlinedButton(
+                                onPressed: () => context.pop(),
+                                style: OutlinedButton.styleFrom(
+                                    side: const BorderSide(color: Colors.red)),
+                                child: Text(
+                                  cancelText ?? 'No',
+                                  style: medium14(context)
+                                      .copyWith(color: Colors.red),
+                                )),
+                          ),
+                          SizedBox(width: width(context) * 0.04),
+                          Expanded(
+                            child: ElevatedButton(
+                                onPressed: confirmAction,
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        confirmColor ?? AppColors.primary),
+                                child: Text(
+                                  confirmText ?? 'Yes',
+                                  style: medium14(context)
+                                      .copyWith(color: Colors.white),
+                                )),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        });
+  }
+
   static void showLogOutDialog(
       {required BuildContext context, required WidgetRef ref}) {
     showDialog(
@@ -116,30 +186,34 @@ class AppOverlays {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          OutlinedButton(
-                              onPressed: () => context.pop(),
-                              style: OutlinedButton.styleFrom(
-                                  side: const BorderSide(
-                                      color: AppColors.primary)),
-                              child: Text(
-                                'No',
-                                style: medium14(context)
-                                    .copyWith(color: AppColors.primary),
-                              )),
+                          Expanded(
+                            child: OutlinedButton(
+                                onPressed: () => context.pop(),
+                                style: OutlinedButton.styleFrom(
+                                    side: const BorderSide(
+                                        color: AppColors.primary)),
+                                child: Text(
+                                  'No',
+                                  style: medium14(context)
+                                      .copyWith(color: AppColors.primary),
+                                )),
+                          ),
                           SizedBox(width: width(context) * 0.04),
-                          ElevatedButton(
-                              onPressed: () {
-                                ref
-                                    .read(authProvider.notifier)
-                                    .logout(context: context);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.primary),
-                              child: Text(
-                                'Yes',
-                                style: medium14(context)
-                                    .copyWith(color: Colors.white),
-                              )),
+                          Expanded(
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  ref
+                                      .read(authProvider.notifier)
+                                      .logout(context: context);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.primary),
+                                child: Text(
+                                  'Yes',
+                                  style: medium14(context)
+                                      .copyWith(color: Colors.white),
+                                )),
+                          ),
                         ],
                       )
                     ],

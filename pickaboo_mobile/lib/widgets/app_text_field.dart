@@ -103,12 +103,17 @@ class IsVisibleNotifier extends Notifier<bool> {
 class SearchTextField extends StatelessWidget {
   final String hintText;
   final bool islocation;
+  final VoidCallback? onTap;
   const SearchTextField(
-      {super.key, required this.hintText, required this.islocation});
+      {super.key,
+      required this.hintText,
+      required this.islocation,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onTap: onTap,
       decoration: InputDecoration(
           hintText: hintText,
           filled: islocation,
@@ -356,9 +361,11 @@ class EditableTextField extends StatefulWidget {
   final String label;
   final TextEditingController controller;
   final TextInputType keyboardType;
+  final bool isEditable;
   const EditableTextField(
       {super.key,
       required this.label,
+      this.isEditable = false,
       required this.controller,
       required this.keyboardType});
 
@@ -369,6 +376,17 @@ class EditableTextField extends StatefulWidget {
 class _EditableTextFieldState extends State<EditableTextField> {
   // TextEditingController hasdk = TextEditingController();
   bool isEditMode = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.isEditable == true) {
+      setState(() {
+        isEditMode = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(

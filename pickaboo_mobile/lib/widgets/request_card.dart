@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../controllers/auth/auth_controller.dart';
 import '../utilities/utilities.dart';
 
-class RequestCard extends StatelessWidget {
+class RequestCard extends ConsumerWidget {
   final bool isUser;
   const RequestCard({super.key, required this.isUser});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final accountType = ref.watch(authProvider).accountType;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: height(context) * 0.0075),
       child: Card(
@@ -32,7 +35,10 @@ class RequestCard extends StatelessWidget {
                   const LocationText(),
                   const Spacer(),
                   InkWell(
-                    onTap: () => context.pushNamed(AppRouter.requstDetails,
+                    onTap: () => context.pushNamed(
+                        accountType == 'Service Personnel'
+                            ? AppRouter.driverRequstDetails
+                            : AppRouter.userRequstDetails,
                         pathParameters: {'isActive': 'yes'}),
                     child: Row(
                       children: [

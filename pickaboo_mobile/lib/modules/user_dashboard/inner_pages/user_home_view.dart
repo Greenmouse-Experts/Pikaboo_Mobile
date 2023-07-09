@@ -14,7 +14,7 @@ class UserHomeView extends ConsumerWidget {
     final homeOwner = ref.watch(authProvider).user;
     final name = homeOwner?.firstName ?? '';
     final image = homeOwner?.avatar ?? '';
-    final notificationCount = homeOwner?.notificationsCount;
+    final notificationCount = ref.watch(authProvider).notificationCount;
     return Scaffold(
       appBar: customAppBar2(context,
           hasElevation: false,
@@ -22,13 +22,7 @@ class UserHomeView extends ConsumerWidget {
           ref: ref,
           hasHamburger: true,
           actions: [
-            AppAvatar(
-              name: name,
-              imgUrl: image,
-              radius: isMobile(context)
-                  ? width(context) * 0.045
-                  : width(context) * 0.04,
-            ),
+            AppBarIcon(name: name, image: image),
             SizedBox(width: width(context) * 0.04)
           ]),
       body: SingleChildScrollView(
@@ -122,7 +116,7 @@ class UserHomeView extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           UserRowIcon(
-                            onTap: () => context.pushNamed(AppRouter.faq),
+                            onTap: () => context.pushNamed(AppRouter.userFaq),
                             bgColor: AppColors.primary,
                             title: 'FAQs',
                             image: 'faq',
@@ -134,14 +128,15 @@ class UserHomeView extends ConsumerWidget {
                             image: 'fund',
                           ),
                           UserRowIcon(
-                            onTap: () => context.pushNamed(AppRouter.history),
+                            onTap: () =>
+                                context.pushNamed(AppRouter.userhistory),
                             bgColor: AppColors.lightBlue,
-                            title: 'History',
+                            title: 'Orders',
                             image: 'history',
                           ),
                           NootificationIcon(
                             onTap: () =>
-                                context.pushNamed(AppRouter.notifications),
+                                context.pushNamed(AppRouter.userNotifications),
                             bgColor: AppColors.orange,
                             notification: notificationCount,
                             title: 'Notification',
@@ -172,8 +167,9 @@ class UserHomeView extends ConsumerWidget {
                       ),
                       SizedBox(height: height(context) * 0.0075),
                       ActionCard(
-                        onPressed: () =>
-                            context.pushNamed(AppRouter.marketplace),
+                        onPressed: () => context.pushNamed(
+                            AppRouter.marketplace,
+                            pathParameters: {'canGoBack': 'yes'}),
                         title: 'Purchase',
                         color: AppColors.fadePurple,
                         content: 'Buy trash cans and waste bins from us.',
@@ -194,7 +190,8 @@ class UserHomeView extends ConsumerWidget {
                       ),
                       SizedBox(height: height(context) * 0.0075),
                       ActionCard(
-                        onPressed: () => context.pushNamed(AppRouter.support),
+                        onPressed: () =>
+                            context.pushNamed(AppRouter.userSupport),
                         title: 'Contact Details',
                         color: AppColors.fadeGreen2,
                         content: 'Contact us directly via our details.',

@@ -14,18 +14,13 @@ class SupportView extends ConsumerWidget {
     final homeOwner = ref.watch(authProvider).user;
     final name = homeOwner?.firstName ?? '';
     final image = homeOwner?.avatar ?? '';
+    final accountType = ref.watch(authProvider).accountType;
     return Scaffold(
       appBar: customAppBar3(context,
           hasElevation: false,
           bgColor: AppColors.fadeGreen,
           actions: [
-            AppAvatar(
-              name: name,
-              imgUrl: image,
-              radius: isMobile(context)
-                  ? width(context) * 0.045
-                  : width(context) * 0.04,
-            ),
+            AppBarIcon(name: name, image: image),
             SizedBox(width: width(context) * 0.04)
           ]),
       body: Column(
@@ -63,8 +58,10 @@ class SupportView extends ConsumerWidget {
                         bgColor: AppColors.lightYellow,
                         title: 'Transactions',
                         image: 'transaction',
-                        onTap: () =>
-                            context.pushNamed(AppRouter.transactionHistory)),
+                        onTap: () => context.pushNamed(
+                            accountType == 'Service Personnel'
+                                ? AppRouter.driverTransactionHistory
+                                : AppRouter.userTransactionHistory)),
                     DriverRowIcon(
                         bgColor: AppColors.lightGreen,
                         title: 'Add funds',
@@ -74,12 +71,18 @@ class SupportView extends ConsumerWidget {
                         bgColor: AppColors.lightRed,
                         title: 'Report issue',
                         image: 'issue',
-                        onTap: () => context.pushNamed(AppRouter.faq)),
+                        onTap: () => context.pushNamed(
+                            accountType == 'Service Personnel'
+                                ? AppRouter.driverFaq
+                                : AppRouter.userFaq)),
                     DriverRowIcon(
                         bgColor: AppColors.lightIndigo,
                         title: 'FAQs',
                         image: 'faqs',
-                        onTap: () => context.pushNamed(AppRouter.faq)),
+                        onTap: () => context.pushNamed(
+                            accountType == 'Service Personnel'
+                                ? AppRouter.driverFaq
+                                : AppRouter.userFaq)),
                   ],
                 ),
                 SizedBox(width: width(context), height: height(context) * 0.03),

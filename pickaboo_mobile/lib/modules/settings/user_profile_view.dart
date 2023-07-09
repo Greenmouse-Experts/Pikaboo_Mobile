@@ -58,7 +58,7 @@ class UserProfileview extends ConsumerWidget {
                       children: [
                         ProfileTile(
                             onPressed: () =>
-                                context.pushNamed(AppRouter.accountView),
+                                context.pushNamed(AppRouter.userAccountView),
                             icon: Icons.people,
                             title: 'Account',
                             isLast: true,
@@ -90,7 +90,7 @@ class UserProfileview extends ConsumerWidget {
                             subTitle: homeOwner?.address ?? ''),
                         ProfileTile(
                             onPressed: () =>
-                                context.pushNamed(AppRouter.notifications),
+                                context.pushNamed(AppRouter.userNotifications),
                             icon: Icons.notifications,
                             title: 'Notification',
                             subTitle:

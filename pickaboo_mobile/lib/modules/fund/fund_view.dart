@@ -1,9 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+// // Import for Android features.
+// import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../controllers/auth/auth_controller.dart';
 import '../../data/constants.dart';
+import '../../data/models/models.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
@@ -26,7 +32,25 @@ class _FundViewConsumerState extends ConsumerState<FundView> {
     plugin.initialize(publicKey: publicKey);
   }
 
-  void _fundWallet() {
+  Future<PaystackSchema> createAccessCode(amount, reference, email) async {
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${Constants.paystackSecretkey}'
+    };
+    Map data = {"amount": amount, "email": email, "reference": reference};
+    String payload = json.encode(data);
+    http.Response response = await http.post(
+        Uri.parse('https://api.paystack.co/transaction/initialize'),
+        headers: headers,
+        body: payload);
+    final newdata = jsonDecode(response.body);
+
+    final schema = PaystackSchema.fromJson(newdata['data']);
+    return schema;
+  }
+
+  void _fundWallet() async {
     final homeOwner = ref.watch(authProvider).user;
     final email = homeOwner?.email ?? 'greenmouseapp@gmail.com';
 
@@ -45,19 +69,107 @@ class _FundViewConsumerState extends ConsumerState<FundView> {
       ..email = email
       ..currency = "NGN";
 
-    plugin
-        .checkout(context,
-            method: CheckoutMethod.card, charge: charge, fullscreen: true)
-        .then((value) {
-      if (value.status == true) {
-        ref.read(authProvider.notifier).topupWallet(
-            context: context,
-            reference: value.reference ??
-                'TR-${DateTime.now().millisecondsSinceEpoch}',
-            ref: ref);
-      } else {}
+    createAccessCode(amount, charge.reference, email).then((value) {
+      charge.accessCode = value.accessCode;
+    }).then((_) {
+      plugin
+          .checkout(context,
+              method: CheckoutMethod.selectable,
+              charge: charge,
+              fullscreen: true,
+              logo: SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: Image.asset('assets/images/pickaboo_logo.png')))
+          .then((value) {
+        fundController.clear();
+        FocusManager.instance.primaryFocus?.unfocus();
+        if (value.status == true) {
+          ref.read(authProvider.notifier).topupWallet(
+              context: context,
+              reference: value.reference ??
+                  'TR-${DateTime.now().millisecondsSinceEpoch}',
+              ref: ref);
+        } else {
+          AppOverlays.showErrorSnackBar(
+              context: context, message: 'Payment was unsuccessful');
+        }
+      });
     });
   }
+
+  // _showPaystack() async {
+  //   final homeOwner = ref.watch(authProvider).user;
+  //   final email = homeOwner?.email ?? 'greenmouseapp@gmail.com';
+
+  //   if (fundController.text.isEmpty) {
+  //     AppOverlays.showErrorSnackBar(
+  //         context: context,
+  //         message: 'Enter an amount to fund your wallet with');
+  //     return;
+  //   }
+  //   final amount = int.parse(fundController.text) * 100;
+  //   final reference = 'TR-${DateTime.now().millisecondsSinceEpoch}';
+  //   final paySchema = await createAccessCode(amount, reference, email);
+  //   // This awaits the [authorization_url](#authUrl). NB: I'm using the MVVM architecture in my live code, but it's still the same process of retrieving the authURL.
+  //   //  var authUrl = await _profileCtrl.paystackWebViewChargeCard(data);
+
+  //   final controller = WebViewController()
+  //     ..setJavaScriptMode(JavaScriptMode.unrestricted)
+  //     ..setBackgroundColor(const Color(0x00000000))
+  //     ..setNavigationDelegate(
+  //       NavigationDelegate(
+  //         onProgress: (int progress) {
+  //           // Update loading bar.
+  //         },
+  //         onPageStarted: (String url) {},
+  //         onPageFinished: (String url) {},
+  //         onWebResourceError: (WebResourceError error) {},
+  //         onNavigationRequest: (NavigationRequest request) {
+  //           if (request.url == "https://standard.paystack.co/close" ||
+  //               request.url == Constants.callBackUrl) {
+  //             Navigator.pop(context);
+  //             ref.read(authProvider.notifier).topupWallet(
+  //                 context: context, reference: paySchema.reference, ref: ref);
+  //           }
+  //           return NavigationDecision.navigate;
+  //         },
+  //       ),
+  //     )
+  //     ..loadRequest(Uri.parse(paySchema.authorizationUrl));
+
+  //   pay(controller);
+  // }
+
+  // void pay(WebViewController controller) {
+  //   showGeneralDialog(
+  //       context: context,
+  //       barrierDismissible: true,
+  //       barrierLabel:
+  //           MaterialLocalizations.of(context).modalBarrierDismissLabel,
+  //       barrierColor: Colors.black45,
+  //       transitionDuration: const Duration(milliseconds: 200),
+  //       pageBuilder: (BuildContext buildContext, Animation animation,
+  //           Animation secondaryAnimation) {
+  //         return Column(
+  //           children: [
+  //             customAppBar5(context,
+  //                 actions: [NavigationControls(controller: controller)]),
+  //             Center(
+  //                 child: Container(
+  //               width: MediaQuery.of(context).size.width - 10,
+  //               // height: MediaQuery.of(context).size.height - 80,
+  //               height: adjustedHeight(context),
+  //               padding: const EdgeInsets.only(top: 40),
+  //               color: Colors.white,
+  //               child: WebViewWidget(
+  //                 controller: controller,
+  //               ),
+  //             )),
+  //           ],
+  //         );
+  //       });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +182,7 @@ class _FundViewConsumerState extends ConsumerState<FundView> {
           implyLeading: true,
           hasElevation: false,
           actions: [
-            AppAvatar(
-              name: name,
-              imgUrl: image,
-              radius: isMobile(context)
-                  ? width(context) * 0.045
-                  : width(context) * 0.04,
-            ),
+            AppBarIcon(name: name, image: image),
             SizedBox(width: width(context) * 0.04)
           ]),
       body: SingleChildScrollView(

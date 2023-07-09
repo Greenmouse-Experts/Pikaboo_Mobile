@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../utilities/utilities.dart';
-import 'app_button.dart';
-import 'app_image.dart';
+import 'widgets.dart';
 
 class CardSlide1 extends StatelessWidget {
   const CardSlide1({super.key});
@@ -137,7 +136,7 @@ class CardSlide3 extends StatelessWidget {
                 AppButton(
                   text: 'Go To Shop',
                   onPressed: () {
-                    context.pushNamed(AppRouter.marketplace);
+                    AppOverlays.showSignInDialog(context: context);
                   },
                   buttonWidth: 0.35,
                   buttonHeight: 0.035,

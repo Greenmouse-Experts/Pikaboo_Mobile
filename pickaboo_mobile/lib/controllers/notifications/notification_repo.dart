@@ -16,4 +16,12 @@ class NotificationRepository {
         data: {'notification_id': id}, ref: ref);
     return response;
   }
+
+  Future<ApiResponse> deleteNotification(String id, WidgetRef ref) async {
+    final response = _api.postData(
+        '/user/delete/notification?notification_id=$id',
+        data: {'notification_id': id},
+        ref: ref);
+    return response;
+  }
 }

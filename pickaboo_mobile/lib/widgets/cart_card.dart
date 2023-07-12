@@ -17,9 +17,7 @@ class CartCard extends ConsumerStatefulWidget {
 }
 
 class _CartCardConsumerState extends ConsumerState<CartCard> {
-  bool isLoading = false;
-
-  void reduceCount() async {
+  Future<void> reduceCount() async {
     int quantity = int.parse(widget.cartItem.quantity ?? '0');
     if (quantity <= 1) {
       AppOverlays.showErrorSnackBar(
@@ -32,9 +30,7 @@ class _CartCardConsumerState extends ConsumerState<CartCard> {
                 '0') *
         quantity;
 
-    setState(() {
-      isLoading = true;
-    });
+    ref.read(_loadingProvider.notifier).setToLoading();
 
     await ref.read(cartProvider.notifier).updateCart(
         context: context,
@@ -43,9 +39,7 @@ class _CartCardConsumerState extends ConsumerState<CartCard> {
         price: price.toString(),
         quantity: quantity.toString());
 
-    setState(() {
-      isLoading = false;
-    });
+    ref.read(_loadingProvider.notifier).setToNotLoading();
   }
 
   void increaseCount() async {
@@ -63,9 +57,7 @@ class _CartCardConsumerState extends ConsumerState<CartCard> {
                 '0') *
         quantity;
 
-    setState(() {
-      isLoading = true;
-    });
+    ref.read(_loadingProvider.notifier).setToLoading();
 
     await ref.read(cartProvider.notifier).updateCart(
         context: context,
@@ -73,10 +65,7 @@ class _CartCardConsumerState extends ConsumerState<CartCard> {
         cartId: widget.cartItem.id!,
         price: price.toString(),
         quantity: quantity.toString());
-
-    setState(() {
-      isLoading = false;
-    });
+    ref.read(_loadingProvider.notifier).setToNotLoading();
   }
 
   @override
@@ -174,21 +163,25 @@ class _CartCardConsumerState extends ConsumerState<CartCard> {
                             size: width(context) * 0.06,
                             color: AppColors.primary)),
                   ),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: width(context) * 0.02),
-                    child: isLoading
-                        ? SizedBox(
-                            width: width(context) * 0.05,
-                            height: width(context) * 0.05,
-                            child: const CircularProgressIndicator.adaptive(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                  AppColors.primary),
-                            ),
-                          )
-                        : Text(widget.cartItem.quantity ?? '',
-                            style: medium14(context)),
-                  ),
+                  Consumer(builder: (context, ref, _) {
+                    final isLoading = ref.watch(_loadingProvider);
+
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: width(context) * 0.02),
+                      child: isLoading
+                          ? SizedBox(
+                              width: width(context) * 0.05,
+                              height: width(context) * 0.05,
+                              child: const CircularProgressIndicator.adaptive(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    AppColors.primary),
+                              ),
+                            )
+                          : Text(widget.cartItem.quantity ?? '',
+                              style: medium14(context)),
+                    );
+                  }),
                   InkWell(
                     onTap: increaseCount,
                     child: Container(
@@ -209,5 +202,23 @@ class _CartCardConsumerState extends ConsumerState<CartCard> {
         ],
       ),
     );
+  }
+}
+
+final _loadingProvider =
+    NotifierProvider<_LoadingNotifier, bool>(_LoadingNotifier.new);
+
+class _LoadingNotifier extends Notifier<bool> {
+  @override
+  build() {
+    return false;
+  }
+
+  void setToLoading() {
+    state = true;
+  }
+
+  void setToNotLoading() {
+    state = false;
   }
 }

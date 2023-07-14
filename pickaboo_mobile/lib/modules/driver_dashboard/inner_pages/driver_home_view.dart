@@ -25,22 +25,7 @@ class DriverHomeView extends ConsumerWidget {
           hasHamburger: true,
           isUser: false,
           actions: [
-            IconButton(
-                onPressed: () =>
-                    context.pushNamed(AppRouter.driiverNotifications),
-                icon: Badge(
-                  label: notificationCount == null
-                      ? null
-                      : Text('$notificationCount'),
-                  backgroundColor:
-                      notificationCount == null ? Colors.transparent : null,
-                  padding: const EdgeInsets.all(3),
-                  child: Icon(
-                    Icons.notifications,
-                    size: width(context) * 0.05,
-                    color: AppColors.gold,
-                  ),
-                )),
+            DriverNotificationIcon(notificationCount),
             SizedBox(width: width(context) * 0.04)
           ]),
       body: SingleChildScrollView(
@@ -138,9 +123,15 @@ class DriverHomeView extends ConsumerWidget {
                     SizedBox(height: height(context) * 0.02),
                     Align(
                         alignment: Alignment.center,
-                        child: Text('Pick Up Alert', style: medium13(context))),
-                    SizedBox(height: height(context) * 0.01),
-                    const PickUpPreview(),
+                        child:
+                            Text('Pick Up Alerts', style: medium18(context))),
+                    SizedBox(
+                        height: height(context) * 0.11,
+                        child: ListView.builder(
+                            //       scrollDirection: Axis.horizontal,
+                            itemCount: 4,
+                            itemBuilder: (context, i) =>
+                                const PickUpPreview())),
                     SizedBox(height: height(context) * 0.03),
                     Text('Stay In Touch', style: medium13(context)),
                     SizedBox(height: height(context) * 0.015),

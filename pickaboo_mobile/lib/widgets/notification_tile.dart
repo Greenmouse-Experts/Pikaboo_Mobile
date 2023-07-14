@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../data/models/notification_schema.dart';
 import '../utilities/utilities.dart';
@@ -60,5 +61,35 @@ class NotificationTile extends StatelessWidget {
             color: Colors.black,
           )),
     );
+  }
+}
+
+class DriverNotificationIcon extends StatelessWidget {
+  final int? notification;
+  const DriverNotificationIcon(this.notification, {super.key});
+
+  @override
+  Widget build(
+    BuildContext context,
+  ) {
+    return IconButton(
+        onPressed: () => context.pushNamed(AppRouter.driiverNotifications),
+        icon: notification == null || notification == 0
+            ? Icon(
+                Icons.notifications,
+                size: width(context) * 0.05,
+                color: AppColors.gold,
+              )
+            : Badge(
+                label: Text('$notification'),
+                backgroundColor:
+                    notification == null ? Colors.transparent : null,
+                padding: const EdgeInsets.all(3),
+                child: Icon(
+                  Icons.notifications,
+                  size: width(context) * 0.05,
+                  color: AppColors.gold,
+                ),
+              ));
   }
 }

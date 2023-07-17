@@ -39,8 +39,9 @@ class Api {
           options: Options(headers: hasHeader ? authorization : null));
 
       return ApiResponse.fromResponse(response);
-    } on DioException catch (error) {
-      return error.toApiError(cancelToken: CancelToken());
+    } on DioException {
+      // return error.toApiError(cancelToken: CancelToken());
+      rethrow;
     } catch (e) {
       rethrow;
     }

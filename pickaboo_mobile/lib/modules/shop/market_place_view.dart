@@ -62,12 +62,17 @@ class MarketPlaceView extends ConsumerWidget {
             child: Padding(
                 padding: screenPadding(context),
                 child: FutureBuilder(
+                    // / future: getTest(),
                     future: productNotifier.getAllProducts(ref: ref),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const PageLoader();
                       } else if (snapshot.hasError) {
-                        return Text(snapshot.error.toString());
+                        return AppErrorWidget(
+                            //snapshot.error!
+                            widgetHeight: 0.7,
+                            errorType: snapshot.error.runtimeType,
+                            error: snapshot.error.toString());
                       } else {
                         final groupedProducts =
                             ref.watch(productProvider).groupedProducts;
@@ -182,53 +187,68 @@ class MarketPlaceView extends ConsumerWidget {
                               );
                             }),
                             SizedBox(height: height(context) * 0.01),
-                            Consumer(builder: (context, ref, _) {
-                              final page = ref.watch(_pageProvider);
+                            products.isEmpty
+                                ? Container(
+                                    alignment: Alignment.center,
+                                    height: height(context) * 0.4,
+                                    child: Center(
+                                        child: Text(
+                                      'No products available currently, Check again later',
+                                      textAlign: TextAlign.center,
+                                      style: medium16(context),
+                                    )),
+                                  )
+                                : Consumer(builder: (context, ref, _) {
+                                    final page = ref.watch(_pageProvider);
 
-                              return Consumer(builder: (context, ref, child) {
-                                final isSingle = ref.watch(switchProvider);
-                                final theproducts = products[page];
+                                    return Consumer(builder: (context, ref, _) {
+                                      final isSingle =
+                                          ref.watch(switchProvider);
+                                      final theproducts = products[page];
 
-                                return theproducts.isEmpty
-                                    ? Container(
-                                        alignment: Alignment.center,
-                                        height: height(context) * 0.4,
-                                        child: Center(
-                                            child: Text(
-                                          'No products available currently, Check again later',
-                                          textAlign: TextAlign.center,
-                                          style: medium16(context),
-                                        )),
-                                      )
-                                    : isSingle
-                                        ? ListView.builder(
-                                            shrinkWrap: true,
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            itemCount: theproducts.length,
-                                            itemBuilder: (context, i) =>
-                                                ProductCard(
-                                                  product: theproducts[i],
-                                                ))
-                                        : GridView.builder(
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                                    crossAxisCount: 2,
-                                                    childAspectRatio: 0.92,
-                                                    crossAxisSpacing:
-                                                        width(context) * 0.05,
-                                                    mainAxisSpacing:
-                                                        height(context) * 0.02),
-                                            shrinkWrap: true,
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            itemCount: theproducts.length,
-                                            itemBuilder: (context, i) =>
-                                                ProductGridCard(
-                                                  product: theproducts[i],
-                                                ));
-                              });
-                            })
+                                      return theproducts.isEmpty
+                                          ? Container(
+                                              alignment: Alignment.center,
+                                              height: height(context) * 0.4,
+                                              child: Center(
+                                                  child: Text(
+                                                'No products available currently, Check again later',
+                                                textAlign: TextAlign.center,
+                                                style: medium16(context),
+                                              )),
+                                            )
+                                          : isSingle
+                                              ? ListView.builder(
+                                                  shrinkWrap: true,
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  itemCount: theproducts.length,
+                                                  itemBuilder: (context, i) =>
+                                                      ProductCard(
+                                                        product: theproducts[i],
+                                                      ))
+                                              : GridView.builder(
+                                                  gridDelegate:
+                                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                                          crossAxisCount: 2,
+                                                          childAspectRatio:
+                                                              0.92,
+                                                          crossAxisSpacing:
+                                                              width(context) *
+                                                                  0.05,
+                                                          mainAxisSpacing:
+                                                              height(context) *
+                                                                  0.02),
+                                                  shrinkWrap: true,
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  itemCount: theproducts.length,
+                                                  itemBuilder: (context, i) =>
+                                                      ProductGridCard(
+                                                        product: theproducts[i],
+                                                      ));
+                                    });
+                                  })
                           ],
                         );
                       }

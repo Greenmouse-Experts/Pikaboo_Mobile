@@ -29,7 +29,11 @@ class NotificationView extends ConsumerWidget {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const PageLoader();
               } else if (snapshot.hasError) {
-                return Text(snapshot.error.toString());
+                return AppErrorWidget(
+                    //snapshot.error!
+                    widgetHeight: 0.7,
+                    errorType: snapshot.error.runtimeType,
+                    error: snapshot.error.toString());
               } else {
                 return Consumer(builder: (context, ref, _) {
                   final notifications =
@@ -60,8 +64,14 @@ class NotificationView extends ConsumerWidget {
                                 children: [
                                   const PageHeader(
                                       title: 'Notifications', hasSearch: false),
-                                  SizedBox(height: height(context) * 0.02),
-                                  Text('Unread', style: medium13(context)),
+                                  unreadNotifications.isEmpty
+                                      ? const SizedBox()
+                                      : SizedBox(
+                                          height: height(context) * 0.02),
+                                  unreadNotifications.isEmpty
+                                      ? const SizedBox()
+                                      : Text('Unread',
+                                          style: medium13(context)),
                                 ],
                               ),
                             ),

@@ -32,4 +32,10 @@ class AuthRepository {
         data: {'ref_id': reference}, ref: ref);
     return response;
   }
+
+  Future<ApiResponse> postFcmToken(String? fcmToken, WidgetRef ref) async {
+    final response = _api.postData('/user/add/fcm/token',
+        data: {'fcm_token': fcmToken}, ref: ref);
+    return response;
+  }
 }

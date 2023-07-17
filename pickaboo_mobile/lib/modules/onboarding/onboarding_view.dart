@@ -1,17 +1,20 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../controllers/auth/auth_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
-class OnBoardingView extends StatelessWidget {
+class OnBoardingView extends ConsumerWidget {
   const OnBoardingView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final controller = PageController();
+    ref.read(authProvider.notifier).setFirstTimeUser();
     return Scaffold(
       body: Stack(
         children: [

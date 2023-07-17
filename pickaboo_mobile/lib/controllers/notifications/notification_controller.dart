@@ -27,6 +27,7 @@ class NotificationNotifier extends ChangeNotifier {
   Future<void> getAllNotifications({required WidgetRef ref}) async {
     try {
       final response = await _repo.getAllNotifications(ref);
+
       if (response.isSuccessful) {
         _notifications = NotificationSchema.getList(response.data);
         _unreadNotifications = _notifications
@@ -35,7 +36,8 @@ class NotificationNotifier extends ChangeNotifier {
         _readNotifications = _notifications
             .where((element) => element.status != 'Unread')
             .toList();
-      }
+      } else {}
+
       ref
           .read(authProvider.notifier)
           .updateNotificationCountValue(_unreadNotifications.length);

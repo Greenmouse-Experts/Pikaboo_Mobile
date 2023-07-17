@@ -3,3 +3,4 @@ export './market_schema.dart';
 export './cart_schema.dart';
 export './notification_schema.dart';
 export './paystack_schema.dart';
+export './clean_up_schema.dart';

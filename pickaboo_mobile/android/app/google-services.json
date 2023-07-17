@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "78373342313",
+    "project_id": "pikaboo-a53a4",
+    "storage_bucket": "pikaboo-a53a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:78373342313:android:b625b1bf849d0d8f6de6f8",
+        "android_client_info": {
+          "package_name": "com.example.pickaboo_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "78373342313-qjbujo1gtnolnscpak7kullh4p1tfs2l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxrAqEMwWox3gzPymxOcmo9UHq6mn_9Q4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "78373342313-qjbujo1gtnolnscpak7kullh4p1tfs2l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "78373342313-kdrthku75os2jg74m1drei9lsf4nqpgr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pickabooMobile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

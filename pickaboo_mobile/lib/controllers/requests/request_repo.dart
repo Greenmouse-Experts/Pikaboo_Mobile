@@ -8,7 +8,7 @@ class RequestRepository {
 
   Future<ApiResponse> getDriverRequests({required WidgetRef ref}) async {
     final response = _api
-        .getData('/service-personnel/view/assigned/cleanup/request', ref: ref);
+        .getData('/service-personnel/view/assigned/schedule/request', ref: ref);
     return response;
   }
 

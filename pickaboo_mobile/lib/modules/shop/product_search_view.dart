@@ -53,13 +53,11 @@ class ProductSearchDelegate extends SearchDelegate {
                 return const PageLoader();
               default:
                 if (snapshot.hasError) {
-                  return Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Something went wrong!',
-                      style: medium18(context),
-                    ),
-                  );
+                  return AppErrorWidget(
+                      //snapshot.error!
+                      widgetHeight: 0.7,
+                      errorType: snapshot.error.runtimeType,
+                      error: snapshot.error.toString());
                 } else {
                   final theProducts = snapshot.data ?? [];
                   return ListView.builder(
@@ -87,13 +85,11 @@ class ProductSearchDelegate extends SearchDelegate {
                 return const PageLoader();
               default:
                 if (snapshot.hasError) {
-                  return Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Something went wrong!',
-                      style: medium18(context),
-                    ),
-                  );
+                  return AppErrorWidget(
+                      //snapshot.error!
+                      widgetHeight: 0.7,
+                      errorType: snapshot.error.runtimeType,
+                      error: snapshot.error.toString());
                 } else {
                   final theProducts = snapshot.data ?? [];
                   return theProducts.isEmpty

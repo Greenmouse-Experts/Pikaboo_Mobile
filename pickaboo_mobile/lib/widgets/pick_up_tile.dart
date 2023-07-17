@@ -4,13 +4,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../controllers/auth/auth_controller.dart';
+import '../data/models/models.dart';
 import '../utilities/utilities.dart';
 import 'widgets.dart';
 
 class PickupTile extends StatelessWidget {
   final bool isFirst;
   final bool isLast;
-  const PickupTile({super.key, required this.isFirst, required this.isLast});
+  final CleanUpSchema request;
+  const PickupTile(
+      {super.key,
+      required this.isFirst,
+      required this.isLast,
+      required this.request});
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +71,7 @@ class PickupTile extends StatelessWidget {
           SizedBox(height: height(context) * 0.0002),
         ],
       ),
-      subtitle: Text('OJOTA',
+      subtitle: Text(request.cleanupRequest?.zone?.name ?? '',
           style:
               medium11(context).copyWith(color: Colors.black.withOpacity(0.4))),
       trailing: Container(

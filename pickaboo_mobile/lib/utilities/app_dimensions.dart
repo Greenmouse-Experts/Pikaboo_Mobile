@@ -19,9 +19,13 @@ EdgeInsets horizontalPadding(BuildContext context) =>
     EdgeInsets.symmetric(horizontal: width(context) * 0.04);
 
 double calculateTextSize(BuildContext context, double fontSize) {
-  final scaleFactor = width(context) > 480
-      ? width(context) / (baseScreenWidth * 1.2)
-      : width(context) / (baseScreenWidth * 0.94);
+  final scaleFactor = width(context) > 480 && height(context) < 900
+      ? width(context) / (baseScreenWidth * 1.4)
+      : width(context) < 290
+          ? width(context) / (baseScreenWidth)
+          : width(context) > 480
+              ? width(context) / (baseScreenWidth * 1.2)
+              : width(context) / (baseScreenWidth * 0.94);
   final calculatedFontSize = fontSize * scaleFactor;
   return calculatedFontSize;
 }

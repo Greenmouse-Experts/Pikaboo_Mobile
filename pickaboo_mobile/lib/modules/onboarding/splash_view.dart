@@ -1,31 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../controllers/auth/auth_controller.dart';
 import '../../utilities/utilities.dart';
 
-class SplashView extends StatefulWidget {
+class SplashView extends ConsumerStatefulWidget {
   const SplashView({Key? key}) : super(key: key);
 
   @override
-  State<SplashView> createState() => _SplashViewState();
+  ConsumerState<SplashView> createState() => _SplashViewConsumerState();
 }
 
-class _SplashViewState extends State<SplashView> {
+class _SplashViewConsumerState extends ConsumerState<SplashView> {
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-
+    restoreUserSession();
     Future.delayed(const Duration(seconds: 2), () {
       setState(() {
         isLoading = false;
       });
     });
     Future.delayed(const Duration(seconds: 5), () {
-      context.goNamed(AppRouter.onboarding);
+      final user = ref.watch(authProvider).user;
+      if (user == null) {
+        final isFirstTimer = ref.watch(authProvider).isFirstTimeUser;
+        if (isFirstTimer) {
+          context.goNamed(AppRouter.onboarding);
+        } else {
+          context.goNamed(AppRouter.dashboard);
+        }
+      } else {
+        final accountType = ref.watch(authProvider).accountType;
+        if (accountType == 'Service Personnel') {
+          context.goNamed(AppRouter.driverDashboard);
+        } else {
+          context.goNamed(AppRouter.userDashboard);
+        }
+      }
     });
+  }
+
+  void restoreUserSession() async {
+    ref.read(authProvider.notifier).restoreUserSession(ref);
   }
 
   @override

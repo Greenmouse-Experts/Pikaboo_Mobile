@@ -1,95 +1,116 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pickaboo_mobile/controllers/requests/request_controller.dart';
 
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
-class PickUpRequestView extends StatelessWidget {
+class PickUpRequestView extends ConsumerWidget {
   const PickUpRequestView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final getRequests = ref.watch(requestProvider);
     return Scaffold(
       appBar: customAppBar3(context, hasElevation: false),
       body: SingleChildScrollView(
           child: SafeArea(
         child: Padding(
           padding: screenPadding(context),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const PageHeader(title: 'Pickup Requests', hasSearch: false),
-              SizedBox(height: height(context) * 0.01),
-              Text('Available garbage pickup in your location today.',
-                  style: medium13(context)
-                      .copyWith(color: Colors.black.withOpacity(0.4))),
-              SizedBox(height: height(context) * 0.02),
-              Consumer(builder: (context, ref, child) {
-                final i = ref.watch(_pageProvider);
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CategorySelector(
-                      isSelected: i == 0,
-                      title: 'All',
-                      onSelected: () {
-                        ref.read(_pageProvider.notifier).updatePage(0);
-                      },
-                    ),
-                    CategorySelector(
-                      isSelected: i == 1,
-                      title: 'Active',
-                      onSelected: () {
-                        ref.read(_pageProvider.notifier).updatePage(1);
-                      },
-                    ),
-                    CategorySelector(
-                      isSelected: i == 2,
-                      title: 'Finished',
-                      onSelected: () {
-                        ref.read(_pageProvider.notifier).updatePage(2);
-                      },
-                    ),
-                  ],
-                );
-              }),
-              SizedBox(height: height(context) * 0.01),
-              Consumer(builder: (context, ref, child) {
-                final i = ref.watch(_pageProvider);
+          child: FutureBuilder(
+              future: getRequests.getAllRequests(ref: ref),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const PageLoader();
+                } else if (snapshot.hasError) {
+                  return AppErrorWidget(
+                      widgetHeight: 0.7,
+                      errorType: snapshot.error.runtimeType,
+                      error: snapshot.error.toString());
+                } else {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const PageHeader(
+                          title: 'Pickup Requests', hasSearch: false),
+                      SizedBox(height: height(context) * 0.01),
+                      Text('Available garbage pickup in your location today.',
+                          style: medium13(context)
+                              .copyWith(color: Colors.black.withOpacity(0.4))),
+                      SizedBox(height: height(context) * 0.02),
+                      Consumer(builder: (context, ref, child) {
+                        final i = ref.watch(_pageProvider);
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CategorySelector(
+                              isSelected: i == 0,
+                              title: 'All',
+                              onSelected: () {
+                                ref.read(_pageProvider.notifier).updatePage(0);
+                              },
+                            ),
+                            CategorySelector(
+                              isSelected: i == 1,
+                              title: 'Active',
+                              onSelected: () {
+                                ref.read(_pageProvider.notifier).updatePage(1);
+                              },
+                            ),
+                            CategorySelector(
+                              isSelected: i == 2,
+                              title: 'Finished',
+                              onSelected: () {
+                                ref.read(_pageProvider.notifier).updatePage(2);
+                              },
+                            ),
+                          ],
+                        );
+                      }),
+                      SizedBox(height: height(context) * 0.01),
+                      Consumer(builder: (context, ref, child) {
+                        final i = ref.watch(_pageProvider);
+                        final cleanUpRequests =
+                            ref.watch(requestProvider).cleanUpRequests;
 
-                return i == 0
-                    ? ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 6,
-                        itemBuilder: (context, i) {
-                          return PickupTile(
-                            isFirst: i == 0,
-                            isLast: i == 19,
-                          );
-                        })
-                    : i == 1
-                        ? ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 6,
-                            itemBuilder: (context, i) {
-                              return const PickUpCard(
-                                isActive: true,
-                              );
-                            })
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 6,
-                            itemBuilder: (context, i) {
-                              return const PickUpCard(
-                                isActive: false,
-                              );
-                            });
-              })
-            ],
-          ),
+                        return i == 0
+                            ? ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: cleanUpRequests.length,
+                                itemBuilder: (context, i) {
+                                  return PickupTile(
+                                    isFirst: i == 0,
+                                    isLast: i == cleanUpRequests.length - 1,
+                                    request: cleanUpRequests[i],
+                                  );
+                                })
+                            : i == 1
+                                ? ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: 6,
+                                    itemBuilder: (context, i) {
+                                      return const PickUpCard(
+                                        isActive: true,
+                                      );
+                                    })
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: 6,
+                                    itemBuilder: (context, i) {
+                                      return const PickUpCard(
+                                        isActive: false,
+                                      );
+                                    });
+                      })
+                    ],
+                  );
+                }
+              }),
         ),
       )),
     );

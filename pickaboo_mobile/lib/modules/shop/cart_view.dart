@@ -28,7 +28,11 @@ class CartView extends StatelessWidget {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const PageLoader();
                   } else if (snapshot.hasError) {
-                    return Text(snapshot.error.toString());
+                    return AppErrorWidget(
+                        //snapshot.error!
+                        widgetHeight: 0.7,
+                        errorType: snapshot.error.runtimeType,
+                        error: snapshot.error.toString());
                   } else {
                     final cartItems = ref.watch(cartProvider).cart;
                     return Column(

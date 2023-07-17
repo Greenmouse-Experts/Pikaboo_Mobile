@@ -1,14 +1,17 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/models/models.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 import '../cart/cart_controller.dart';
+import '../notifications/notification_controller.dart';
 import 'auth_repo.dart';
 
 final authProvider = ChangeNotifierProvider<_AuthNotifier>((ref) {
@@ -18,8 +21,13 @@ final authProvider = ChangeNotifierProvider<_AuthNotifier>((ref) {
 class _AuthNotifier extends ChangeNotifier {
   final _repo = AuthRepository();
 
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   UserSchema? _user;
   UserSchema? get user => _user;
+
+  bool _isFirstTimeUser = true;
+  bool get isFirstTimeUser => _isFirstTimeUser;
 
   String? _token;
   String? get token => _token;
@@ -32,6 +40,29 @@ class _AuthNotifier extends ChangeNotifier {
 
   String? _accountType;
   String? get accountType => _accountType;
+
+  Future<void> restoreUserSession(WidgetRef ref) async {
+    final pref = await _prefs;
+    final userData = pref.getString('user');
+    final res = pref.getBool('isFirstTimeUser');
+    if (res != null) {
+      _isFirstTimeUser = res;
+    }
+    if (userData != null) {
+      _user = UserSchema.fromRawJson(userData);
+      _notificationCount = _user?.notificationsCount ?? 0;
+      _token = pref.getString('token');
+      _wallet = _user?.wallet;
+      _accountType = _user?.accountType;
+      notifyListeners();
+    }
+    ref.watch(notificationProvider).getAllNotifications(ref: ref);
+  }
+
+  Future<void> setFirstTimeUser() async {
+    final pref = await _prefs;
+    pref.setBool('isFirstTimeUser', false);
+  }
 
   Future<void> userLogin(
       {required BuildContext context,
@@ -71,15 +102,36 @@ class _AuthNotifier extends ChangeNotifier {
           _wallet = _user?.wallet;
           _accountType = _user?.accountType;
 
-          if (isUser) {
-            ref.watch(cartProvider).viewCart(ref: ref).then((value) {
-              context.pop();
-              context.goNamed(AppRouter.userDashboard);
+          _prefs.then((pref) {
+            pref.setString('user', _user?.toRawJson() ?? '');
+            pref.setString('token', _token ?? '');
+            final messaging = FirebaseMessaging.instance;
+            messaging
+                .requestPermission(
+              alert: true,
+              badge: true,
+              provisional: false,
+              sound: true,
+            )
+                .then((settings) {
+              if (settings.authorizationStatus ==
+                  AuthorizationStatus.authorized) {
+                FirebaseMessaging.instance.getToken().then((token) {
+                  _repo.postFcmToken(token, ref);
+                });
+              }
             });
-          } else {
-            context.pop();
-            context.goNamed(AppRouter.driverDashboard);
-          }
+
+            if (isUser) {
+              ref.watch(cartProvider).viewCart(ref: ref).then((value) {
+                context.pop();
+                context.goNamed(AppRouter.userDashboard);
+              });
+            } else {
+              context.pop();
+              context.goNamed(AppRouter.driverDashboard);
+            }
+          });
         } else {
           context.pop();
           AppOverlays.showErrorDialog(
@@ -91,6 +143,13 @@ class _AuthNotifier extends ChangeNotifier {
       AppOverlays.showErrorDialog(context: context, error: e);
     }
   }
+
+  // Future<void> _setUser(String user) async {
+  //   final pref = await _prefs;
+  //   pref.setString('user', user);
+  // }
+
+  Future<void> setFcmToken() async {}
 
   Future<void> topupWallet(
       {required BuildContext context,
@@ -179,9 +238,13 @@ class _AuthNotifier extends ChangeNotifier {
     }
   }
 
-  void logout({required BuildContext context}) {
-    context.goNamed(AppRouter.dashboard);
-    _user == null;
+  void logout({required BuildContext context}) async {
+    _prefs.then((pref) {
+      pref.remove('user');
+      pref.remove('token');
+      context.goNamed(AppRouter.dashboard);
+      _user == null;
+    });
   }
 
   Map<String, String> _getUserLoginPayload({

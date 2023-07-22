@@ -104,16 +104,21 @@ class SearchTextField extends StatelessWidget {
   final String hintText;
   final bool islocation;
   final VoidCallback? onTap;
+  final TextEditingController? controller;
+  final Function(String)? onChanged;
   const SearchTextField(
       {super.key,
       required this.hintText,
       required this.islocation,
+      this.controller,
+      this.onChanged,
       this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       onTap: onTap,
+      controller: controller,
       decoration: InputDecoration(
           hintText: hintText,
           filled: islocation,
@@ -430,12 +435,14 @@ class _EditableTextFieldState extends State<EditableTextField> {
 
 class TextArea extends StatelessWidget {
   final String hintText;
-  const TextArea({super.key, required this.hintText});
+  final TextEditingController controller;
+  const TextArea({super.key, required this.hintText, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       keyboardType: TextInputType.multiline,
+      controller: controller,
       maxLines: 8,
       cursorColor: AppColors.primary,
       decoration: InputDecoration(

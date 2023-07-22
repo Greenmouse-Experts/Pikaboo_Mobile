@@ -3,8 +3,8 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
+import '../../controllers/auth/auth_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
@@ -22,7 +22,7 @@ class FaqView extends StatelessWidget {
             child: Padding(
           padding: screenPadding(context),
           child: DefaultTabController(
-            length: 3,
+            length: 2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -40,7 +40,7 @@ class FaqView extends StatelessWidget {
                     tabs: const [
                       Tab(text: 'FAQs'),
                       Tab(text: 'Feedback'),
-                      Tab(text: 'What’s new'),
+                      // Tab(text: 'What’s new'),
                     ]),
                 SizedBox(
                     height: !isMobile(context)
@@ -51,7 +51,7 @@ class FaqView extends StatelessWidget {
                     child: const TabBarView(children: [
                       FaqWidget(),
                       FeedbackWidget(),
-                      Center(child: Text('What’s new'))
+                      //Center(child: Text('What’s new'))
                     ]))
               ],
             ),
@@ -62,71 +62,83 @@ class FaqView extends StatelessWidget {
   }
 }
 
-class FeedbackWidget extends ConsumerWidget {
+class FeedbackWidget extends ConsumerStatefulWidget {
   const FeedbackWidget({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(width: width(context), height: height(context) * 0.02),
-          const PageHeader(title: 'Rate Your Experience', hasSearch: false),
-          SizedBox(height: height(context) * 0.01),
-          Text('Are you satisfied with our services?',
-              style: regular14(context)
-                  .copyWith(color: Colors.black.withOpacity(0.4))),
-          SizedBox(height: height(context) * 0.01),
-          RatingBar.builder(
-              minRating: 1,
-              maxRating: 5,
-              itemCount: 5,
-              glowColor: AppColors.gold,
-              itemBuilder: (context, i) => const Icon(
-                    Icons.star_outline_outlined,
-                    color: AppColors.primary,
-                  ),
-              onRatingUpdate: (rating) {}),
-          SizedBox(height: height(context) * 0.02),
-          const Divider(color: AppColors.lightAsh),
-          SizedBox(height: height(context) * 0.02),
-          Text('Tell us what can be improved', style: medium14(context)),
-          SizedBox(height: height(context) * 0.01),
-          Consumer(builder: (context, ref, child) {
-            final improvements = ref.watch(improveProvider);
-            return Wrap(
-                alignment: WrapAlignment.start,
-                children: theImprovements.map((item) {
-                  return ImprovementSelector(
-                      isSelected: improvements.contains(item),
-                      title: item,
-                      onSelected: () {
-                        if (!improvements.contains(item)) {
-                          ref.read(improveProvider.notifier).addNewItem(item);
-                        } else {
-                          ref.read(improveProvider.notifier).removeItem(item);
-                        }
-                      });
-                }).toList());
-          }),
-          SizedBox(height: height(context) * 0.01),
-          const TextArea(hintText: 'Tell us how we can improve'),
-          SizedBox(height: height(context) * 0.02),
-          AppButton(
-              text: 'Submit',
-              onPressed: () {
-                context.pushReplacementNamed(AppRouter.feedbackStatus);
-              }),
-        ],
-      ),
+  ConsumerState<FeedbackWidget> createState() => _FeedbackWidgetConsumerState();
+}
+
+class _FeedbackWidgetConsumerState extends ConsumerState<FeedbackWidget> {
+  final improvement = TextEditingController();
+
+  double selectedRating = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(width: width(context), height: height(context) * 0.02),
+        const PageHeader(title: 'Rate Your Experience', hasSearch: false),
+        SizedBox(height: height(context) * 0.01),
+        Text('Are you satisfied with our services?',
+            style: regular14(context)
+                .copyWith(color: Colors.black.withOpacity(0.4))),
+        SizedBox(height: height(context) * 0.01),
+        RatingBar.builder(
+            minRating: 1,
+            maxRating: 5,
+            itemCount: 5,
+            glowColor: AppColors.gold,
+            itemBuilder: (context, i) => const Icon(
+                  Icons.star_outline_outlined,
+                  color: AppColors.primary,
+                ),
+            onRatingUpdate: (rating) {
+              selectedRating = rating;
+            }),
+        SizedBox(height: height(context) * 0.02),
+        const Divider(color: AppColors.lightAsh),
+        SizedBox(height: height(context) * 0.02),
+        Text('Tell us what can be improved', style: medium14(context)),
+        SizedBox(height: height(context) * 0.01),
+        TextArea(
+            hintText: 'Tell us how we can improve', controller: improvement),
+        SizedBox(height: height(context) * 0.02),
+        AppButton(
+            text: 'Submit',
+            onPressed: () {
+              if (selectedRating == 0) {
+                AppOverlays.showErrorSnackBar(
+                    context: context, message: 'Select a rating');
+                return;
+              }
+              if (improvement.text.isEmpty) {
+                AppOverlays.showErrorSnackBar(
+                    context: context, message: 'Enter a message');
+                return;
+              }
+              ref.read(authProvider.notifier).rateApplication(
+                  context: context,
+                  rating: selectedRating.toString(),
+                  improvement: improvement.text,
+                  ref: ref);
+            }),
+      ],
     );
   }
 }
 
-class FaqWidget extends StatelessWidget {
+class FaqWidget extends StatefulWidget {
   const FaqWidget({super.key});
 
+  @override
+  State<FaqWidget> createState() => _FaqWidgetState();
+}
+
+class _FaqWidgetState extends State<FaqWidget> {
+  final _search = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -139,8 +151,11 @@ class FaqWidget extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15)),
                 elevation: 2,
-                child: const SearchTextField(
-                    hintText: 'Search Keywords', islocation: false)),
+                child: SearchTextField(
+                    onChanged: (val) {},
+                    controller: _search,
+                    hintText: 'Search Keywords',
+                    islocation: false)),
           ),
           SizedBox(height: height(context) * 0.02),
           ListView.builder(

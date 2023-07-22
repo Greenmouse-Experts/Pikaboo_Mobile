@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../data/models/models.dart';
 import '../utilities/utilities.dart';
 
 class TransactionHistoryCard extends StatelessWidget {
-  const TransactionHistoryCard({super.key});
+  final TransactionSchema transaction;
+  const TransactionHistoryCard({super.key, required this.transaction});
 
   @override
   Widget build(BuildContext context) {
@@ -12,22 +14,21 @@ class TransactionHistoryCard extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text('Fri Jun 9, 2023',
+            Text(transaction.createdAt!.formatedDate,
                 style: regular13(context)
                     .copyWith(color: Colors.black.withOpacity(0.4))),
             const Spacer(),
-            Text('NGN (6, 000)',
+            Text('NGN ${(transaction.amount ?? '0').formatWithCommas}',
                 style: medium14(context).copyWith(color: AppColors.error))
           ],
         ),
         SizedBox(height: height(context) * 0.01),
         Row(
           children: [
-            Text('Waste Bin Purchase', style: medium14(context)),
+            Text(transaction.type ?? '', style: medium14(context)),
             const Spacer(),
-            Text('Tap to view or download receipt',
-                style: regular11(context)
-                    .copyWith(color: Colors.black.withOpacity(0.4)))
+            Text('Status : ${(transaction.status ?? '').capitalizeFirst()}',
+                style: regular13(context).copyWith(color: AppColors.primary))
           ],
         ),
         SizedBox(height: height(context) * 0.01),

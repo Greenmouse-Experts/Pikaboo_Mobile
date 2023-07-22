@@ -181,10 +181,11 @@ class UserHomeView extends ConsumerWidget {
                   Column(
                     children: [
                       ActionCard(
-                        onPressed: () {},
-                        title: 'Location',
+                        onPressed: () =>
+                            context.pushNamed(AppRouter.addressView),
+                        title: 'Address',
                         color: AppColors.fadePurple,
-                        content: 'Set and track your location remotely.',
+                        content: 'View your address',
                         image: 'assets/images/icons/new_location.png',
                         cardHeight: 0.19,
                       ),

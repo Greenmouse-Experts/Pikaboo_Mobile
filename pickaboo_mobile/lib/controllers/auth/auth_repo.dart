@@ -38,4 +38,11 @@ class AuthRepository {
         data: {'fcm_token': fcmToken}, ref: ref);
     return response;
   }
+
+  Future<ApiResponse> rateApplication(
+      {required dynamic paylaod, required WidgetRef ref}) async {
+    final response =
+        _api.postData('/application/rate', data: paylaod, ref: ref);
+    return response;
+  }
 }

@@ -41,14 +41,14 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
                     child: Image.asset('assets/images/password.png')),
                 SizedBox(height: height(context) * 0.025),
                 Text(
-                  'Need Password Reset?',
+                  'Need Passcode Reset?',
                   style: semi20(context).copyWith(color: AppColors.darkGreen),
                 ),
                 SizedBox(height: height(context) * 0.025),
                 SizedBox(
                     width: width(context) * 0.77,
                     child: Text(
-                      'Enter the phone number associated with your account and we’ll send an sms with instructions to reset your password',
+                      'Enter the phone number associated with your account and we’ll send an sms with instructions to reset your passcode',
                       textAlign: TextAlign.center,
                       style: medium13(context)
                           .copyWith(color: Colors.black.withOpacity(0.7)),

@@ -52,7 +52,7 @@ class _AuthNotifier extends ChangeNotifier {
       _user = UserSchema.fromRawJson(userData);
       _notificationCount = _user?.notificationsCount ?? 0;
       _token = pref.getString('token');
-      _wallet = _user?.wallet;
+      _wallet = _user?.wallet?.toString() ?? '0';
       _accountType = _user?.accountType;
       notifyListeners();
     }
@@ -99,7 +99,7 @@ class _AuthNotifier extends ChangeNotifier {
           }
 
           _token = response.token;
-          _wallet = _user?.wallet;
+          _wallet = _user?.wallet?.toString() ?? '0';
           _accountType = _user?.accountType;
 
           _prefs.then((pref) {
@@ -150,6 +150,15 @@ class _AuthNotifier extends ChangeNotifier {
   // }
 
   Future<void> setFcmToken() async {}
+
+  Future<void> updateUser(dynamic data) async {
+    _user = UserSchema.fromJson(data);
+    _wallet = _user?.wallet?.toString() ?? '0';
+    _notificationCount = _user?.notificationsCount ?? 0;
+    final pref = await _prefs;
+    pref.setString('user', _user?.toRawJson() ?? '');
+    notifyListeners();
+  }
 
   Future<void> topupWallet(
       {required BuildContext context,
@@ -238,6 +247,31 @@ class _AuthNotifier extends ChangeNotifier {
     }
   }
 
+  Future<void> rateApplication(
+      {required BuildContext context,
+      required String rating,
+      required String improvement,
+      required WidgetRef ref}) async {
+    AppOverlays.loadingDialog(context: context);
+    try {
+      final payload =
+          _getRatingPayload(rating: rating, improvement: improvement);
+      _repo.rateApplication(paylaod: payload, ref: ref).then((response) {
+        context.pop();
+        if (response.isSuccessful) {
+          context.pushReplacementNamed(AppRouter.feedbackStatus);
+        } else {
+          AppOverlays.showErrorDialog(
+              context: context,
+              error: response.message ?? 'An unknown error occurred');
+        }
+      });
+    } catch (e) {
+      context.pop();
+      AppOverlays.showErrorDialog(context: context, error: e);
+    }
+  }
+
   void logout({required BuildContext context}) async {
     _prefs.then((pref) {
       pref.remove('user');
@@ -252,6 +286,11 @@ class _AuthNotifier extends ChangeNotifier {
     required String otp,
   }) {
     return {'phone_number': phone, 'otp': otp};
+  }
+
+  Map<String, String> _getRatingPayload(
+      {required String rating, required String improvement}) {
+    return {'rating': rating, "improvement": improvement};
   }
 
   Future<FormData> _getProfilePhotoPaylooad({required File pickedFile}) async {

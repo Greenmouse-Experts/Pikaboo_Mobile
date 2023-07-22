@@ -14,18 +14,16 @@ class UserSchema {
   String? lastName;
   String? email;
   String? phone;
-  String? phone2;
+  dynamic phone2;
   String? gender;
   dynamic dob;
   String? avatar;
   DateTime? emailVerifiedAt;
   String? currentPassword;
-  dynamic role;
-  String? wallet;
-  dynamic fcmToken;
+  int? wallet;
+  String? fcmToken;
   dynamic meansOfIdentification;
   String? address;
-  dynamic zoneId;
   dynamic truckId;
   String? status;
   String? isVerified;
@@ -50,12 +48,10 @@ class UserSchema {
     this.avatar,
     this.emailVerifiedAt,
     this.currentPassword,
-    this.role,
     this.wallet,
     this.fcmToken,
     this.meansOfIdentification,
     this.address,
-    this.zoneId,
     this.truckId,
     this.status,
     this.isVerified,
@@ -88,12 +84,10 @@ class UserSchema {
             ? null
             : DateTime.parse(json["email_verified_at"]),
         currentPassword: json["current_password"],
-        role: json["role"],
         wallet: json["wallet"],
         fcmToken: json["fcm_token"],
         meansOfIdentification: json["means_of_identification"],
         address: json["address"],
-        zoneId: json["zone_id"],
         truckId: json["truck_id"],
         status: json["status"],
         isVerified: json["isVerified"],
@@ -121,12 +115,10 @@ class UserSchema {
         "avatar": avatar,
         "email_verified_at": emailVerifiedAt?.toIso8601String(),
         "current_password": currentPassword,
-        "role": role,
         "wallet": wallet,
         "fcm_token": fcmToken,
         "means_of_identification": meansOfIdentification,
         "address": address,
-        "zone_id": zoneId,
         "truck_id": truckId,
         "status": status,
         "isVerified": isVerified,

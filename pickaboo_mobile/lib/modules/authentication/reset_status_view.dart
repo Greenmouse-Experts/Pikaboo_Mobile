@@ -29,7 +29,7 @@ class ResetStatusView extends StatelessWidget {
           SizedBox(
             width: width(context) * 0.7,
             child: Text(
-              'We have sent an sms to $phone containing your new password details.',
+              'We have sent an sms to $phone containing your new passcode details.',
               textAlign: TextAlign.center,
               style: medium13(context)
                   .copyWith(color: Colors.black.withOpacity(0.7)),
@@ -49,7 +49,7 @@ class ResetStatusView extends StatelessWidget {
             child: ActionText(
                 action: () {},
                 leadingText:
-                    'Did not receive any OTP? Check your spam filter, or ',
+                    'Did not receive any message? Check your spam filter, or ',
                 actionText: 'try another phone number.'),
           ),
           SizedBox(height: height(context) * 0.02),

@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import '../../controllers/auth/auth_controller.dart';
 import '../../controllers/cart/cart_controller.dart';
 import '../../utilities/utilities.dart';
-import '../../widgets/dropdown_pickker.dart';
 import '../../widgets/widgets.dart';
 
 class CheckoutView extends ConsumerStatefulWidget {

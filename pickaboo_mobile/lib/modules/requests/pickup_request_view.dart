@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pickaboo_mobile/controllers/requests/request_controller.dart';
 
+import '../../controllers/requests/request_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 

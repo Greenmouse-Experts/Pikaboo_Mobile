@@ -89,7 +89,7 @@ class _UserLoginViewState extends ConsumerState<UserLoginView> {
                           AppTextField(
                               controller: _otp,
                               keyboardType: TextInputType.phone,
-                              label: 'OTP',
+                              label: 'Passcode',
                               validator: Validations.validOtpPassword,
                               hintText: '*****',
                               isPassword: true),
@@ -131,7 +131,7 @@ class _UserLoginViewState extends ConsumerState<UserLoginView> {
                               context.pushNamed(AppRouter.forgotPassword);
                             },
                             child: Column(children: [
-                              Text('Forgot Password',
+                              Text('Forgot Passcode?',
                                   style: medium14(context)
                                       .copyWith(color: AppColors.darkGreen)),
                               const SizedBox(height: 1),

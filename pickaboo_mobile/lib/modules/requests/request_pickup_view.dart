@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../controllers/auth/auth_controller.dart';
+import '../../controllers/special_requests.dart/special_request_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
@@ -15,13 +17,72 @@ class RequestPickupView extends ConsumerStatefulWidget {
 }
 
 class _RequestPickupViewConsumerState extends ConsumerState<RequestPickupView> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController numberController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
+  final List<String> addressTypes = ['My Address', 'Custom Address'];
+  var addressType = 'My Address';
+
+  final _address = TextEditingController();
+  final _date = TextEditingController();
+
+  void selectAddressType(String newPlan) {
+    setState(() {
+      addressType = newPlan;
+    });
+  }
+
+  void submitRequest() {
+    final charge = ref.watch(specialProvider).charges;
+    if (addressType == 'My Address') {
+      if (_date.text.isEmpty) {
+        AppOverlays.showErrorSnackBar(
+            context: context, message: 'Select a  date');
+        return;
+      }
+      AppOverlays.showConfirmDialog(
+          context: context,
+          ref: ref,
+          confirmAction: () {
+            context.pop();
+            ref.read(specialProvider.notifier).createSpecialRequest(
+                context: context, ref: ref, date: _date.text);
+          },
+          message:
+              'Creating this special request will lead to a deduction of NGN ${charge.formatWithCommas} from your wallet. \n Do you want to proceed?');
+      // ;
+    } else {
+      if (_date.text.isEmpty) {
+        AppOverlays.showErrorSnackBar(
+            context: context, message: 'Select a  date');
+        return;
+      }
+      if (_address.text.isEmpty) {
+        AppOverlays.showErrorSnackBar(
+            context: context, message: 'Enter an address');
+        return;
+      }
+
+      AppOverlays.showConfirmDialog(
+          context: context,
+          ref: ref,
+          confirmAction: () {
+            context.pop();
+
+            ref.read(specialProvider.notifier).createSpecialRequest(
+                context: context,
+                ref: ref,
+                date: _date.text,
+                altAddress: _address.text);
+          },
+          message:
+              'Creating this special request will lead to a deduction of NGN ${charge.formatWithCommas} from your wallet. \n Do you want to proceed?');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    // final getFlatRate =
     final homeOwner = ref.watch(authProvider).user;
+    //    final homeOwner = ref.watch(authProvider).user;
+    final address = homeOwner?.address ?? '';
     final name = homeOwner?.firstName ?? '';
     final image = homeOwner?.avatar ?? '';
     return Scaffold(
@@ -33,70 +94,59 @@ class _RequestPickupViewConsumerState extends ConsumerState<RequestPickupView> {
         child: SafeArea(
             child: Padding(
           padding: screenPadding(context),
-          child: Column(
-            children: [
-              SizedBox(width: width(context)),
-              const DoubleTitle(
-                  leadingTitle: 'Special Request',
-                  leadingContent: '5 min',
-                  trailingTitle: 'N2000',
-                  trailingContent: 'Zonal Price per bin',
-                  hasBackground: true),
-              const DoubleTitle(
-                  leadingTitle: 'Waste Address',
-                  leadingContent: 'Akuku/Ewan',
-                  trailingTitle: '',
-                  trailingContent: '',
-                  hasBackground: false),
-              const DoubleTitle(
-                  leadingTitle: 'Estimated Time',
-                  leadingContent: '1hr 10min',
-                  trailingTitle: '',
-                  trailingContent: '',
-                  hasBackground: false),
-              const _DatePicker(),
-              CustomDoubleTitle(
-                  leadingTitle: 'Waste bins',
-                  leadingContent: 'Number of waste bins.',
-                  isLast: true,
-                  customEnd: Row(
+          child: FutureBuilder(
+              future: ref.watch(specialProvider).getFlatRate(ref),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const PageLoader();
+                } else if (snapshot.hasError) {
+                  return AppErrorWidget(
+                      //snapshot.error!
+                      widgetHeight: 0.7,
+                      errorType: snapshot.error.runtimeType,
+                      error: snapshot.error.toString());
+                } else {
+                  return Column(
                     children: [
-                      Text('Quantity', style: medium13(context)),
-                      SizedBox(width: width(context) * 0.01),
-                      Container(
-                        width: width(context) * 0.18,
-                        height: height(context) * 0.025,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.lightAsh),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Icon(Icons.remove, size: width(context) * 0.04),
-                            Text('1', style: medium13(context)),
-                            Icon(Icons.add, size: width(context) * 0.04),
-                          ],
-                        ),
-                      )
+                      SizedBox(width: width(context)),
+                      const DoubleTitle(
+                          leadingTitle: '   Special Request',
+                          leadingContent: '   Create a special cleaning pickup',
+                          trailingTitle: '',
+                          trailingContent: '',
+                          hasBackground: true),
+                      DropDownPicker(
+                        label: 'Request Address',
+                        hasHeader: true,
+                        hint: 'Select Address',
+                        value: addressType,
+                        items: addressTypes.map((String plan) {
+                          return DropdownMenuItem(
+                            value: plan,
+                            child: Text(
+                              plan,
+                              style: regular14(context),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: selectAddressType,
+                      ),
+                      SizedBox(height: height(context) * 0.01),
+                      addressType == 'My Address'
+                          ? RowTitle2(title: 'Address', content: address)
+                          : EditableTextField(
+                              controller: _address,
+                              keyboardType: TextInputType.streetAddress,
+                              label: 'Custom Address',
+                              isEditable: true,
+                            ),
+                      _DatePicker(_date),
+                      SizedBox(height: height(context) * 0.04),
+                      AppButton(text: 'Proceed', onPressed: submitRequest)
                     ],
-                  )),
-              const DoubleTitle(
-                  leadingTitle: 'Total Price',
-                  leadingContent: '',
-                  trailingTitle: 'N4000',
-                  trailingContent: 'Total Price for 2 bins',
-                  hasBackground: true),
-              SizedBox(height: height(context) * 0.04),
-              AppButton(
-                  text: 'Proceed',
-                  onPressed: () {
-                    AppOverlays.showSuccessDialog(
-                        context: context,
-                        content:
-                            'Your request has been received, you will be notified when your pickup is ready.');
-                  })
-            ],
-          ),
+                  );
+                }
+              }),
         )),
       ),
     );
@@ -104,14 +154,15 @@ class _RequestPickupViewConsumerState extends ConsumerState<RequestPickupView> {
 }
 
 class _DatePicker extends StatefulWidget {
-  const _DatePicker();
+  final TextEditingController dateController;
+  const _DatePicker(this.dateController);
 
   @override
   State<_DatePicker> createState() => _DatePickerState();
 }
 
 class _DatePickerState extends State<_DatePicker> {
-  TextEditingController dateController = TextEditingController();
+  //TextEditingController dateController = TextEditingController();
   void selectDate() async {
     final DateTime? selectedDate = await showDatePicker(
         context: context,
@@ -135,7 +186,7 @@ class _DatePickerState extends State<_DatePicker> {
         });
     if (selectedDate != null) {
       setState(() {
-        dateController.text = selectedDate.toString();
+        widget.dateController.text = selectedDate.regularDate;
       });
     }
   }
@@ -144,9 +195,9 @@ class _DatePickerState extends State<_DatePicker> {
   Widget build(BuildContext context) {
     return CustomDoubleTitle(
       leadingTitle: 'Date',
-      leadingContent: dateController.text.isEmpty
+      leadingContent: widget.dateController.text.isEmpty
           ? 'Expected pickup date'
-          : dateController.text,
+          : widget.dateController.text,
       customEnd: IconButton(
           onPressed: selectDate,
           icon: Icon(

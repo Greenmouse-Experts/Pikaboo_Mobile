@@ -4,3 +4,6 @@ export './cart_schema.dart';
 export './notification_schema.dart';
 export './paystack_schema.dart';
 export './clean_up_schema.dart';
+export './transactions_schema.dart';
+export './flat_rate_schema.dart';
+export './special_request_schema.dart';

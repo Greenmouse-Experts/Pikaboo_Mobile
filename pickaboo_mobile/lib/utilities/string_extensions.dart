@@ -35,4 +35,10 @@ extension DateFormatter on DateTime {
 
     return formattedDate;
   }
+
+  String get regularDate {
+    DateTime date = this;
+    final formattedDate = DateFormat('dd-MM-yyyy').format(date);
+    return formattedDate;
+  }
 }

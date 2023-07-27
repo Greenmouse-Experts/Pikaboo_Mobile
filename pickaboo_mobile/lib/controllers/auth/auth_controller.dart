@@ -206,6 +206,7 @@ class _AuthNotifier extends ChangeNotifier {
       _repo.updateProfilePicture(payload, ref).then((response) {
         if (response.isSuccessful) {
           context.pop();
+          updateUser(response.data);
           _user = UserSchema.fromJson(response.data);
           notifyListeners();
           AppOverlays.showSuccessDialog(

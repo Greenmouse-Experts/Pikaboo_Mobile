@@ -20,7 +20,7 @@ class UserSchema {
   String? avatar;
   DateTime? emailVerifiedAt;
   String? currentPassword;
-  int? wallet;
+  dynamic wallet;
   String? fcmToken;
   dynamic meansOfIdentification;
   String? address;

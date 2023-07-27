@@ -65,19 +65,26 @@ class AnonHomeView extends StatelessWidget {
                 SizedBox(height: height(context) * 0.025),
                 Text('What we Do!', style: medium16(context)),
                 SizedBox(height: height(context) * 0.022),
-                const InfoWidget(
-                    color: AppColors.fadeGreen2,
-                    title: 'Service Personnel',
-                    content:
-                        "Sign in as a truck driver and get paid to pick up waste in your preferred locations",
-                    image: 'assets/images/wastetruck.png'),
+                InkWell(
+                  onTap: () => context.pushNamed(AppRouter.driverLogin),
+                  child: const InfoWidget(
+                      color: AppColors.fadeGreen2,
+                      title: 'Service Personnel',
+                      content:
+                          "Sign in as a truck driver and get paid to pick up waste in your preferred locations",
+                      image: 'assets/images/wastetruck.png'),
+                ),
                 SizedBox(height: height(context) * 0.02),
-                const InfoWidget(
-                    color: AppColors.fadePurple,
-                    title: 'Home Resident',
-                    content:
-                        "Sign in as a household owner and get request for garbage pick up waste your location.",
-                    image: 'assets/images/dump.png'),
+                InkWell(
+                  onTap: () => context.pushNamed(AppRouter.login,
+                      pathParameters: {'type': 'user'}),
+                  child: const InfoWidget(
+                      color: AppColors.fadePurple,
+                      title: 'Home Resident',
+                      content:
+                          "Sign in as a household owner and get request for garbage pick up waste your location.",
+                      image: 'assets/images/dump.png'),
+                ),
                 SizedBox(height: height(context) * 0.015),
                 Text('Users Sign In', style: medium16(context)),
                 SizedBox(height: height(context) * 0.015),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../controllers/auth/auth_controller.dart';
+import '../../../controllers/driver_requests/driver_request_controller.dart';
 import '../../../utilities/utilities.dart';
 import '../../../widgets/widgets.dart';
 
@@ -45,122 +46,149 @@ class DriverHomeView extends ConsumerWidget {
               stops: [0.5, 0.5],
             ),
           ),
-          child: Column(
-            children: [
-              Container(
-                color: AppColors.primary,
-                child: Padding(
-                  padding: screenPadding(context),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: height(context) * 0.01),
-                        IdIcon(
-                            imageUrl: image,
-                            firstName: firstName,
-                            lastName: lastName),
-                        height(context) < 700
-                            ? const SizedBox()
-                            : SizedBox(height: adjustedHeight(context) * 0.02),
-                        SizedBox(height: adjustedHeight(context) * 0.015),
-                        Row(
+          child: FutureBuilder(
+              future: ref
+                  .watch(driverRequestProvider)
+                  .getScheduledRequests(ref: ref),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const PageLoader();
+                } else if (snapshot.hasError) {
+                  return AppErrorWidget(
+                      //snapshot.error!
+                      widgetHeight: 0.7,
+                      errorType: snapshot.error.runtimeType,
+                      error: snapshot.error.toString());
+                } else {
+                  final schedules =
+                      ref.watch(driverRequestProvider).driverSchedulesHome;
+                  return Column(
+                    children: [
+                      Container(
+                        color: AppColors.primary,
+                        child: Padding(
+                          padding: screenPadding(context),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: height(context) * 0.01),
+                                IdIcon(
+                                    imageUrl: image,
+                                    firstName: firstName,
+                                    lastName: lastName),
+                                height(context) < 700
+                                    ? const SizedBox()
+                                    : SizedBox(
+                                        height: adjustedHeight(context) * 0.02),
+                                SizedBox(
+                                    height: adjustedHeight(context) * 0.015),
+                                Row(
+                                  children: [
+                                    Text('Joined on:',
+                                        style: medium13(context).copyWith(
+                                            color:
+                                                Colors.white.withOpacity(0.7))),
+                                    Text('    Jun 2023',
+                                        style: medium13(context)
+                                            .copyWith(color: Colors.white)),
+                                  ],
+                                ),
+                                SizedBox(
+                                    height: adjustedHeight(context) * 0.015),
+                                SizedBox(height: height(context) * 0.02),
+                              ]),
+                        ),
+                      ),
+                      Container(
+                        height: height(context) < 700
+                            ? height(context) * 0.63925
+                            : height(context) * 0.6,
+                        padding: screenPadding(context),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(
+                                    isMobile(context) ? 50 : 80),
+                                topRight: Radius.circular(
+                                    isMobile(context) ? 50 : 80)),
+                            color: Colors.white),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Joined on:',
-                                style: medium13(context).copyWith(
-                                    color: Colors.white.withOpacity(0.7))),
-                            Text('    Jun 2023',
-                                style: medium13(context)
-                                    .copyWith(color: Colors.white)),
+                            SizedBox(height: height(context) * 0.05),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                DriverRowIcon(
+                                    bgColor: AppColors.lightYellow,
+                                    title: 'Requests',
+                                    image: 'request2',
+                                    onTap: () => context
+                                        .pushNamed(AppRouter.pickUpRequests)),
+                                DriverRowIcon(
+                                    bgColor: AppColors.lightGreen,
+                                    title: 'Geo Location',
+                                    image: 'geolocation',
+                                    onTap: () {}),
+                                DriverRowIcon(
+                                    bgColor: AppColors.lightRed,
+                                    title: 'History',
+                                    image: 'history1',
+                                    onTap: () => context
+                                        .pushNamed(AppRouter.driverHistory)),
+                                DriverRowIcon(
+                                    bgColor: AppColors.lightIndigo,
+                                    title: 'FAQs',
+                                    image: 'faqs',
+                                    onTap: () =>
+                                        context.pushNamed(AppRouter.driverFaq)),
+                              ],
+                            ),
+                            SizedBox(height: height(context) * 0.03),
+                            Text('Pick Up Alerts', style: medium14(context)),
+                            SizedBox(height: height(context) * 0.01),
+                            SizedBox(
+                                height: height(context) * 0.11,
+                                child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: schedules.length,
+                                    itemBuilder: (context, i) => PickUpPreview(
+                                          schedule: schedules[i],
+                                        ))),
+                            SizedBox(height: height(context) * 0.03),
+                            Text('Stay In Touch', style: medium13(context)),
+                            SizedBox(height: height(context) * 0.015),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ActionCard(
+                                  onPressed: () =>
+                                      context.pushNamed(AppRouter.driverFaq),
+                                  title: 'Support',
+                                  color: AppColors.fadeGreen2,
+                                  content:
+                                      'Need help ? Click here to leave a feedback',
+                                  image: 'assets/images/icons/new_request.png',
+                                  cardHeight: 0.18,
+                                ),
+                                ActionCard(
+                                  onPressed: () =>
+                                      context.pushNamed(AppRouter.userSupport),
+                                  color: AppColors.fadePurple,
+                                  title: 'Contact Details',
+                                  content:
+                                      'Contact us directly via our details.',
+                                  image: 'assets/images/icons/new_contact.png',
+                                  cardHeight: 0.18,
+                                ),
+                              ],
+                            )
                           ],
                         ),
-                        SizedBox(height: adjustedHeight(context) * 0.015),
-                        SizedBox(height: height(context) * 0.02),
-                      ]),
-                ),
-              ),
-              Container(
-                height: height(context) < 700
-                    ? height(context) * 0.63925
-                    : height(context) * 0.6,
-                padding: screenPadding(context),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(isMobile(context) ? 50 : 80),
-                        topRight: Radius.circular(isMobile(context) ? 50 : 80)),
-                    color: Colors.white),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: height(context) * 0.05),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        DriverRowIcon(
-                            bgColor: AppColors.lightYellow,
-                            title: 'Requests',
-                            image: 'request2',
-                            onTap: () =>
-                                context.pushNamed(AppRouter.pickUpRequests)),
-                        DriverRowIcon(
-                            bgColor: AppColors.lightGreen,
-                            title: 'Geo Location',
-                            image: 'geolocation',
-                            onTap: () {}),
-                        DriverRowIcon(
-                            bgColor: AppColors.lightRed,
-                            title: 'History',
-                            image: 'history1',
-                            onTap: () =>
-                                context.pushNamed(AppRouter.driverHistory)),
-                        DriverRowIcon(
-                            bgColor: AppColors.lightIndigo,
-                            title: 'FAQs',
-                            image: 'faqs',
-                            onTap: () =>
-                                context.pushNamed(AppRouter.driverFaq)),
-                      ],
-                    ),
-                    SizedBox(height: height(context) * 0.02),
-                    Align(
-                        alignment: Alignment.center,
-                        child:
-                            Text('Pick Up Alerts', style: medium18(context))),
-                    SizedBox(
-                        height: height(context) * 0.11,
-                        child: ListView.builder(
-                            //       scrollDirection: Axis.horizontal,
-                            itemCount: 4,
-                            itemBuilder: (context, i) =>
-                                const PickUpPreview())),
-                    SizedBox(height: height(context) * 0.03),
-                    Text('Stay In Touch', style: medium13(context)),
-                    SizedBox(height: height(context) * 0.015),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ActionCard(
-                          onPressed: () {},
-                          title: 'Support',
-                          color: AppColors.fadeGreen2,
-                          content: 'Need help ? Click here to leave a feedback',
-                          image: 'assets/images/icons/new_request.png',
-                          cardHeight: 0.18,
-                        ),
-                        ActionCard(
-                          onPressed: () {},
-                          color: AppColors.fadePurple,
-                          title: 'Contact Details',
-                          content: 'Contact us directly via our details.',
-                          image: 'assets/images/icons/new_contact.png',
-                          cardHeight: 0.18,
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
+                      )
+                    ],
+                  );
+                }
+              }),
         )),
       ),
     );

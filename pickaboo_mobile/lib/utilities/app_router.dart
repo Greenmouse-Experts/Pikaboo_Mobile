@@ -60,6 +60,7 @@ class AppRouter {
   static const String cartView = 'cartView';
   static const String checkoutView = 'checkoutView';
   static const String oorderDetailsView = 'orderDetailsViews';
+  static const String scheduledRequestsAddress = 'scheduledRequestsAddress';
 }
 
 final GoRouter _router = GoRouter(routes: <RouteBase>[
@@ -259,6 +260,13 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             name: AppRouter.mapView,
             path: AppRouter.mapView,
             builder: (context, state) => const AppMapView()),
+        GoRoute(
+            name: AppRouter.scheduledRequestsAddress,
+            path: '${AppRouter.scheduledRequestsAddress}/:id/:schedule',
+            builder: (context, state) => DriverScheduledDetails(
+                  id: state.pathParameters['id']!,
+                  schedule: state.pathParameters['schedule']!,
+                ))
       ]),
 ]);
 

@@ -119,6 +119,7 @@ class SearchTextField extends StatelessWidget {
     return TextField(
       onTap: onTap,
       controller: controller,
+      onChanged: onChanged,
       decoration: InputDecoration(
           hintText: hintText,
           filled: islocation,

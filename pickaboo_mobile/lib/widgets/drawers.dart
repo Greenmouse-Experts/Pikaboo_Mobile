@@ -50,17 +50,18 @@ class DriverDrawer extends StatelessWidget {
             ),
             DrawerTile(
               icon: Icons.account_circle,
-              onPressed: () {},
+              onPressed: () {
+                context.pop();
+                context.pushNamed(AppRouter.driverAccountView);
+              },
               title: 'Account',
             ),
             DrawerTile(
-              icon: Icons.person_pin_circle,
-              onPressed: () {},
-              title: 'My Address',
-            ),
-            DrawerTile(
               icon: Icons.notifications,
-              onPressed: () {},
+              onPressed: () {
+                context.pop();
+                context.pushNamed(AppRouter.driiverNotifications);
+              },
               title: 'Notifications',
             ),
             DrawerTile(

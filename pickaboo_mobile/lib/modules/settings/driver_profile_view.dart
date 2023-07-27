@@ -70,7 +70,7 @@ class DriverProfileView extends ConsumerWidget {
                       icon: Icons.support_agent,
                       title: 'Support',
                       subTitle: 'Contact Pikaboo help center',
-                      onPressed: () {}),
+                      onPressed: () => context.pushNamed(AppRouter.driverFaq)),
                   ServiceProfileTile(
                       icon: Icons.logout,
                       title: 'Logout',

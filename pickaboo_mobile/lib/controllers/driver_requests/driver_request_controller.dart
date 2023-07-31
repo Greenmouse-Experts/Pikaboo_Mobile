@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pickaboo_mobile/widgets/widgets.dart';
 
 import '../../data/models/driver_schedule_schema.dart';
 import '../../data/models/models.dart';
@@ -36,6 +38,14 @@ class DriverRequestNotifier extends ChangeNotifier {
       // }
     } catch (e) {
       rethrow;
+    }
+  }
+
+  Future<void> completeCleanUp(
+      {required WidgetRef ref, required BuildContext context}) async {
+    try {} catch (e) {
+      context.pop();
+      AppOverlays.showErrorDialog(context: context, error: e.toString());
     }
   }
 }

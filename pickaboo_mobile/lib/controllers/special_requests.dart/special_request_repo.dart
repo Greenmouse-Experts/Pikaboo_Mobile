@@ -23,4 +23,17 @@ class SpecialRequestRepo {
         _api.getData('/home-residence/special-request/get', ref: ref);
     return response;
   }
+
+  Future<ApiResponse> getDriverSpecialHistory({required WidgetRef ref}) async {
+    final response =
+        _api.getData('/service-personnel/special-requests/get', ref: ref);
+    return response;
+  }
+
+  Future<ApiResponse> completeRequest(
+      {required WidgetRef ref, required String id}) async {
+    final response =
+        _api.postData('endpoint', data: {"special_request_id": id}, ref: ref);
+    return response;
+  }
 }

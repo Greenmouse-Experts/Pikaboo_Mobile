@@ -19,4 +19,13 @@ class DriverRequestRepo {
         ref: ref);
     return response;
   }
+
+  Future<ApiResponse> completeCleanUp(
+      {required dynamic payload, required WidgetRef ref}) async {
+    final response = _api.postData(
+        '/service-personnel/complete/schedule/residence',
+        data: payload,
+        ref: ref);
+    return response;
+  }
 }

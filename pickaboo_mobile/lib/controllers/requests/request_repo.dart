@@ -30,7 +30,10 @@ class RequestRepository {
 
   Future<ApiResponse> completeCleanUp(
       {required dynamic payload, required WidgetRef ref}) async {
-    final response = _api.postData('endpoint', data: payload, ref: ref);
+    final response = _api.postData(
+        '/service-personnel/complete/schedule/residence',
+        data: payload,
+        ref: ref);
     return response;
   }
 }

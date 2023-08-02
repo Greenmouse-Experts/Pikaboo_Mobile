@@ -48,7 +48,9 @@ class ProductsSchema {
   String? stock;
   int? sold;
   DateTime? createdAt;
+  String? status;
   List<dynamic>? images;
+  Category? category;
 
   ProductsSchema({
     this.id,
@@ -60,7 +62,9 @@ class ProductsSchema {
     this.stock,
     this.sold,
     this.createdAt,
+    this.status,
     this.images,
+    this.category,
   });
 
   factory ProductsSchema.fromRawJson(String str) =>
@@ -80,9 +84,13 @@ class ProductsSchema {
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
+        status: json["status"],
         images: json["images"] == null
             ? []
             : List<dynamic>.from(json["images"]!.map((x) => x)),
+        category: json["category"] == null
+            ? null
+            : Category.fromJson(json["category"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -95,8 +103,49 @@ class ProductsSchema {
         "stock": stock,
         "sold": sold,
         "created_at": createdAt?.toIso8601String(),
+        "status": status,
         "images":
             images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
+        "category": category?.toJson(),
+      };
+}
+
+class Category {
+  int? id;
+  String? name;
+  String? slug;
+  String? status;
+  DateTime? createdAt;
+
+  Category({
+    this.id,
+    this.name,
+    this.slug,
+    this.status,
+    this.createdAt,
+  });
+
+  factory Category.fromRawJson(String str) =>
+      Category.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
+        id: json["id"],
+        name: json["name"],
+        slug: json["slug"],
+        status: json["status"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "slug": slug,
+        "status": status,
+        "created_at": createdAt?.toIso8601String(),
       };
 }
 

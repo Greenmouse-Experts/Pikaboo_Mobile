@@ -71,7 +71,7 @@ class ProductNotifier extends ChangeNotifier {
     Map<String, List<ProductsSchema>> result = {'All': products};
 
     for (ProductsSchema prod in products) {
-      String category = prod.name ?? '';
+      String category = prod.category?.name ?? '';
       if (!result.containsKey(category)) {
         result[category] = [];
       }

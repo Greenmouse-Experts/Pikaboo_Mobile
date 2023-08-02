@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../data/models/models.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
+import '../auth/auth_controller.dart';
 import 'cart_repository.dart';
 
 final cartProvider = ChangeNotifierProvider<CartNotifier>((ref) {
@@ -152,8 +153,9 @@ class CartNotifier extends ChangeNotifier {
       _repo.checkOut(address, ref).then((response) {
         context.pop();
         if (response.isSuccessful) {
+          ref.read(authProvider.notifier).refreshUser(ref: ref);
           _cart.clear();
-          context.goNamed(AppRouter.fundStatus);
+          context.goNamed(AppRouter.orderStatusView);
         } else {
           AppOverlays.showErrorSnackBar(
               context: context,

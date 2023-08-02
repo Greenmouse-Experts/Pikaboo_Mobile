@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // // Import for Android features.
@@ -47,6 +48,7 @@ class _FundViewConsumerState extends ConsumerState<FundView> {
     final newdata = jsonDecode(response.body);
 
     final schema = PaystackSchema.fromJson(newdata['data']);
+
     return schema;
   }
 
@@ -68,8 +70,9 @@ class _FundViewConsumerState extends ConsumerState<FundView> {
       ..reference = 'TR-${DateTime.now().millisecondsSinceEpoch}'
       ..email = email
       ..currency = "NGN";
-
+    AppOverlays.loadingDialog(context: context);
     createAccessCode(amount, charge.reference, email).then((value) {
+      context.pop();
       charge.accessCode = value.accessCode;
     }).then((_) {
       plugin

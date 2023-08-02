@@ -42,6 +42,8 @@ class ProductCard extends StatelessWidget {
                       children: [
                         Text(product.name ?? '', style: medium13(context)),
                         Text(product.description ?? '',
+                            maxLines: 6,
+                            overflow: TextOverflow.ellipsis,
                             style: regular11(context).copyWith(
                                 color: Colors.black.withOpacity(0.4))),
                         Row(

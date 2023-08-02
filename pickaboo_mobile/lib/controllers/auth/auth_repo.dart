@@ -45,4 +45,9 @@ class AuthRepository {
         _api.postData('/application/rate', data: paylaod, ref: ref);
     return response;
   }
+
+  Future<ApiResponse> refreshUser({required WidgetRef ref}) async {
+    final response = _api.getData('/user', ref: ref);
+    return response;
+  }
 }

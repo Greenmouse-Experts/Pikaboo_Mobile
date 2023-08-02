@@ -60,68 +60,70 @@ class _CheckoutViewConsumerState extends ConsumerState<CheckoutView> {
     final address = homeOwner?.address;
     return Scaffold(
       appBar: customAppBar5(context, hasElevation: false),
-      body: SafeArea(
-          child: Padding(
-        padding: screenPadding(context),
-        child: Column(
-          children: [
-            const PageHeader(title: 'Order Summary', hasSearch: false),
-            SizedBox(height: height(context) * 0.01),
-            SizedBox(
-              height: height(context) * 0.3,
-              child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: cartItems.length,
-                  itemBuilder: (context, i) {
-                    return CheckoutTile(
-                      cartItem: cartItems[i],
-                    );
-                  }),
-            ),
-            const Divider(color: AppColors.altAsh),
-            SizedBox(height: height(context) * 0.01),
-            DropDownPicker(
-              label: 'Delivery Address',
-              hasHeader: true,
-              hint: 'Select Address',
-              value: addressType,
-              items: addressTypes.map((String plan) {
-                return DropdownMenuItem(
-                  value: plan,
-                  child: Text(
-                    plan,
-                    style: regular14(context),
-                  ),
-                );
-              }).toList(),
-              onChanged: selectAddressType,
-            ),
-            SizedBox(height: height(context) * 0.01),
-            addressType == 'My Address'
-                ? RowTitle2(title: 'Address', content: address ?? '')
-                : EditableTextField(
-                    controller: _address,
-                    keyboardType: TextInputType.streetAddress,
-                    label: 'Custom Address',
-                    isEditable: true,
-                  ),
-            const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Total:',
-                    style: regular14(context)
-                        .copyWith(color: Colors.black.withOpacity(0.4))),
-                Text(
-                    'NGN ${ref.watch(cartProvider).cartTotal.toString().formatWithCommas}',
-                    style: medium15(context))
-              ],
-            ),
-            const Spacer(),
-            AppButton(text: 'Purchase', onPressed: _checkout),
-          ],
-        ),
-      )),
+      body: SingleChildScrollView(
+        child: SafeArea(
+            child: Padding(
+          padding: screenPadding(context),
+          child: Column(
+            children: [
+              const PageHeader(title: 'Order Summary', hasSearch: false),
+              SizedBox(height: height(context) * 0.01),
+              SizedBox(
+                height: height(context) * 0.3,
+                child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: cartItems.length,
+                    itemBuilder: (context, i) {
+                      return CheckoutTile(
+                        cartItem: cartItems[i],
+                      );
+                    }),
+              ),
+              const Divider(color: AppColors.altAsh),
+              SizedBox(height: height(context) * 0.01),
+              DropDownPicker(
+                label: 'Delivery Address',
+                hasHeader: true,
+                hint: 'Select Address',
+                value: addressType,
+                items: addressTypes.map((String plan) {
+                  return DropdownMenuItem(
+                    value: plan,
+                    child: Text(
+                      plan,
+                      style: regular14(context),
+                    ),
+                  );
+                }).toList(),
+                onChanged: selectAddressType,
+              ),
+              SizedBox(height: height(context) * 0.01),
+              addressType == 'My Address'
+                  ? RowTitle2(title: 'Address', content: address ?? '')
+                  : EditableTextField(
+                      controller: _address,
+                      keyboardType: TextInputType.streetAddress,
+                      label: 'Custom Address',
+                      isEditable: true,
+                    ),
+              SizedBox(height: height(context) * 0.05),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Total:',
+                      style: regular14(context)
+                          .copyWith(color: Colors.black.withOpacity(0.4))),
+                  Text(
+                      'NGN ${ref.watch(cartProvider).cartTotal.toString().formatWithCommas}',
+                      style: medium15(context))
+                ],
+              ),
+              SizedBox(height: height(context) * 0.05),
+              AppButton(text: 'Purchase', onPressed: _checkout),
+            ],
+          ),
+        )),
+      ),
     );
   }
 }

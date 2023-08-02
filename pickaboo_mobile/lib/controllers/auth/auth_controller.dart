@@ -41,6 +41,9 @@ class _AuthNotifier extends ChangeNotifier {
   String? _accountType;
   String? get accountType => _accountType;
 
+  bool _isRefreshing = false;
+  bool get isRefreshing => _isRefreshing;
+
   Future<void> restoreUserSession(WidgetRef ref) async {
     final pref = await _prefs;
     final userData = pref.getString('user');
@@ -56,6 +59,7 @@ class _AuthNotifier extends ChangeNotifier {
       _accountType = _user?.accountType;
       notifyListeners();
     }
+    await refreshUser(ref: ref);
     ref.watch(notificationProvider).getAllNotifications(ref: ref);
   }
 
@@ -171,6 +175,7 @@ class _AuthNotifier extends ChangeNotifier {
           context.pop();
           _wallet = response.data.toString();
           notifyListeners();
+          refreshUser(ref: ref);
           AppOverlays.showSuccessDialog(
               context: context,
               content: response.message ?? 'Balance updated successfully');
@@ -280,6 +285,26 @@ class _AuthNotifier extends ChangeNotifier {
       context.goNamed(AppRouter.dashboard);
       _user == null;
     });
+  }
+
+  Future<void> refreshUser({required WidgetRef ref}) async {
+    try {
+      //   final userId = _user?.id.toString() ?? '';
+      _isRefreshing = true;
+      notifyListeners();
+      await _repo.refreshUser(ref: ref).then((response) {
+        if (response.isSuccessful) {
+          _user = UserSchema.fromJson(response.data);
+          updateUser(response.data);
+        }
+
+        _isRefreshing = false;
+        notifyListeners();
+      });
+      //await updateUser(_user);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Map<String, String> _getUserLoginPayload({

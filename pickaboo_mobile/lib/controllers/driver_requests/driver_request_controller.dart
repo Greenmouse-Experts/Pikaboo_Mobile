@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pickaboo_mobile/widgets/widgets.dart';
 
 import '../../data/models/driver_schedule_schema.dart';
 import '../../data/models/models.dart';
+import '../../widgets/widgets.dart';
 import 'driver_request_repo.dart';
 
 final driverRequestProvider =

@@ -29,7 +29,7 @@ Future<void> _onBackgroundMessage(RemoteMessage message) async {
 }
 
 initInfo() async {
-  const androidInitialize = AndroidInitializationSettings('pickaboo_logo');
+  const androidInitialize = AndroidInitializationSettings(icon);
   final DarwinInitializationSettings initializationSettingsDarwin =
       DarwinInitializationSettings(
           requestAlertPermission: true,

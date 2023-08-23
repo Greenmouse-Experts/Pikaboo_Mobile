@@ -56,6 +56,7 @@ class SpecialRequestNotifier extends ChangeNotifier {
   Future<void> getFlatRate(WidgetRef ref) async {
     try {
       final response = await _repo.getFlatRate(ref: ref);
+
       if (response.isSuccessful) {
         final flatrate = FlatRateSchema.fromJson(response.data);
         _charges = flatrate.charges;

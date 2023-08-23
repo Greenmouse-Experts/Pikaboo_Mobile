@@ -291,6 +291,7 @@ class _AuthNotifier extends ChangeNotifier {
     try {
       //   final userId = _user?.id.toString() ?? '';
       _isRefreshing = true;
+
       notifyListeners();
       await _repo.refreshUser(ref: ref).then((response) {
         if (response.isSuccessful) {

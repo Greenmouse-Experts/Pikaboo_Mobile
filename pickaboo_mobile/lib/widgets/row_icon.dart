@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badge;
+import 'package:url_launcher/url_launcher.dart';
 
 import '../utilities/utilities.dart';
 
@@ -166,10 +167,23 @@ class DriverRowIcon extends StatelessWidget {
 class RowTitle extends StatelessWidget {
   final String title;
   final String content;
-  const RowTitle({super.key, required this.title, required this.content});
+  final bool isPhone;
+
+  const RowTitle(
+      {super.key,
+      required this.title,
+      required this.content,
+      this.isPhone = false});
 
   @override
   Widget build(BuildContext context) {
+    Future<void> makingPhoneCall() async {
+      var url = Uri(scheme: "tel", path: content);
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url);
+      } else {}
+    }
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: height(context) * 0.007),
       child: Row(
@@ -179,10 +193,20 @@ class RowTitle extends StatelessWidget {
             style: regular15(context),
           ),
           const SizedBox(width: 5),
-          Text(
-            content,
-            style: regular15(context).copyWith(color: AppColors.primary),
-          )
+          isPhone
+              ? Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    OutlinedButton.icon(
+                        onPressed: makingPhoneCall,
+                        icon: const Icon(Icons.phone, color: AppColors.primary),
+                        label: Text(content, style: regular15(context)))
+                  ],
+                )
+              : Text(
+                  content,
+                  style: regular15(context).copyWith(color: AppColors.primary),
+                )
         ],
       ),
     );

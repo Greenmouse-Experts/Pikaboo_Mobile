@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../controllers/auth/auth_controller.dart';
 import '../../controllers/special_requests.dart/special_request_controller.dart';
+import '../../controllers/user_requests/user_request_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
@@ -12,6 +14,7 @@ class UserRequestsView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(authProvider).user;
     return Scaffold(
       appBar: customAppBar5(
         context,
@@ -22,9 +25,12 @@ class UserRequestsView extends ConsumerWidget {
             child: Padding(
                 padding: screenPadding(context),
                 child: FutureBuilder(
-                    future: ref
-                        .watch(specialProvider)
-                        .getSpecialRequestHistory(ref),
+                    future: Future.wait([
+                      ref.watch(specialProvider).getSpecialRequestHistory(ref),
+                      ref
+                          .watch(userRequestProvider)
+                          .getSscheduledRequests(ref: ref)
+                    ]),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const PageLoader();
@@ -37,6 +43,8 @@ class UserRequestsView extends ConsumerWidget {
                       } else {
                         final specials =
                             ref.watch(specialProvider).specialRequests;
+                        final scheduled =
+                            ref.watch(userRequestProvider).userRequests;
                         return DefaultTabController(
                             length: 2,
                             child: Column(
@@ -66,30 +74,58 @@ class UserRequestsView extends ConsumerWidget {
                                             ? adjustedHeight(context) * 0.88
                                             : adjustedHeight(context) * 0.92,
                                     child: TabBarView(children: [
-                                      Center(
-                                          child: Text(
-                                        'You currently have no scheduled requests',
-                                        style: medium15(context),
-                                      )),
-                                      ListView.builder(
-                                          itemCount: specials.length,
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemBuilder: (context, i) {
-                                            // return const RequestCard(
-                                            //   isUser: true,
-                                            // );
+                                      scheduled.isEmpty
+                                          ? Center(
+                                              child: Text(
+                                              'You currently have no scheduled requests',
+                                              style: medium15(context),
+                                            ))
+                                          : ListView.builder(
+                                              itemCount: scheduled.length,
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemBuilder: (context, i) {
+                                                // return const RequestCard(
+                                                //   isUser: true,
+                                                // );
+                                                final address =
+                                                    "${scheduled[i].residence?.houseNumber ?? ""}, ${scheduled[i].residence?.streetName ?? " "},${scheduled[i].residence?.lga ?? ""}";
+                                                return NewPickUpTile(
+                                                    address: address,
+                                                    date:
+                                                        scheduled[i].createdAt!,
+                                                    price:
+                                                        (scheduled[i].price ??
+                                                                "0")
+                                                            .formatWithCommas);
+                                              }),
+                                      specials.isEmpty
+                                          ? Center(
+                                              child: Text(
+                                              'You currently have no special requests',
+                                              style: medium15(context),
+                                            ))
+                                          : ListView.builder(
+                                              itemCount: specials.length,
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemBuilder: (context, i) {
+                                                // return const RequestCard(
+                                                //   isUser: true,
+                                                // );
 
-                                            return DoubleTitle(
-                                                leadingTitle:
-                                                    ' Request Date: ${specials[i].scheduleDate}',
-                                                leadingContent:
-                                                    ' Status: ${specials[i].status}',
-                                                trailingTitle: '',
-                                                trailingContent: '',
-                                                hasBackground: i % 2 == 0);
-                                          })
+                                                return NewPickUpTile(
+                                                    address: specials[i]
+                                                            .altAddress ??
+                                                        user?.address ??
+                                                        "",
+                                                    date: specials[i]
+                                                            .completedDate ??
+                                                        specials[i].createdAt!,
+                                                    price: "5,000");
+                                              })
                                     ]))
                               ],
                             ));

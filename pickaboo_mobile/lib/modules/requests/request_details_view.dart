@@ -7,6 +7,7 @@ import '../../widgets/widgets.dart';
 
 class RequestDetailsView extends ConsumerWidget {
   final bool isActive;
+
   const RequestDetailsView({super.key, required this.isActive});
 
   @override
@@ -18,7 +19,7 @@ class RequestDetailsView extends ConsumerWidget {
         children: [
           SizedBox(height: height(context) * 0.01, width: width(context)),
           Text(
-            'Request details',
+            'Request Details',
             style: medium20(context).copyWith(color: AppColors.darkGreen),
           ),
           SizedBox(height: height(context) * 0.01),
@@ -30,7 +31,7 @@ class RequestDetailsView extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Request details',
+                  'Request Details',
                   style: medium18(context).copyWith(color: AppColors.primary),
                 ),
                 SizedBox(height: height(context) * 0.008),

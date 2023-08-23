@@ -94,6 +94,63 @@ class PickupTile extends StatelessWidget {
   }
 }
 
+class NewPickUpTile extends StatelessWidget {
+  final String address;
+  final DateTime date;
+  final String price;
+  const NewPickUpTile(
+      {super.key,
+      required this.address,
+      required this.date,
+      required this.price});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: height(context) * 0.01),
+        Text("Waste Address", style: regular14(context)),
+        SizedBox(
+            width: width(context) * 0.9,
+            child: Text(
+              address,
+              style: regular12(context).copyWith(color: AppColors.darkAsh),
+              maxLines: 2,
+            )),
+        SizedBox(height: height(context) * 0.01),
+        const Divider(color: AppColors.lightAsh),
+        SizedBox(height: height(context) * 0.01),
+        Text("Date", style: regular14(context)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(date.formatedDate,
+                style: regular12(context).copyWith(color: AppColors.darkAsh)),
+            const AppSvgImage(image: "assets/images/icons/calender.svg")
+          ],
+        ),
+        SizedBox(height: height(context) * 0.01),
+        const Divider(color: AppColors.lightAsh),
+        Container(
+          color: AppColors.fadeGreen,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: height(context) * 0.015),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Total Price", style: regular14(context)),
+                Text("NGN $price", style: medium14(context))
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: height(context) * 0.02),
+      ],
+    );
+  }
+}
+
 class PickupAddressTile extends StatelessWidget {
   final bool isFirst;
   final bool isLast;
@@ -106,8 +163,7 @@ class PickupAddressTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final address =
-        '${request.residence?.homeResidence?.address ?? ''}, ${request.residence?.area1 ?? ''}, ${request.residence?.quarter ?? ''}, ${request.residence?.town ?? ''}';
+    final address = request.residence?.homeResidence?.address ?? '';
     return ListTile(
       minVerticalPadding: 0,
       contentPadding: isMobile(context)
@@ -155,7 +211,13 @@ class PickupAddressTile extends StatelessWidget {
               style: medium11(context)
                   .copyWith(color: Colors.black.withOpacity(0.4))),
           SizedBox(height: height(context) * 0.0002),
-          Text(address, style: semi13(context)),
+          SizedBox(
+              width: width(context) * 0.7,
+              child: Text(
+                address,
+                style: semi13(context),
+                maxLines: 2,
+              )),
           SizedBox(height: height(context) * 0.0002),
         ],
       ),
@@ -264,9 +326,7 @@ class AddressCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountType = ref.watch(authProvider).accountType;
-    final theAddress =
-        '${address.residence?.homeResidence?.address ?? ''}, ${address.residence?.area1 ?? ''}, ${address.residence?.quarter ?? ''}, ${address.residence?.town ?? ''}';
+    final theAddress = address.residence?.homeResidence?.address ?? '';
     return Column(
       children: [
         SizedBox(height: height(context) * 0.005),
@@ -290,11 +350,11 @@ class AddressCard extends ConsumerWidget {
             ),
             const Spacer(),
             InkWell(
-              onTap: () => context.pushNamed(
-                  accountType == 'Service Personnel'
-                      ? AppRouter.driverRequstDetails
-                      : AppRouter.userRequstDetails,
-                  pathParameters: {'isActive': 'yes'}),
+              onTap: () => context.pushNamed(AppRouter.scheduledRequestDetails,
+                  pathParameters: {
+                    'isActive': isPending ? 'yes' : 'no',
+                    "request": address.toRawJson()
+                  }),
               child: Row(
                 children: [
                   isPending

@@ -62,6 +62,7 @@ class AppRouter {
   static const String oorderDetailsView = 'orderDetailsViews';
   static const String scheduledRequestsAddress = 'scheduledRequestsAddress';
   static const String orderStatusView = 'orderStatusView';
+  static const String scheduledRequestDetails = "scheduledRequestsDetails";
 }
 
 final GoRouter _router = GoRouter(routes: <RouteBase>[
@@ -272,7 +273,14 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             builder: (context, state) => DriverScheduledDetails(
                   id: state.pathParameters['id']!,
                   schedule: state.pathParameters['schedule']!,
-                ))
+                )),
+        GoRoute(
+          name: AppRouter.scheduledRequestDetails,
+          path: "${AppRouter.scheduledRequestDetails}/:isActive/:request",
+          builder: (context, state) => ScheduledRequest(
+              isActive: state.pathParameters["isActive"]! == "yes",
+              request: state.pathParameters["request"]!),
+        )
       ]),
 ]);
 

@@ -33,7 +33,7 @@ class DriverRequestNotifier extends ChangeNotifier {
       {required WidgetRef ref, required String id}) async {
     try {
       final response = await _repo.getScheduledResidence(ref: ref, id: id);
-      // if (response.isSuccessful) {
+
       return DriverScheduleResidenceSchema.getList(response.data);
       // }
     } catch (e) {

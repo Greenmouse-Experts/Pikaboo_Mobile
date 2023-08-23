@@ -36,4 +36,13 @@
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyBhqrFBTbvmWQOEBUZ1H7xZgCdXurCXGvI"/>
     </application>
+    <!-- Provide required visibility configuration for API level 30 and above -->
+    <queries>
+
+    <!-- If your app checks for call support -->
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="tel" />
+    </intent>
+    </queries>
 </manifest>

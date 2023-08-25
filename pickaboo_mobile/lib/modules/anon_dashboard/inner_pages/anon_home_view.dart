@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../controllers/push_notifications/push_notifications_controller.dart';
 import '../../../utilities/utilities.dart';
 import '../../../widgets/widgets.dart';
 
@@ -91,7 +92,9 @@ class AnonHomeView extends StatelessWidget {
                 AppButton(
                     text: 'Login',
                     onPressed: () {
-                      context.pushNamed(AppRouter.chooseSignIn);
+                      print("dhdd");
+                      showNoti();
+                      // context.pushNamed(AppRouter.chooseSignIn);
                     }),
               ],
             ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 
-const icon = '@mipmap/ic_launcher';
+const icon = 'mipmap/ic_launcher';
 //FirebaseMessaging _firebaseMessaging;
 FirebaseMessaging messaging = FirebaseMessaging.instance;
 
@@ -20,13 +20,13 @@ AndroidNotificationChannel channel = const AndroidNotificationChannel(
 );
 
 initBackgroundNotification() {
-  FirebaseMessaging.onBackgroundMessage(_onBackgroundMessage);
+  FirebaseMessaging.onBackgroundMessage(_onMessage);
 }
 
-Future<void> _onBackgroundMessage(RemoteMessage message) async {
-  // FlutterAppBadger.updateBadgeCount(1);
-  // await Firebase.initializeApp();
-}
+// Future<void> _onBackgroundMessage(RemoteMessage message) async {
+//   // FlutterAppBadger.updateBadgeCount(1);
+//   // await Firebase.initializeApp();
+// }
 
 initInfo() async {
   const androidInitialize = AndroidInitializationSettings(icon);
@@ -55,14 +55,40 @@ initInfo() async {
   );
 
   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-    FirebaseMessaging.onMessage.listen(_onForegroundMessage);
+    FirebaseMessaging.onMessage.listen(_onMessage);
   }
 }
 
 ///initializing local notification plugin
 ///
+///
+///
+Future showNoti() async {
+  BigTextStyleInformation bigStyleInfo = const BigTextStyleInformation(
+    " notification!.body.toString()",
+    htmlFormatBigText: true,
+    contentTitle: "notification.title.toString()",
+    htmlFormatContentTitle: true,
+  );
+  return flutterLocalNotificationsPlugin.show(
+    0,
+    " title",
+    " body",
+    NotificationDetails(
+      android: AndroidNotificationDetails(
+        "Pikabooo Android Id",
+        "Pikaboo",
+        importance: Importance.max,
+        styleInformation: bigStyleInfo,
+        priority: Priority.high,
+        playSound: true,
+      ),
+      iOS: const DarwinNotificationDetails(),
+    ),
+  );
+}
 
-Future _onForegroundMessage(RemoteMessage message) async {
+Future _onMessage(RemoteMessage message) async {
   debugPrint('foreground cloud message callback called');
 
   RemoteNotification? notification = message.notification;
@@ -80,14 +106,13 @@ Future _onForegroundMessage(RemoteMessage message) async {
     notification.body,
     NotificationDetails(
       android: AndroidNotificationDetails(
-        channel.id,
-        channel.name,
+        "Pikabooo Android Id",
+        "Pikaboo",
         importance: Importance.max,
         channelDescription: channel.description,
         styleInformation: bigStyleInfo,
         priority: Priority.high,
         playSound: true,
-        icon: 'pickaboo_logo',
       ),
       iOS: const DarwinNotificationDetails(),
     ),

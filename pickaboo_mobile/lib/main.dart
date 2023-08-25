@@ -15,8 +15,8 @@ Future<void> main() async {
 
   await FirebaseMessaging.instance.getInitialMessage();
 
-  await initBackgroundNotification();
   await initInfo();
+  await initBackgroundNotification();
 
   final sharedPreferences = await SharedPreferences.getInstance();
   runApp(ProviderScope(overrides: [

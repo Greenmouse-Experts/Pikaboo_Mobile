@@ -35,13 +35,13 @@
         <string>remote-notification</string>
     </array>
 	<key>NSCameraUsageDescription</key>
-	<string>Pikaboo requires access to the camera.</string>
+	<string>Pikaboo requires access to the camera to scan qr codes.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Pikaboo requires access to your location</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Pikaboo requires access to the microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Pikaboo requires access to the photo library.</string>
+	<string>Pikaboo requires access to the photo library to upload profile photos.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

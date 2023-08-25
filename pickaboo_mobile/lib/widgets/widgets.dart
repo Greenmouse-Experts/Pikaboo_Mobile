@@ -41,3 +41,4 @@ export './order_tile.dart';
 export './error_widget.dart';
 export './dropdown_pickker.dart';
 export './special_card.dart';
+export './qr_overlay.dart';

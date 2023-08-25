@@ -5,3 +5,4 @@ export './user_requests.dart';
 export './request_details_view.dart';
 export './driver_scheduled_details_view.dart';
 export './scheduled_request_details.dart';
+export './qrcode.dart';

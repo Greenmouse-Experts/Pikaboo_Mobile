@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badge;
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../utilities/utilities.dart';
+import 'widgets.dart';
 
 class UserRowIcon extends StatelessWidget {
   final Color bgColor;
@@ -181,7 +183,12 @@ class RowTitle extends StatelessWidget {
       var url = Uri(scheme: "tel", path: content);
       if (await canLaunchUrl(url)) {
         await launchUrl(url);
-      } else {}
+      } else {
+        Clipboard.setData(ClipboardData(text: content)).then((value) {
+          AppOverlays.showSuccessSnackBar(
+              context: context, message: "Phone number copied successfully");
+        });
+      }
     }
 
     return Padding(

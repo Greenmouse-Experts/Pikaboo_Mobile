@@ -7,14 +7,19 @@ import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
 class ScheduledRequest extends ConsumerWidget {
+  final String cleanupId;
   final bool isActive;
   final String request;
   const ScheduledRequest(
-      {super.key, required this.isActive, required this.request});
+      {super.key,
+      required this.isActive,
+      required this.request,
+      required this.cleanupId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final requestDetails = DriverScheduleResidenceSchema.fromRawJson(request);
+
     final name =
         "${(requestDetails.residence?.homeResidence?.firstName) ?? ""} ${(requestDetails.residence?.homeResidence?.lastName) ?? ""}";
     final phone = requestDetails.residence?.homeResidence?.phone ?? "";
@@ -94,7 +99,10 @@ class ScheduledRequest extends ConsumerWidget {
                       Expanded(
                           child: AppButton(
                               text: 'Complete',
-                              onPressed: () => context.pop())),
+                              onPressed: () {
+                                context.pushNamed(AppRouter.qrCode,
+                                    pathParameters: {"id": cleanupId});
+                              })),
                       SizedBox(width: width(context) * 0.05),
                       Expanded(
                         child: AppButton(

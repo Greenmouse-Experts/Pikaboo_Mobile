@@ -45,25 +45,25 @@ class PickUpRequestView extends ConsumerWidget {
                           children: [
                             CategorySelector(
                               isSelected: i == 0,
-                              title: 'All',
+                              title: 'Scheduled Requests',
                               onSelected: () {
                                 ref.read(_pageProvider.notifier).updatePage(0);
                               },
                             ),
                             CategorySelector(
                               isSelected: i == 1,
-                              title: 'Active',
+                              title: 'Special Calls',
                               onSelected: () {
                                 ref.read(_pageProvider.notifier).updatePage(1);
                               },
                             ),
-                            CategorySelector(
-                              isSelected: i == 2,
-                              title: 'Finished',
-                              onSelected: () {
-                                ref.read(_pageProvider.notifier).updatePage(2);
-                              },
-                            ),
+                            // // CategorySelector(
+                            // //   isSelected: i == 2,
+                            // //   title: 'Finished',
+                            // //   onSelected: () {
+                            // //     ref.read(_pageProvider.notifier).updatePage(2);
+                            // //   },
+                            // // ),
                           ],
                         );
                       }),

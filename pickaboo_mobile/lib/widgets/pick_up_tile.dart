@@ -319,10 +319,14 @@ class PickUpCard extends ConsumerWidget {
 }
 
 class AddressCard extends ConsumerWidget {
+  final String cleanUpId;
   final bool isPending;
   final DriverScheduleResidenceSchema address;
   const AddressCard(
-      {super.key, required this.isPending, required this.address});
+      {super.key,
+      required this.isPending,
+      required this.address,
+      required this.cleanUpId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -353,7 +357,8 @@ class AddressCard extends ConsumerWidget {
               onTap: () => context.pushNamed(AppRouter.scheduledRequestDetails,
                   pathParameters: {
                     'isActive': isPending ? 'yes' : 'no',
-                    "request": address.toRawJson()
+                    "request": address.toRawJson(),
+                    "cleanupId": cleanUpId
                   }),
               child: Row(
                 children: [

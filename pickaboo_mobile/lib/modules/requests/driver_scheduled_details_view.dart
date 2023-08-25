@@ -136,6 +136,7 @@ class DriverScheduledDetails extends ConsumerWidget {
                                           itemCount: pendingAddresses.length,
                                           itemBuilder: (context, i) {
                                             return AddressCard(
+                                              cleanUpId: id,
                                               isPending: true,
                                               address: pendingAddresses[i],
                                             );
@@ -157,6 +158,7 @@ class DriverScheduledDetails extends ConsumerWidget {
                                           itemCount: completedAddresses.length,
                                           itemBuilder: (context, i) {
                                             return AddressCard(
+                                              cleanUpId: id,
                                               isPending: false,
                                               address: completedAddresses[i],
                                             );

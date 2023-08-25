@@ -228,6 +228,7 @@ class AppOverlays {
   static void showSuccessDialog(
       {required BuildContext context,
       Widget? contentReplacement,
+      VoidCallback? onPressed,
       required String content}) {
     showDialog(
         context: context,
@@ -258,7 +259,11 @@ class AppOverlays {
                           bgColor: AppColors.lightYellow2,
                           textColor: AppColors.altYellow,
                           onPressed: () {
-                            context.pop();
+                            if (onPressed == null) {
+                              context.pop();
+                            } else {
+                              onPressed();
+                            }
                           },
                           text: 'Continue'),
                     ],

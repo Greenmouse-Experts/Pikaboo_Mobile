@@ -50,4 +50,9 @@ class AuthRepository {
     final response = _api.getData('/user', ref: ref);
     return response;
   }
+
+  Future<ApiResponse> deleteAccount({required WidgetRef ref}) async {
+    final response = _api.postData("/user/delete/account", data: '', ref: ref);
+    return response;
+  }
 }

@@ -83,8 +83,12 @@ class RequestDetailsView extends ConsumerWidget {
                       Expanded(
                         child: AppButton(
                             text: 'Track',
-                            onPressed: () =>
-                                context.pushNamed(AppRouter.mapView)),
+                            onPressed: () => context.pushNamed(
+                                    AppRouter.mapView,
+                                    pathParameters: {
+                                      "latitude": "23",
+                                      "longitude": "3"
+                                    })),
                       )
                     ],
                   )

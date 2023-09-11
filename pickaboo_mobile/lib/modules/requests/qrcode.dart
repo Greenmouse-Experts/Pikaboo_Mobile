@@ -8,7 +8,9 @@ import '../../widgets/widgets.dart';
 
 class QrCodeScanView extends ConsumerStatefulWidget {
   final String cleanupId;
-  const QrCodeScanView({super.key, required this.cleanupId});
+  final bool isScheduled;
+  const QrCodeScanView(
+      {super.key, required this.cleanupId, required this.isScheduled});
 
   @override
   ConsumerState<QrCodeScanView> createState() => _QrCodeScanViewConsumerState();
@@ -55,13 +57,15 @@ class _QrCodeScanViewConsumerState extends ConsumerState<QrCodeScanView> {
                               ddatata[0].url?.url?.split("sort=").last;
 
                           _canSubmit = true;
-                          ref
-                              .read(driverRequestProvider.notifier)
-                              .completeCleanUp(
-                                  ref: ref,
-                                  context: context,
-                                  cleanupId: widget.cleanupId,
-                                  residenceId: residenceId.toString());
+                          if (widget.isScheduled) {
+                            ref
+                                .read(driverRequestProvider.notifier)
+                                .completeCleanUp(
+                                    ref: ref,
+                                    context: context,
+                                    cleanupId: widget.cleanupId,
+                                    residenceId: residenceId.toString());
+                          } else {}
                         }
                       }),
                       const QRScannerOverlay(overlayColour: AppColors.altWhite)

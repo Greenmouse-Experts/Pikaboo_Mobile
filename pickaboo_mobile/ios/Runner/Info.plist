@@ -27,6 +27,8 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
   	<string>tel</string>
+		<string>comgooglemaps</string> <!-- Google Maps -->
+    <string>applemaps</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

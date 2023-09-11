@@ -63,6 +63,7 @@ class AppRouter {
   static const String scheduledRequestsAddress = 'scheduledRequestsAddress';
   static const String orderStatusView = 'orderStatusView';
   static const String scheduledRequestDetails = "scheduledRequestsDetails";
+  static const String specialRequestDetails = "specialRequestDetails";
   static const String qrCode = "qrCoddeScanView";
 }
 
@@ -266,8 +267,11 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             builder: (context, state) => const AccountView()),
         GoRoute(
             name: AppRouter.mapView,
-            path: AppRouter.mapView,
-            builder: (context, state) => const AppMapView()),
+            path: "${AppRouter.mapView}/:latitude/:longitude",
+            builder: (context, state) => AppMapView(
+                  latitude: state.pathParameters['latitude']!,
+                  longitude: state.pathParameters['longitude']!,
+                )),
         GoRoute(
             name: AppRouter.scheduledRequestsAddress,
             path: '${AppRouter.scheduledRequestsAddress}/:id/:schedule',
@@ -285,10 +289,20 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
               request: state.pathParameters["request"]!),
         ),
         GoRoute(
+          name: AppRouter.specialRequestDetails,
+          path:
+              "${AppRouter.specialRequestDetails}/:isActive/:request/:cleanupId",
+          builder: (context, state) => SpecialRequest(
+              isActive: state.pathParameters["isActive"]! == "yes",
+              cleanupId: state.pathParameters["cleanupId"]!,
+              request: state.pathParameters["request"]!),
+        ),
+        GoRoute(
           name: AppRouter.qrCode,
           path: "${AppRouter.qrCode}/:id",
           builder: (context, state) => QrCodeScanView(
             cleanupId: state.pathParameters["id"]!,
+            isScheduled: state.pathParameters["isScheduled"] == 'yes',
           ),
         ),
       ]),

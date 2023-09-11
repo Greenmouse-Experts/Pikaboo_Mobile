@@ -29,6 +29,7 @@ class Api {
       bool hasHeader = true}) async {
     try {
       final authToken = ref.watch(authProvider).token;
+
       final authorization = {
         'Authorization': 'Bearer $authToken',
       };

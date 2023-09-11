@@ -1,9 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.pickaboo_mobile">
+    package="com.pikaboo.app">
    <uses-permission android:name="android.permission.INTERNET"/>
    <uses-permission android:name="android.permission.CAMERA"/>
    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-   <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
    <application
         android:label="Pikaboo"
         android:name="${applicationName}"
@@ -26,14 +25,31 @@
               />
             <meta-data
               android:name="com.google.firebase.messaging.default_notification_channel_id"
-              android:value="Pikabooo Android Id"
+              android:value="pikaboo_android_id"
               />
               <meta-data
               android:name="com.google.firebase.messaging.default_notification_icon"
               android:resource="@drawable/pickaboo_logo" />
+               <intent-filter>
+                    <action android:name="android.intent.action.VIEW" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <category android:name="android.intent.category.BROWSABLE" />
+                    <data
+                          android:scheme="http"
+                          android:host="maps.google.com"
+                          android:pathPrefix="/maps" />
+                    <data
+                          android:scheme="https"
+                          android:host="maps.google.com"
+                          android:pathPrefix="/maps" />
+             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+             <intent-filter>
+                <action android:name="FLUTTER_NOTIFICATION_CLICK"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
@@ -52,5 +68,9 @@
         <action android:name="android.intent.action.VIEW" />
         <data android:scheme="tel" />
     </intent>
+       <intent>
+    <action android:name="android.intent.action.VIEW" />
+    <data android:scheme="comgooglemaps" />
+  </intent>
     </queries>
 </manifest>

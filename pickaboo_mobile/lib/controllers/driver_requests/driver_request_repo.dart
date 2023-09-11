@@ -28,4 +28,27 @@ class DriverRequestRepo {
         ref: ref);
     return response;
   }
+
+  Future<ApiResponse> getSpecialRequest({required WidgetRef ref}) async {
+    final response =
+        _api.getData("/service-personnel/special-requests/get", ref: ref);
+    return response;
+  }
+
+  Future<ApiResponse> getSpecialResidence(
+      {required WidgetRef ref, required String id}) async {
+    final response = _api.getData(
+        "/service-personnel/special-requests/view/residence?special_request_id=$id",
+        ref: ref);
+    return response;
+  }
+
+  Future<ApiResponse> completeSpecialRequest(
+      {required dynamic payload, required WidgetRef ref}) async {
+    final response = _api.postData(
+        "/service-personnel/special-requests/complete/request",
+        data: payload,
+        ref: ref);
+    return response;
+  }
 }

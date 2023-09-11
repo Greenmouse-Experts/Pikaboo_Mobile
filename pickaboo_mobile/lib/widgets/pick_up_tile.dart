@@ -3,7 +3,6 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../controllers/auth/auth_controller.dart';
 import '../data/models/models.dart';
 import '../utilities/utilities.dart';
 import 'widgets.dart';
@@ -22,6 +21,11 @@ class PickupTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       minVerticalPadding: 0,
+      onTap: () => context
+          .pushNamed(AppRouter.scheduledRequestsAddress, pathParameters: {
+        'id': request.cleanupRequest?.id.toString() ?? '',
+        'schedule': request.toRawJson()
+      }),
       contentPadding: isMobile(context)
           ? EdgeInsets.zero
           : EdgeInsets.symmetric(vertical: height(context) * 0.006),
@@ -63,17 +67,18 @@ class PickupTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Pickup address',
+          Text('Pickup Zone',
               style: medium11(context)
                   .copyWith(color: Colors.black.withOpacity(0.4))),
           SizedBox(height: height(context) * 0.0002),
-          Text('Maclemore Street', style: semi13(context)),
+          Text(request.cleanupRequest?.zone?.name ?? '',
+              style: semi13(context)),
           SizedBox(height: height(context) * 0.0002),
         ],
       ),
-      subtitle: Text(request.cleanupRequest?.zone?.name ?? '',
-          style:
-              medium11(context).copyWith(color: Colors.black.withOpacity(0.4))),
+      // subtitle: Text("Zone:   ${request.cleanupRequest?.zone?.name ?? ''}",
+      //     style:
+      //         medium11(context).copyWith(color: Colors.black.withOpacity(0.4))),
       trailing: Container(
         width:
             isMobile(context) ? width(context) * 0.06 : width(context) * 0.05,
@@ -263,12 +268,13 @@ class DotLine extends StatelessWidget {
 }
 
 class PickUpCard extends ConsumerWidget {
-  final bool isActive;
-  const PickUpCard({super.key, required this.isActive});
+  final DriverSpecialSchema specialRequest;
+  const PickUpCard({super.key, required this.specialRequest});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final accountType = ref.watch(authProvider).accountType;
+    // final accountType = ref.watch(authProvider).accountType;
+    final isActive = specialRequest.status == "PENDING";
     return Column(
       children: [
         SizedBox(height: height(context) * 0.005),
@@ -282,18 +288,19 @@ class PickUpCard extends ConsumerWidget {
                         .copyWith(color: Colors.black.withOpacity(0.4))),
                 SizedBox(height: height(context) * 0.01),
                 Text(
-                  'Akuku/Ewan',
+                  specialRequest.homeResidence?.address ?? "",
                   style: semi14(context),
                 )
               ],
             ),
             const Spacer(),
             InkWell(
-              onTap: () => context.pushNamed(
-                  accountType == 'Service Personnel'
-                      ? AppRouter.driverRequstDetails
-                      : AppRouter.userRequstDetails,
-                  pathParameters: {'isActive': 'yes'}),
+              onTap: () => context
+                  .pushNamed(AppRouter.specialRequestDetails, pathParameters: {
+                'isActive': specialRequest.status == 'PENDING' ? 'yes' : 'no',
+                "request": specialRequest.toRawJson(),
+                "cleanupId": specialRequest.id.toString()
+              }),
               child: Row(
                 children: [
                   isActive
@@ -334,48 +341,59 @@ class AddressCard extends ConsumerWidget {
     return Column(
       children: [
         SizedBox(height: height(context) * 0.005),
-        Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Pickup address',
-                    style: medium13(context)
-                        .copyWith(color: Colors.black.withOpacity(0.4))),
-                SizedBox(height: height(context) * 0.01),
-                SizedBox(
-                  width: width(context) * 0.52,
-                  child: Text(
-                    theAddress,
-                    style: semi14(context),
-                  ),
-                )
-              ],
-            ),
-            const Spacer(),
-            InkWell(
-              onTap: () => context.pushNamed(AppRouter.scheduledRequestDetails,
-                  pathParameters: {
-                    'isActive': isPending ? 'yes' : 'no',
-                    "request": address.toRawJson(),
-                    "cleanupId": cleanUpId
-                  }),
-              child: Row(
+        InkWell(
+          onTap: () {
+            context
+                .pushNamed(AppRouter.scheduledRequestDetails, pathParameters: {
+              'isActive': isPending ? 'yes' : 'no',
+              "request": address.toRawJson(),
+              "cleanupId": cleanUpId
+            });
+          },
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  isPending
-                      ? CustomButton(
-                          bgColor: AppColors.lightYellow,
-                          textColor: AppColors.yellow,
-                          onPressed: () {},
-                          text: 'Pending')
-                      : Text('Review', style: regular13(context)),
-                  const SizedBox(width: 4),
-                  Icon(Icons.arrow_forward_ios_outlined,
-                      size: width(context) * 0.04)
+                  Text('Pickup address',
+                      style: medium13(context)
+                          .copyWith(color: Colors.black.withOpacity(0.4))),
+                  SizedBox(height: height(context) * 0.01),
+                  SizedBox(
+                    width: width(context) * 0.52,
+                    child: Text(
+                      theAddress,
+                      style: semi14(context),
+                    ),
+                  )
                 ],
               ),
-            ),
-          ],
+              const Spacer(),
+              InkWell(
+                onTap: () => context.pushNamed(
+                    AppRouter.scheduledRequestDetails,
+                    pathParameters: {
+                      'isActive': isPending ? 'yes' : 'no',
+                      "request": address.toRawJson(),
+                      "cleanupId": cleanUpId
+                    }),
+                child: Row(
+                  children: [
+                    isPending
+                        ? CustomButton(
+                            bgColor: AppColors.lightYellow,
+                            textColor: AppColors.yellow,
+                            onPressed: () {},
+                            text: 'Pending')
+                        : Text('Review', style: regular13(context)),
+                    const SizedBox(width: 4),
+                    Icon(Icons.arrow_forward_ios_outlined,
+                        size: width(context) * 0.04)
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
         SizedBox(height: height(context) * 0.015),
         const Divider(color: AppColors.lightAsh)

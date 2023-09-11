@@ -72,6 +72,20 @@ class DriverProfileView extends ConsumerWidget {
                       subTitle: 'Contact Pikaboo help center',
                       onPressed: () => context.pushNamed(AppRouter.driverFaq)),
                   ServiceProfileTile(
+                      icon: Icons.delete_forever,
+                      title: 'Delete',
+                      subTitle: 'Delete your account',
+                      onPressed: () {
+                        AppOverlays.showConfirmDialog(
+                            context: context,
+                            ref: ref,
+                            confirmAction: () {
+                              context.pop();
+                            },
+                            message:
+                                "Are you sure you want to delete your account?");
+                      }),
+                  ServiceProfileTile(
                       icon: Icons.logout,
                       title: 'Logout',
                       subTitle: 'Logout of your account',

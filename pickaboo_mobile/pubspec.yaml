@@ -1,7 +1,7 @@
 name: pickaboo_mobile
 description: A new Flutter project.
 publish_to: "none"
-version: 1.0.0+1
+version: 1.0.0+3
 
 environment:
   sdk: ">=2.17.5 <4.0.0"

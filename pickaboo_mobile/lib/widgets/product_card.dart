@@ -13,7 +13,8 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final image = product.images == null || product.images!.isEmpty
         ? 'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png'
-        : product.images![0];
+        : product.images![0].name ??
+            "https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png";
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: InkWell(
@@ -74,7 +75,8 @@ class ProductGridCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final image = product.images == null || product.images!.isEmpty
         ? 'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png'
-        : product.images![0];
+        : product.images![0].name ??
+            "https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png";
     return InkWell(
       onTap: () => context.pushNamed(AppRouter.productPage,
           pathParameters: {'product': product.toRawJson()}),

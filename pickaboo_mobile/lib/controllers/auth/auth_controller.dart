@@ -253,6 +253,27 @@ class _AuthNotifier extends ChangeNotifier {
     }
   }
 
+  Future<void> deleteAccount(
+      {required WidgetRef ref, required BuildContext context}) async {
+    AppOverlays.loadingDialog(context: context);
+
+    try {
+      _repo.deleteAccount(ref: ref).then((response) {
+        context.pop();
+        if (response.isSuccessful) {
+          logout(context: context);
+        } else {
+          AppOverlays.showErrorDialog(
+              context: context,
+              error: response.message ?? "An unknown error occured");
+        }
+      });
+    } catch (e) {
+      context.pop();
+      AppOverlays.showErrorDialog(context: context, error: e);
+    }
+  }
+
   Future<void> rateApplication(
       {required BuildContext context,
       required String rating,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../controllers/driver_requests/driver_request_controller.dart';
 import '../../controllers/requests/request_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
@@ -11,6 +12,7 @@ class PickUpRequestView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final getRequests = ref.watch(requestProvider);
+    final specialRequests = ref.watch(driverRequestProvider);
     return Scaffold(
       appBar: customAppBar3(context, hasElevation: false),
       body: SingleChildScrollView(
@@ -18,7 +20,10 @@ class PickUpRequestView extends ConsumerWidget {
         child: Padding(
           padding: screenPadding(context),
           child: FutureBuilder(
-              future: getRequests.getAllRequests(ref: ref),
+              future: Future.wait([
+                getRequests.getAllRequests(ref: ref),
+                specialRequests.getSpecialRequests(ref: ref)
+              ]),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const PageLoader();
@@ -74,36 +79,42 @@ class PickUpRequestView extends ConsumerWidget {
                             ref.watch(requestProvider).cleanUpRequests;
 
                         return i == 0
-                            ? ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: cleanUpRequests.length,
-                                itemBuilder: (context, i) {
-                                  return PickupTile(
-                                    isFirst: i == 0,
-                                    isLast: i == cleanUpRequests.length - 1,
-                                    request: cleanUpRequests[i],
-                                  );
-                                })
-                            : i == 1
-                                ? ListView.builder(
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemCount: 6,
-                                    itemBuilder: (context, i) {
-                                      return const PickUpCard(
-                                        isActive: true,
-                                      );
-                                    })
+                            ? cleanUpRequests.isEmpty
+                                ? const SizedBox(
+                                    height: 100,
+                                    child: Center(
+                                        child: Text(
+                                            "No Scheduled Requests Currently")),
+                                  )
                                 : ListView.builder(
                                     shrinkWrap: true,
                                     physics:
                                         const NeverScrollableScrollPhysics(),
-                                    itemCount: 6,
+                                    itemCount: cleanUpRequests.length,
                                     itemBuilder: (context, i) {
-                                      return const PickUpCard(
-                                        isActive: false,
+                                      return PickupTile(
+                                        isFirst: i == 0,
+                                        isLast: i == cleanUpRequests.length - 1,
+                                        request: cleanUpRequests[i],
+                                      );
+                                    })
+                            : specialRequests.driverSpecialRequests.isEmpty
+                                ? const SizedBox(
+                                    height: 100,
+                                    child: Center(
+                                        child: Text(
+                                            "No Scheduled Requests Currently")),
+                                  )
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: specialRequests
+                                        .driverSpecialRequests.length,
+                                    itemBuilder: (context, i) {
+                                      return PickUpCard(
+                                        specialRequest: specialRequests
+                                            .driverSpecialRequests[i],
                                       );
                                     });
                       })

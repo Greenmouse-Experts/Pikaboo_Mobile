@@ -116,7 +116,7 @@ class DriverHomeView extends ConsumerWidget {
                           children: [
                             SizedBox(height: height(context) * 0.05),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 DriverRowIcon(
                                     bgColor: AppColors.lightYellow,
@@ -124,17 +124,17 @@ class DriverHomeView extends ConsumerWidget {
                                     image: 'request2',
                                     onTap: () => context
                                         .pushNamed(AppRouter.pickUpRequests)),
-                                DriverRowIcon(
-                                    bgColor: AppColors.lightGreen,
-                                    title: 'Geo Location',
-                                    image: 'geolocation',
-                                    onTap: () {}),
-                                DriverRowIcon(
-                                    bgColor: AppColors.lightRed,
-                                    title: 'History',
-                                    image: 'history1',
-                                    onTap: () => context
-                                        .pushNamed(AppRouter.driverHistory)),
+                                // DriverRowIcon(
+                                //     bgColor: AppColors.lightGreen,
+                                //     title: 'Geo Location',
+                                //     image: 'geolocation',
+                                //     onTap: () {}),
+                                // DriverRowIcon(
+                                //     bgColor: AppColors.lightRed,
+                                //     title: 'History',
+                                //     image: 'history1',
+                                //     onTap: () => context
+                                //         .pushNamed(AppRouter.driverHistory)),
                                 DriverRowIcon(
                                     bgColor: AppColors.lightIndigo,
                                     title: 'FAQs',
@@ -148,12 +148,21 @@ class DriverHomeView extends ConsumerWidget {
                             SizedBox(height: height(context) * 0.01),
                             SizedBox(
                                 height: height(context) * 0.11,
-                                child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: schedules.length,
-                                    itemBuilder: (context, i) => PickUpPreview(
-                                          schedule: schedules[i],
-                                        ))),
+                                child: schedules.isEmpty
+                                    ? const SizedBox(
+                                        width: double.infinity,
+                                        child: Center(
+                                          child: Text(
+                                              "You currently have no scheduled requests, you will be notified when yoou receive one"),
+                                        ),
+                                      )
+                                    : ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: schedules.length,
+                                        itemBuilder: (context, i) =>
+                                            PickUpPreview(
+                                              schedule: schedules[i],
+                                            ))),
                             SizedBox(height: height(context) * 0.03),
                             Text('Stay In Touch', style: medium13(context)),
                             SizedBox(height: height(context) * 0.015),

@@ -1,4 +1,4 @@
-package com.example.pickaboo_mobile
+package com.pikaboo.app
 
 import io.flutter.embedding.android.FlutterActivity
 

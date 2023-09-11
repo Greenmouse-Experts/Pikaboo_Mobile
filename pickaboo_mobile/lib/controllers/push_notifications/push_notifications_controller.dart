@@ -29,7 +29,7 @@ initBackgroundNotification() {
 // }
 
 initInfo() async {
-  const androidInitialize = AndroidInitializationSettings(icon);
+  const androidInitialize = AndroidInitializationSettings('mipmap/ic_launcher');
   final DarwinInitializationSettings initializationSettingsDarwin =
       DarwinInitializationSettings(
           requestAlertPermission: true,
@@ -106,7 +106,7 @@ Future _onMessage(RemoteMessage message) async {
     notification.body,
     NotificationDetails(
       android: AndroidNotificationDetails(
-        "Pikabooo Android Id",
+        "pikaboo_android_id",
         "Pikaboo",
         importance: Importance.max,
         channelDescription: channel.description,

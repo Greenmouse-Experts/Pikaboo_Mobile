@@ -223,10 +223,13 @@ class MarketPlaceView extends ConsumerWidget {
                                                   physics:
                                                       const NeverScrollableScrollPhysics(),
                                                   itemCount: theproducts.length,
-                                                  itemBuilder: (context, i) =>
-                                                      ProductCard(
-                                                        product: theproducts[i],
-                                                      ))
+                                                  itemBuilder: (context, i) {
+                                                    return ProductCard(
+                                                      product: theproducts[i],
+                                                    );
+                                                  })
+                                              // SizedBox()
+
                                               : GridView.builder(
                                                   gridDelegate:
                                                       SliverGridDelegateWithFixedCrossAxisCount(

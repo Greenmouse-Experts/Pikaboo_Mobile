@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final marketSchema = marketSchemaFromJson(jsonString);
-
 import 'dart:convert';
 
 class MarketSchema {
@@ -49,7 +45,7 @@ class ProductsSchema {
   int? sold;
   DateTime? createdAt;
   String? status;
-  List<dynamic>? images;
+  List<Category>? images;
   Category? category;
 
   ProductsSchema({
@@ -87,7 +83,8 @@ class ProductsSchema {
         status: json["status"],
         images: json["images"] == null
             ? []
-            : List<dynamic>.from(json["images"]!.map((x) => x)),
+            : List<Category>.from(
+                json["images"]!.map((x) => Category.fromJson(x))),
         category: json["category"] == null
             ? null
             : Category.fromJson(json["category"]),
@@ -104,8 +101,9 @@ class ProductsSchema {
         "sold": sold,
         "created_at": createdAt?.toIso8601String(),
         "status": status,
-        "images":
-            images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
+        "images": images == null
+            ? []
+            : List<dynamic>.from(images!.map((x) => x.toJson())),
         "category": category?.toJson(),
       };
 }

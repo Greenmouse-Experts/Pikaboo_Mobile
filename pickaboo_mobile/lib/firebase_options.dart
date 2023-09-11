@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBxrAqEMwWox3gzPymxOcmo9UHq6mn_9Q4',
-    appId: '1:78373342313:android:b625b1bf849d0d8f6de6f8',
+    appId: '1:78373342313:android:08ac9e8ccc6b3bc96de6f8',
     messagingSenderId: '78373342313',
     projectId: 'pikaboo-a53a4',
     storageBucket: 'pikaboo-a53a4.appspot.com',

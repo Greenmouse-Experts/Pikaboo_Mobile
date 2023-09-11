@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../controllers/driver_requests/driver_request_controller.dart';
 import '../../data/models/models.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 
-class ScheduledRequest extends ConsumerWidget {
+class SpecialRequest extends ConsumerWidget {
   final String cleanupId;
   final bool isActive;
   final String request;
-  const ScheduledRequest(
+  const SpecialRequest(
       {super.key,
       required this.isActive,
       required this.request,
@@ -18,14 +19,11 @@ class ScheduledRequest extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final requestDetails = DriverScheduleResidenceSchema.fromRawJson(request);
+    final requestDetails = DriverSpecialSchema.fromRawJson(request);
 
     final name =
-        "${(requestDetails.residence?.homeResidence?.firstName) ?? ""} ${(requestDetails.residence?.homeResidence?.lastName) ?? ""}";
-    final latitue = requestDetails.residence?.latitude ?? "6.5982159133587555";
-    final longitude =
-        requestDetails.residence?.longtitude ?? "3.3539029113052066";
-    final phone = requestDetails.residence?.homeResidence?.phone ?? "";
+        "${(requestDetails.homeResidence?.firstName) ?? ""} ${(requestDetails.homeResidence?.lastName) ?? ""}";
+    final phone = requestDetails.homeResidence?.phone ?? "";
     return Scaffold(
       appBar: customAppBar5(context, hasElevation: false),
       body: SafeArea(
@@ -54,12 +52,10 @@ class ScheduledRequest extends ConsumerWidget {
                 const RowTitle(
                     title: 'Pickup Type', content: 'Scheduled Request'),
                 RowTitle(
-                    title: 'Area',
-                    content: requestDetails.residence?.area1 ?? ""),
-                RowTitle(
                     title: 'Address',
-                    content:
-                        requestDetails.residence?.homeResidence?.address ?? ""),
+                    content: requestDetails.altAddress ??
+                        requestDetails.homeResidence?.address ??
+                        ""),
                 RowTitle(
                     title: 'Date Requested',
                     content: requestDetails.createdAt!.formatedDate),
@@ -106,19 +102,21 @@ class ScheduledRequest extends ConsumerWidget {
                                 context.pushNamed(AppRouter.qrCode,
                                     pathParameters: {
                                       "id": cleanupId,
-                                      "isScheduled": "yes"
+                                      "isScheduled": "no"
                                     });
                               })),
                       SizedBox(width: width(context) * 0.05),
                       Expanded(
                         child: AppButton(
-                            text: 'Track',
-                            onPressed: () => context.pushNamed(
-                                    AppRouter.mapView,
-                                    pathParameters: {
-                                      "latitude": latitue,
-                                      "longitude": longitude
-                                    })),
+                            text: 'Complete',
+                            onPressed: () {
+                              ref
+                                  .read(driverRequestProvider.notifier)
+                                  .completeSpecialRequest(
+                                      ref: ref,
+                                      context: context,
+                                      cleanupId: requestDetails.id.toString());
+                            }),
                       )
                     ],
                   )

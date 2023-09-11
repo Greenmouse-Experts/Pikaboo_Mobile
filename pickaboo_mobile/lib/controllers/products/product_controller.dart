@@ -33,6 +33,7 @@ class ProductNotifier extends ChangeNotifier {
 
       if (response.isSuccessful) {
         final data = MarketSchema.fromJson(response.data);
+
         _products = data.data ?? [];
         _meta = data.meta;
         _links = data.links;

@@ -20,7 +20,7 @@ class ProductView extends StatelessWidget {
     final price = prod.price ?? '0';
     final image = prod.images == null || prod.images!.isEmpty
         ? 'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png'
-        : prod.images![0];
+        : prod.images![0].name ?? "";
 
     int quantity = 1;
 
@@ -118,7 +118,8 @@ class ProductView extends StatelessWidget {
                                     padding: EdgeInsets.only(
                                         right: width(context) * 0.02),
                                     child: ProductImage(
-                                      image: images[i],
+                                      image: images[i].name ??
+                                          "https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png",
                                     ),
                                   )),
                         ),

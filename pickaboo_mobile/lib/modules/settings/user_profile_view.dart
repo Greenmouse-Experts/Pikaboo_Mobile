@@ -127,6 +127,21 @@ class UserProfileview extends ConsumerWidget {
                     child: Column(
                       children: [
                         ProfileTile(
+                            onPressed: () {
+                              AppOverlays.showConfirmDialog(
+                                  context: context,
+                                  ref: ref,
+                                  confirmAction: () {
+                                    context.pop();
+                                  },
+                                  message:
+                                      "Are you sure you want to delete your account?");
+                            },
+                            icon: Icons.delete_forever,
+                            title: 'Delete',
+                            isLast: false,
+                            subTitle: 'Delete your account'),
+                        ProfileTile(
                             onPressed: () => AppOverlays.showLogOutDialog(
                                 context: context, ref: ref),
                             icon: Icons.logout,

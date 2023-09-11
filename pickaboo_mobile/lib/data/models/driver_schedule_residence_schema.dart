@@ -1,13 +1,10 @@
-// To parse this JSON data, do
-//
-//     final driverScheduleResidenceSchema = driverScheduleResidenceSchemaFromJson(jsonString);
-
 import 'dart:convert';
 
 class DriverScheduleResidenceSchema {
   int? id;
   Residence? residence;
   String? zone;
+  String? price;
   String? status;
   DateTime? createdAt;
 
@@ -15,6 +12,7 @@ class DriverScheduleResidenceSchema {
     this.id,
     this.residence,
     this.zone,
+    this.price,
     this.status,
     this.createdAt,
   });
@@ -35,6 +33,7 @@ class DriverScheduleResidenceSchema {
             ? null
             : Residence.fromJson(json["residence"]),
         zone: json["zone"],
+        price: json["price"],
         status: json["status"],
         createdAt: json["created_at"] == null
             ? null
@@ -45,6 +44,7 @@ class DriverScheduleResidenceSchema {
         "id": id,
         "residence": residence?.toJson(),
         "zone": zone,
+        "price": price,
         "status": status,
         "created_at": createdAt?.toIso8601String(),
       };
@@ -53,39 +53,49 @@ class DriverScheduleResidenceSchema {
 class Residence {
   int? id;
   String? userId;
-  String? plotNo;
-  String? houseNumber;
-  String? streetName;
-  String? area1;
-  String? area2;
-  String? quarter;
-  String? town;
-  String? state;
-  String? buildingType;
-  String? facilityType;
-  String? flats;
-  String? shopStoreIn;
-  String? purposeBuiltFacility;
-  String? buildingImage;
+  dynamic noOfResidents;
+  dynamic houseNumber;
+  dynamic streetName;
+  dynamic area1;
+  dynamic area2;
+  dynamic quarter;
+  String? townCity;
+  String? lga;
+  dynamic residential;
+  dynamic shopStores;
+  dynamic residentialFacility;
+  dynamic commercialFacility;
+  dynamic completionStatus;
+  dynamic facilityInclude;
+  dynamic waterSupply;
+  dynamic classification;
+  dynamic latitude;
+  dynamic longtitude;
+  dynamic buildingImage;
   DateTime? createdAt;
   HomeResidence? homeResidence;
 
   Residence({
     this.id,
     this.userId,
-    this.plotNo,
+    this.noOfResidents,
     this.houseNumber,
     this.streetName,
     this.area1,
     this.area2,
     this.quarter,
-    this.town,
-    this.state,
-    this.buildingType,
-    this.facilityType,
-    this.flats,
-    this.shopStoreIn,
-    this.purposeBuiltFacility,
+    this.townCity,
+    this.lga,
+    this.residential,
+    this.shopStores,
+    this.residentialFacility,
+    this.commercialFacility,
+    this.completionStatus,
+    this.facilityInclude,
+    this.waterSupply,
+    this.classification,
+    this.latitude,
+    this.longtitude,
     this.buildingImage,
     this.createdAt,
     this.homeResidence,
@@ -99,19 +109,24 @@ class Residence {
   factory Residence.fromJson(Map<String, dynamic> json) => Residence(
         id: json["id"],
         userId: json["user_id"],
-        plotNo: json["plot_no"],
+        noOfResidents: json["no_of_residents"],
         houseNumber: json["house_number"],
         streetName: json["street_name"],
         area1: json["area1"],
         area2: json["area2"],
         quarter: json["quarter"],
-        town: json["town"],
-        state: json["state"],
-        buildingType: json["building_type"],
-        facilityType: json["facility_type"],
-        flats: json["flats"],
-        shopStoreIn: json["shop_store_in"],
-        purposeBuiltFacility: json["purpose_built_facility"],
+        townCity: json["town_city"],
+        lga: json["lga"],
+        residential: json["residential"],
+        shopStores: json["shop_stores"],
+        residentialFacility: json["residential_facility"],
+        commercialFacility: json["commercial_facility"],
+        completionStatus: json["completion_status"],
+        facilityInclude: json["facility_include"],
+        waterSupply: json["water_supply"],
+        classification: json["classification"],
+        latitude: json["latitude"],
+        longtitude: json["longtitude"],
         buildingImage: json["building_image"],
         createdAt: json["created_at"] == null
             ? null
@@ -124,19 +139,24 @@ class Residence {
   Map<String, dynamic> toJson() => {
         "id": id,
         "user_id": userId,
-        "plot_no": plotNo,
+        "no_of_residents": noOfResidents,
         "house_number": houseNumber,
         "street_name": streetName,
         "area1": area1,
         "area2": area2,
         "quarter": quarter,
-        "town": town,
-        "state": state,
-        "building_type": buildingType,
-        "facility_type": facilityType,
-        "flats": flats,
-        "shop_store_in": shopStoreIn,
-        "purpose_built_facility": purposeBuiltFacility,
+        "town_city": townCity,
+        "lga": lga,
+        "residential": residential,
+        "shop_stores": shopStores,
+        "residential_facility": residentialFacility,
+        "commercial_facility": commercialFacility,
+        "completion_status": completionStatus,
+        "facility_include": facilityInclude,
+        "water_supply": waterSupply,
+        "classification": classification,
+        "latitude": latitude,
+        "longtitude": longtitude,
         "building_image": buildingImage,
         "created_at": createdAt?.toIso8601String(),
         "home_residence": homeResidence?.toJson(),
@@ -147,23 +167,23 @@ class HomeResidence {
   int? id;
   String? pikabooId;
   String? accountType;
-  String? title;
-  String? firstName;
-  String? middleName;
-  String? lastName;
+  dynamic title;
+  dynamic firstName;
+  dynamic middleName;
+  dynamic lastName;
   String? email;
   String? phone;
   String? phone2;
-  String? gender;
+  dynamic gender;
   dynamic dob;
-  String? avatar;
+  dynamic avatar;
   DateTime? emailVerifiedAt;
   String? currentPassword;
   String? wallet;
   String? fcmToken;
   dynamic meansOfIdentification;
-  String? address;
-  dynamic zoneId;
+  dynamic address;
+  String? zoneId;
   dynamic truckId;
   String? status;
   String? isVerified;

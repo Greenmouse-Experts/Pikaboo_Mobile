@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../data/models/models.dart';
+import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 import '../auth/auth_controller.dart';
 import 'special_request_repo.dart';
@@ -37,6 +38,11 @@ class SpecialRequestNotifier extends ChangeNotifier {
             context.pop();
             AppOverlays.showSuccessDialog(
                 context: context,
+                onPressed: () {
+                  context.pop();
+                  context.pop();
+                  context.pushNamed(AppRouter.userRequests);
+                },
                 content: response.message ??
                     'Special pick up has been requested successfully');
           });

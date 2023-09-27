@@ -32,6 +32,11 @@ class _AccountViewState extends ConsumerState<AccountView> {
 
   void updateImage(File chosenFile) {
     pickedFile = chosenFile;
+    if (pickedFile == null) {
+      return;
+    }
+    ref.read(authProvider.notifier).updateProfilePhoto(
+        ref: ref, context: context, pickedFile: pickedFile!);
   }
 
   @override
@@ -127,15 +132,11 @@ class _AccountViewState extends ConsumerState<AccountView> {
                   );
                 }),
                 SizedBox(height: height(context) * 0.05),
-                AppButton(
-                    text: 'Save Changes',
-                    onPressed: () {
-                      if (pickedFile == null) {
-                        return;
-                      }
-                      ref.read(authProvider.notifier).updateProfilePhoto(
-                          ref: ref, context: context, pickedFile: pickedFile!);
-                    }),
+                // AppButton(
+                //     text: 'Save Changes',
+                //     onPressed: () {
+                //
+                //     }),
               ],
             ),
           )
@@ -172,6 +173,7 @@ class __ImageSelectorState extends State<_ImageSelector> {
         });
       }
     } catch (e) {
+      // ignore: use_build_context_synchronously
       AppOverlays.showErrorDialog(context: context, error: e);
     }
   }

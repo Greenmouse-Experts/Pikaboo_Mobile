@@ -69,20 +69,17 @@ class UserHomeView extends ConsumerWidget {
                       SizedBox(width: width(context)),
                       Consumer(builder: (context, ref, child) {
                         final amount = ref.watch(authProvider).wallet ?? '0.00';
-                        final loading = ref.watch(authProvider).isRefreshing;
+                        // final loading = ref.watch(authProvider).isRefreshing;
                         final isVisible = ref.watch(_visibleProvider);
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            loading
-                                ? const CircularProgressIndicator(
-                                    color: AppColors.primary)
-                                : Text(
-                                    isVisible
-                                        ? 'NGN ${amount.formatWithCommas}'
-                                        : 'NGN *****',
-                                    style: medium20(context),
-                                  ),
+                            Text(
+                              isVisible
+                                  ? 'NGN ${amount.formatWithCommas}'
+                                  : 'NGN *****',
+                              style: medium20(context),
+                            ),
                             IconButton(
                                 onPressed: () {
                                   ref

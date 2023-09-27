@@ -76,6 +76,9 @@ class OrderDetailsView extends ConsumerWidget {
                         name: orderDetail.data?.product?.name ?? '',
                         price: orderDetail.data?.product?.price ?? '',
                         quantiity: orderDetail.data?.quantity ?? '',
+                        image: orderDetail.data?.product?.productImages?[0]
+                                ["name"] ??
+                            "'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png'",
                       ),
                       const Divider(),
                       RowTitle2(

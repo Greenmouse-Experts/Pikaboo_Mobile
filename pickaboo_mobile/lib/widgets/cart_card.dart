@@ -84,7 +84,7 @@ class _CartCardConsumerState extends ConsumerState<CartCard> {
             child: Padding(
               padding: EdgeInsets.all(width(context) * 0.01),
               child: CachedNetworkImage(
-                  imageUrl:
+                  imageUrl: widget.cartItem.product?.images?[0]["name"] ??
                       'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png',
                   errorWidget: (context, url, error) {
                     return Image.asset('assets/images/pickaboo_logo.png');

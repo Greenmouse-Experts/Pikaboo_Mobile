@@ -49,6 +49,13 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      builder: (context, child) {
+        final mediaQueryData = MediaQuery.of(context);
+        final scale = mediaQueryData.textScaleFactor.clamp(1.0, 1.05);
+        return MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaleFactor: scale),
+            child: child!);
+      },
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),

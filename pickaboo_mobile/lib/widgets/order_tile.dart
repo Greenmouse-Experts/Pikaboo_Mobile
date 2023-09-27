@@ -11,6 +11,8 @@ class OrderTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final initialDate = order.createdAt!;
+    DateTime newDate = initialDate.add(const Duration(days: 7));
     return InkWell(
       onTap: () => context.pushNamed(AppRouter.oorderDetailsView,
           pathParameters: {'id': order.id.toString()}),
@@ -31,7 +33,7 @@ class OrderTile extends StatelessWidget {
                   Text(order.createdAt!.formatedDate,
                       style: medium14(context).copyWith(color: Colors.grey)),
                   SizedBox(height: height(context) * 0.02),
-                  Text('Estimated Delivery : 14 May',
+                  Text('Estimated Delivery : ${newDate.regularDate}',
                       style: medium14(context).copyWith(
                         color: AppColors.darkGreen,
                       ))
@@ -44,9 +46,9 @@ class OrderTile extends StatelessWidget {
                   SizedBox(
                     height: width(context) * 0.12,
                     width: width(context) * 0.12,
-                    child: const ProductImage(
-                        image:
-                            'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png'),
+                    // child: const ProductImage(
+                    //     image: order.
+                    //        'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png'),
                   ),
                   SizedBox(height: height(context) * 0.02),
                   Text(
@@ -67,11 +69,13 @@ class OrderDetailTile extends StatelessWidget {
   final String quantiity;
   final String name;
   final String price;
+  final String image;
   const OrderDetailTile(
       {super.key,
       required this.quantiity,
       required this.name,
-      required this.price});
+      required this.price,
+      required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +84,7 @@ class OrderDetailTile extends StatelessWidget {
       leading: SizedBox(
         width: width(context) * 0.12,
         height: height(context) * 0.12,
-        child: const ProductImage(
-            image:
-                'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png'),
+        child: ProductImage(image: image),
       ),
       title: SizedBox(
           width: width(context) * 0.5,

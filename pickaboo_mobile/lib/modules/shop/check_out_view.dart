@@ -37,6 +37,16 @@ class _CheckoutViewConsumerState extends ConsumerState<CheckoutView> {
     }
     final homeOwner = ref.watch(authProvider).user;
     final address = homeOwner?.address ?? '';
+    if (addressType == 'My Address') {
+      if (address.isEmpty) {
+        AppOverlays.showErrorSnackBar(
+            context: context,
+            message:
+                "You can't check out with this method as you don't have an address currently");
+        return;
+      }
+    }
+
     AppOverlays.showConfirmDialog(
         context: context,
         ref: ref,

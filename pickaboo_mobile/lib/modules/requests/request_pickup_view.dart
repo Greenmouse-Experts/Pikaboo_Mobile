@@ -37,6 +37,15 @@ class _RequestPickupViewConsumerState extends ConsumerState<RequestPickupView> {
             context: context, message: 'Select a  date');
         return;
       }
+      final homeOwner = ref.watch(authProvider).user;
+      final address = homeOwner?.address ?? '';
+      if (address.isEmpty) {
+        AppOverlays.showErrorSnackBar(
+            context: context,
+            message:
+                "You can't request with this method as you don't have an address currently");
+        return;
+      }
       AppOverlays.showConfirmDialog(
           context: context,
           ref: ref,

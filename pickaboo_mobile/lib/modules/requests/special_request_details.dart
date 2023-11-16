@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../controllers/driver_requests/driver_request_controller.dart';
-import '../../data/models/models.dart';
+import '../../data/models/driver_special_request_schema.dart';
+
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 

@@ -4,7 +4,7 @@ import '../utilities/utilities.dart';
 
 class AppButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final double buttonWidth;
   final double buttonHeight;
   final Color? buttonColor;
@@ -28,19 +28,28 @@ class AppButton extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: buttonColor ?? AppColors.primary),
+            color: _disableButton()
+                ? AppColors.fadeGreen3
+                : (buttonColor ?? AppColors.primary)),
         child: Text(
           text,
-          style: semi13(context).copyWith(color: textColor ?? Colors.white),
+          style: semi13(context).copyWith(
+              color: _disableButton()
+                  ? Colors.black26
+                  : (textColor ?? Colors.white)),
         ),
       ),
     );
+  }
+
+  bool _disableButton() {
+    return onPressed == null;
   }
 }
 
 class AppButton2 extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final double buttonWidth;
   final double buttonHeight;
   final Color? buttonColor;
@@ -64,13 +73,21 @@ class AppButton2 extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(3),
-            color: buttonColor ?? AppColors.primary),
+            color: _disableButton()
+                ? AppColors.fadeGreen3
+                : (buttonColor ?? AppColors.primary)),
         child: Text(
           text,
-          style: textStyle ?? semi13(context).copyWith(color: Colors.white),
+          style: textStyle ??
+              semi13(context).copyWith(
+                  color: _disableButton() ? Colors.black26 : Colors.white),
         ),
       ),
     );
+  }
+
+  bool _disableButton() {
+    return onPressed == null;
   }
 }
 

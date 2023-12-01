@@ -29,6 +29,7 @@ class PickUpPreview extends StatelessWidget {
               padding: EdgeInsets.all(width(context) * 0.02),
               // width: width(context) * 0.82,
               child: Row(
+                mainAxisSize: MainAxisSize.min,
                 //  crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Container(

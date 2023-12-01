@@ -17,6 +17,7 @@ class CheckoutView extends ConsumerStatefulWidget {
 class _CheckoutViewConsumerState extends ConsumerState<CheckoutView> {
   final List<String> addressTypes = ['My Address', 'Custom Address'];
   var addressType = 'My Address';
+  String? address = '';
 
   final _address = TextEditingController();
 
@@ -63,11 +64,24 @@ class _CheckoutViewConsumerState extends ConsumerState<CheckoutView> {
             'Are you sure you want to purchase this order, the balance will be deducted from your wallet');
   }
 
+  void addressTextListener() {
+    setState(() {
+      address = _address.value.text;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final homeOwner = ref.read(authProvider).user;
+    address = homeOwner?.address;
+    _address.addListener(addressTextListener);
+  }
+
   @override
   Widget build(BuildContext context) {
     final cartItems = ref.watch(cartProvider).cart;
-    final homeOwner = ref.watch(authProvider).user;
-    final address = homeOwner?.address;
+    print(address);
     return Scaffold(
       appBar: customAppBar5(context, hasElevation: false),
       body: SingleChildScrollView(
@@ -129,7 +143,12 @@ class _CheckoutViewConsumerState extends ConsumerState<CheckoutView> {
                 ],
               ),
               SizedBox(height: height(context) * 0.05),
-              AppButton(text: 'Purchase', onPressed: _checkout),
+              AppButton(
+                  text: 'Purchase',
+                  onPressed: (address ?? '').isNotEmpty ||
+                          _address.value.text.isNotEmpty
+                      ? _checkout
+                      : null),
             ],
           ),
         )),

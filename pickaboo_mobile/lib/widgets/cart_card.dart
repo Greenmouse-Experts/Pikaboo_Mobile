@@ -70,6 +70,7 @@ class _CartCardConsumerState extends ConsumerState<CartCard> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.cartItem.product?.images?.length);
     return Container(
       margin: EdgeInsets.symmetric(vertical: height(context) * 0.01),
       padding: EdgeInsets.symmetric(
@@ -83,19 +84,23 @@ class _CartCardConsumerState extends ConsumerState<CartCard> {
             height: width(context) * 0.24,
             child: Padding(
               padding: EdgeInsets.all(width(context) * 0.01),
-              child: CachedNetworkImage(
-                  imageUrl: widget.cartItem.product?.images?[0]["name"] ??
-                      'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png',
-                  errorWidget: (context, url, error) {
-                    return Image.asset('assets/images/pickaboo_logo.png');
-                  },
-                  progressIndicatorBuilder: (context, url, progress) => Center(
-                        child: CircularProgressIndicator(
-                          value: progress.progress,
-                          valueColor: const AlwaysStoppedAnimation<Color>(
-                              AppColors.primary),
-                        ),
-                      )),
+              // ignore: prefer_is_empty
+              child: widget.cartItem.product?.images?.length == 0
+                  ? const SizedBox()
+                  : CachedNetworkImage(
+                      imageUrl: widget.cartItem.product?.images?[0]["name"] ??
+                          'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png',
+                      errorWidget: (context, url, error) {
+                        return Image.asset('assets/images/pickaboo_logo.png');
+                      },
+                      progressIndicatorBuilder: (context, url, progress) =>
+                          Center(
+                            child: CircularProgressIndicator(
+                              value: progress.progress,
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                  AppColors.primary),
+                            ),
+                          )),
             ),
           ),
           Column(

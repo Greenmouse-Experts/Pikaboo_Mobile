@@ -170,7 +170,7 @@ class UserSchema {
   dynamic avatar;
   DateTime? emailVerifiedAt;
   String? currentPassword;
-  int? wallet;
+  String? wallet;
   dynamic fcmToken;
   dynamic meansOfIdentification;
   dynamic address;
@@ -238,7 +238,7 @@ class UserSchema {
             ? null
             : DateTime.parse(json["email_verified_at"]),
         currentPassword: json["current_password"],
-        wallet: json["wallet"],
+        wallet: json['wallet']?.toString(),
         fcmToken: json["fcm_token"],
         meansOfIdentification: json["means_of_identification"],
         address: json["address"],

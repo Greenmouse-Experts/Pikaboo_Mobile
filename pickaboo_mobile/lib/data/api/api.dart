@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pickaboo_mobile/data/models/dio_logger.dart';
 
 import '../../controllers/auth/auth_controller.dart';
 import '../constants.dart';
@@ -20,7 +21,7 @@ class Api {
         "Accept": "application/json",
       },
     ),
-  );
+  )..interceptors.add(LoggerInterceptor());
 
   Future<ApiResponse> getData(String endpoint,
       {Map<String, dynamic>? queryParameters,

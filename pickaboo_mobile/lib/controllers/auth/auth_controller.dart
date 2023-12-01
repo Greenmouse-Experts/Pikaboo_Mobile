@@ -61,8 +61,8 @@ class _AuthNotifier extends ChangeNotifier {
       _accountType = _user?.accountType;
       notifyListeners();
     }
-    await refreshUser(ref: ref);
-    ref.watch(notificationProvider).getAllNotifications(ref: ref);
+    // await refreshUser(ref: ref);
+    // ref.watch(notificationProvider).getAllNotifications(ref: ref);
   }
 
   Future<void> setFirstTimeUser() async {
@@ -177,7 +177,7 @@ class _AuthNotifier extends ChangeNotifier {
           context.pop();
           _wallet = response.data.toString();
           notifyListeners();
-          refreshUser(ref: ref);
+          // refreshUser(ref: ref);
           AppOverlays.showSuccessDialog(
               context: context,
               content: response.message ?? 'Balance updated successfully');
@@ -312,7 +312,7 @@ class _AuthNotifier extends ChangeNotifier {
 
   Future<void> refreshUser({required WidgetRef ref}) async {
     try {
-      //   final userId = _user?.id.toString() ?? '';
+        // final userId = _user?.id.toString() ?? '';
       _isRefreshing = true;
 
       notifyListeners();
@@ -326,7 +326,9 @@ class _AuthNotifier extends ChangeNotifier {
         notifyListeners();
       });
       //await updateUser(_user);
-    } catch (e) {
+    } catch (e, s) {
+      print(e);
+      print(s);
       rethrow;
     }
   }

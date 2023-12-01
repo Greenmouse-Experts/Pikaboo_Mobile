@@ -35,6 +35,10 @@ class CartView extends StatelessWidget {
                         error: snapshot.error.toString());
                   } else {
                     final cartItems = ref.watch(cartProvider).cart;
+                    print('The card');
+                    cartItems.forEach((e) {
+                      print(e.toJson());
+                    });
                     return Column(
                       children: [
                         const PageHeader(
@@ -61,6 +65,7 @@ class CartView extends StatelessWidget {
                                   itemCount: cartItems.length,
                                   physics: const BouncingScrollPhysics(),
                                   itemBuilder: (context, i) {
+                                    print(cartItems[i]);
                                     return CartCard(cartItem: cartItems[i]);
                                   }),
                         ),

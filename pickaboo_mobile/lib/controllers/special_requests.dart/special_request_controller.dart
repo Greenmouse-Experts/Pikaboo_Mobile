@@ -50,7 +50,7 @@ class SpecialRequestNotifier extends ChangeNotifier {
           context.pop();
           AppOverlays.showErrorDialog(
               context: context,
-              error: response.message ?? 'An unknown error occured');
+              error: response.message ?? 'An unknown error occurred');
         }
       });
     } catch (e) {

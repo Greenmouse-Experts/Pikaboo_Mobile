@@ -24,6 +24,9 @@ class DriverSpecialSchema {
   factory DriverSpecialSchema.fromRawJson(String str) =>
       DriverSpecialSchema.fromJson(json.decode(str));
 
+  factory DriverSpecialSchema.fromRawRouterJson(String str) =>
+      DriverSpecialSchema.fromRouterJson(json.decode(str));
+
   String toRawJson() => json.encode(toJson());
 
   static List<DriverSpecialSchema> getList(List<dynamic> val) {
@@ -43,6 +46,22 @@ class DriverSpecialSchema {
         homeResidence: json["home_residence"] == null
             ? null
             : HomeResidense.fromJson(json["home_residence"]),
+        rating: json["rating"],
+      );
+
+  factory DriverSpecialSchema.fromRouterJson(Map<String, dynamic> json) =>
+      DriverSpecialSchema(
+        id: json["id"],
+        altAddress: json["alt_address"],
+        scheduleDate: json["schedule_date"],
+        completedDate: json["completed_date"],
+        status: json["status"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        homeResidence: json["home_residence"] == null
+            ? null
+            : HomeResidense.fromRouterJson(json["home_residence"]),
         rating: json["rating"],
       );
 
@@ -74,11 +93,11 @@ class HomeResidense {
   dynamic avatar;
   DateTime? emailVerifiedAt;
   String? currentPassword;
-  int? wallet;
+  String? wallet;
   dynamic fcmToken;
   dynamic meansOfIdentification;
   dynamic address;
-  int? zoneId;
+  String? zoneId;
   dynamic truckId;
   String? status;
   String? isVerified;
@@ -138,7 +157,43 @@ class HomeResidense {
             ? null
             : DateTime.parse(json["email_verified_at"]),
         currentPassword: json["current_password"],
-        wallet: json["wallet"],
+        wallet: json["wallet"]?.toString(),
+        fcmToken: json["fcm_token"],
+        meansOfIdentification: json["means_of_identification"],
+        address: json["address"],
+        zoneId: json["zone_id"],
+        truckId: json["truck_id"],
+        status: json["status"],
+        isVerified: json["isVerified"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        createdByWho: json["created_by_who"]['first_name'],
+        buildingInformation: json["building_information"] == null
+            ? null
+            : BuildingInformation.fromJson(json["building_information"]),
+      );
+
+  factory HomeResidense.fromRouterJson(Map<String, dynamic> json) =>
+      HomeResidense(
+        id: json["id"],
+        pikabooId: json["pikaboo_id"],
+        accountType: json["account_type"],
+        title: json["title"],
+        firstName: json["first_name"],
+        middleName: json["middle_name"],
+        lastName: json["last_name"],
+        email: json["email"],
+        phone: json["phone"],
+        phone2: json["phone2"],
+        gender: json["gender"],
+        dob: json["dob"],
+        avatar: json["avatar"],
+        emailVerifiedAt: json["email_verified_at"] == null
+            ? null
+            : DateTime.parse(json["email_verified_at"]),
+        currentPassword: json["current_password"],
+        wallet: json["wallet"]?.toString(),
         fcmToken: json["fcm_token"],
         meansOfIdentification: json["means_of_identification"],
         address: json["address"],
@@ -187,7 +242,7 @@ class HomeResidense {
 
 class BuildingInformation {
   int? id;
-  int? userId;
+  String? userId;
   dynamic noOfResidents;
   dynamic houseNumber;
   dynamic streetName;

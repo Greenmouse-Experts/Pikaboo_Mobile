@@ -19,7 +19,8 @@ class LoggerInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (kDebugMode) {
-      print('\x1b[32m[RESPONSE] ${response.statusCode} ${response.requestOptions.uri}\x1b[0m');
+      print(
+          '\x1b[32m[RESPONSE] ${response.statusCode} ${response.requestOptions.uri}\x1b[0m');
     }
     if (kDebugMode) {
       print('\x1b[33mHeaders: ${response.headers}\x1b[0m');

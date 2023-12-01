@@ -20,7 +20,7 @@ class SpecialRequest extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final requestDetails = DriverSpecialSchema.fromRawJson(request);
+    final requestDetails = DriverSpecialSchema.fromRawRouterJson(request);
 
     final name =
         "${(requestDetails.homeResidence?.firstName) ?? ""} ${(requestDetails.homeResidence?.lastName) ?? ""}";

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pickaboo_mobile/data/models/driver_schedule_schema.dart';
 
 import '../../../controllers/auth/auth_controller.dart';
 import '../../../controllers/driver_requests/driver_request_controller.dart';
@@ -18,7 +17,6 @@ class DriverHomeView extends ConsumerWidget {
     final lastName = user?.lastName ?? '';
     final image = user?.avatar ?? '';
     final notificationCount = user?.notificationsCount;
-    print('My ');
     return Scaffold(
       backgroundColor: AppColors.primary,
       appBar: customAppBar2(context,
@@ -213,7 +211,6 @@ class _PickupAlertList extends ConsumerWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: schedules.length,
                 itemBuilder: (context, i) {
-                  print(schedules[i].toJson());
                   return PickUpPreview(
                     schedule: schedules[i],
                   );

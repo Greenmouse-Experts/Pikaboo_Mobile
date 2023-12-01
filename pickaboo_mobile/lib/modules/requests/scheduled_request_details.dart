@@ -18,7 +18,8 @@ class ScheduledRequest extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final requestDetails = DriverScheduleResidenceSchema.fromRawJson(request);
+    final requestDetails =
+        DriverScheduleResidenceSchema.fromRawRouterJson(request);
 
     final name =
         "${(requestDetails.residence?.homeResidence?.firstName) ?? ""} ${(requestDetails.residence?.homeResidence?.lastName) ?? ""}";

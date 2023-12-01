@@ -13,7 +13,6 @@ import '../../data/models/models.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
 import '../cart/cart_controller.dart';
-import '../notifications/notification_controller.dart';
 import 'auth_repo.dart';
 
 final authProvider = ChangeNotifierProvider<_AuthNotifier>((ref) {
@@ -327,8 +326,6 @@ class _AuthNotifier extends ChangeNotifier {
       });
       //await updateUser(_user);
     } catch (e, s) {
-      print(e);
-      print(s);
       rethrow;
     }
   }

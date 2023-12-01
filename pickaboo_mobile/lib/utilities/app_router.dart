@@ -283,10 +283,13 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
           name: AppRouter.scheduledRequestDetails,
           path:
               "${AppRouter.scheduledRequestDetails}/:isActive/:request/:cleanupId",
-          builder: (context, state) => ScheduledRequest(
-              isActive: state.pathParameters["isActive"]! == "yes",
-              cleanupId: state.pathParameters["cleanupId"]!,
-              request: state.pathParameters["request"]!),
+          builder: (context, state) {
+    
+            return ScheduledRequest(
+                isActive: state.pathParameters["isActive"]! == "yes",
+                cleanupId: state.pathParameters["cleanupId"]!,
+                request: state.pathParameters["request"]!);
+          },
         ),
         GoRoute(
           name: AppRouter.specialRequestDetails,
@@ -299,7 +302,7 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
         ),
         GoRoute(
           name: AppRouter.qrCode,
-          path: "${AppRouter.qrCode}/:id",
+          path: "${AppRouter.qrCode}/:id/:isScheduled",
           builder: (context, state) => QrCodeScanView(
             cleanupId: state.pathParameters["id"]!,
             isScheduled: state.pathParameters["isScheduled"] == 'yes',

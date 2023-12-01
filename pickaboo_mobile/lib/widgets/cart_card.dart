@@ -70,7 +70,6 @@ class _CartCardConsumerState extends ConsumerState<CartCard> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.cartItem.product?.images?.length);
     return Container(
       margin: EdgeInsets.symmetric(vertical: height(context) * 0.01),
       padding: EdgeInsets.symmetric(

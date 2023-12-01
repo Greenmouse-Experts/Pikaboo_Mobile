@@ -81,7 +81,6 @@ class _CheckoutViewConsumerState extends ConsumerState<CheckoutView> {
   @override
   Widget build(BuildContext context) {
     final cartItems = ref.watch(cartProvider).cart;
-    print(address);
     return Scaffold(
       appBar: customAppBar5(context, hasElevation: false),
       body: SingleChildScrollView(

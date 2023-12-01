@@ -19,6 +19,8 @@ class DriverScheduleResidenceSchema {
 
   factory DriverScheduleResidenceSchema.fromRawJson(String str) =>
       DriverScheduleResidenceSchema.fromJson(json.decode(str));
+  factory DriverScheduleResidenceSchema.fromRawRouterJson(String str) =>
+      DriverScheduleResidenceSchema.fromRouterJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
@@ -48,6 +50,21 @@ class DriverScheduleResidenceSchema {
         "status": status,
         "created_at": createdAt?.toIso8601String(),
       };
+
+  factory DriverScheduleResidenceSchema.fromRouterJson(
+          Map<String, dynamic> json) =>
+      DriverScheduleResidenceSchema(
+        id: json["id"],
+        residence: json["residence"] == null
+            ? null
+            : Residence.fromRouterJson(json["residence"]),
+        zone: json["zone"],
+        price: json["price"],
+        status: json["status"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+      );
 }
 
 class Residence {
@@ -161,6 +178,36 @@ class Residence {
         "created_at": createdAt?.toIso8601String(),
         "home_residence": homeResidence?.toJson(),
       };
+
+  factory Residence.fromRouterJson(Map<String, dynamic> json) => Residence(
+        id: json["id"],
+        userId: json["user_id"],
+        noOfResidents: json["no_of_residents"],
+        houseNumber: json["house_number"],
+        streetName: json["street_name"],
+        area1: json["area1"],
+        area2: json["area2"],
+        quarter: json["quarter"],
+        townCity: json["town_city"],
+        lga: json["lga"],
+        residential: json["residential"],
+        shopStores: json["shop_stores"],
+        residentialFacility: json["residential_facility"],
+        commercialFacility: json["commercial_facility"],
+        completionStatus: json["completion_status"],
+        facilityInclude: json["facility_include"],
+        waterSupply: json["water_supply"],
+        classification: json["classification"],
+        latitude: json["latitude"],
+        longtitude: json["longtitude"],
+        buildingImage: json["building_image"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        homeResidence: json["home_residence"] == null
+            ? null
+            : HomeResidence.fromRouterJson(json["home_residence"]),
+      );
 }
 
 class HomeResidence {
@@ -223,37 +270,73 @@ class HomeResidence {
 
   String toRawJson() => json.encode(toJson());
 
-  factory HomeResidence.fromJson(Map<String, dynamic> json) => HomeResidence(
-        id: json["id"],
-        pikabooId: json["pikaboo_id"],
-        accountType: json["account_type"],
-        title: json["title"],
-        firstName: json["first_name"],
-        middleName: json["middle_name"],
-        lastName: json["last_name"],
-        email: json["email"],
-        phone: json["phone"],
-        phone2: json["phone2"],
-        gender: json["gender"],
-        dob: json["dob"],
-        avatar: json["avatar"],
-        emailVerifiedAt: json["email_verified_at"] == null
-            ? null
-            : DateTime.parse(json["email_verified_at"]),
-        currentPassword: json["current_password"],
-        wallet: json["wallet"],
-        fcmToken: json["fcm_token"],
-        meansOfIdentification: json["means_of_identification"],
-        address: json["address"],
-        zoneId: json["zone_id"],
-        truckId: json["truck_id"],
-        status: json["status"],
-        isVerified: json["isVerified"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        createdByWho: json["created_by_who"],
-      );
+  factory HomeResidence.fromJson(Map<String, dynamic> json) {
+    return HomeResidence(
+      id: json["id"],
+      pikabooId: json["pikaboo_id"],
+      accountType: json["account_type"],
+      title: json["title"],
+      firstName: json["first_name"],
+      middleName: json["middle_name"],
+      lastName: json["last_name"],
+      email: json["email"],
+      phone: json["phone"],
+      phone2: json["phone2"],
+      gender: json["gender"],
+      dob: json["dob"],
+      avatar: json["avatar"],
+      emailVerifiedAt: json["email_verified_at"] == null
+          ? null
+          : DateTime.parse(json["email_verified_at"]),
+      currentPassword: json["current_password"],
+      wallet: json["wallet"],
+      fcmToken: json["fcm_token"],
+      meansOfIdentification: json["means_of_identification"],
+      address: json["address"],
+      zoneId: json["zone_id"],
+      truckId: json["truck_id"],
+      status: json["status"],
+      isVerified: json["isVerified"],
+      createdAt: json["created_at"] == null
+          ? null
+          : DateTime.parse(json["created_at"]),
+      createdByWho: json["created_by_who"]['first_name'],
+    );
+  }
+
+  factory HomeResidence.fromRouterJson(Map<String, dynamic> json) {
+    return HomeResidence(
+      id: json["id"],
+      pikabooId: json["pikaboo_id"],
+      accountType: json["account_type"],
+      title: json["title"],
+      firstName: json["first_name"],
+      middleName: json["middle_name"],
+      lastName: json["last_name"],
+      email: json["email"],
+      phone: json["phone"],
+      phone2: json["phone2"],
+      gender: json["gender"],
+      dob: json["dob"],
+      avatar: json["avatar"],
+      emailVerifiedAt: json["email_verified_at"] == null
+          ? null
+          : DateTime.parse(json["email_verified_at"]),
+      currentPassword: json["current_password"],
+      wallet: json["wallet"],
+      fcmToken: json["fcm_token"],
+      meansOfIdentification: json["means_of_identification"],
+      address: json["address"],
+      zoneId: json["zone_id"],
+      truckId: json["truck_id"],
+      status: json["status"],
+      isVerified: json["isVerified"],
+      createdAt: json["created_at"] == null
+          ? null
+          : DateTime.parse(json["created_at"]),
+      createdByWho: json["created_by_who"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "id": id,

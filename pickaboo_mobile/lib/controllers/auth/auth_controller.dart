@@ -325,7 +325,7 @@ class _AuthNotifier extends ChangeNotifier {
         notifyListeners();
       });
       //await updateUser(_user);
-    } catch (e, s) {
+    } catch (e) {
       rethrow;
     }
   }

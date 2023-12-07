@@ -29,9 +29,9 @@ class CartSchema {
   }
 
   factory CartSchema.fromJson(Map<String, dynamic> json) => CartSchema(
-        id: json["id"],
-        quantity: json["quantity"],
-        price: json["price"],
+        id: json["id"] as int? ,
+        quantity: json["quantity"] as String?,
+        price: json["price"] as String?,
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
@@ -85,7 +85,7 @@ class Product {
         price: json["price"] as String?,
         weight: json["weight"] as String?,
         stock: json["stock"] as String?,
-        sold: int.parse(json["sold"] as String? ?? "0")  ,
+        sold: json["sold"] as int?  ,
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),

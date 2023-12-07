@@ -273,18 +273,18 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
                   longitude: state.pathParameters['longitude']!,
                 )),
         GoRoute(
-            name: AppRouter.scheduledRequestsAddress,
-            path: '${AppRouter.scheduledRequestsAddress}/:id/:schedule',
-            builder: (context, state) => DriverScheduledDetails(
-                  id: state.pathParameters['id']!,
-                  schedule: state.pathParameters['schedule']!,
-                )),
+          name: AppRouter.scheduledRequestsAddress,
+          path: '${AppRouter.scheduledRequestsAddress}/:id/:schedule',
+          builder: (context, state) => DriverScheduledDetails(
+            id: state.pathParameters['id']!,
+            schedule: state.pathParameters['schedule']!,
+          ),
+        ),
         GoRoute(
           name: AppRouter.scheduledRequestDetails,
           path:
               "${AppRouter.scheduledRequestDetails}/:isActive/:request/:cleanupId",
           builder: (context, state) {
-    
             return ScheduledRequest(
                 isActive: state.pathParameters["isActive"]! == "yes",
                 cleanupId: state.pathParameters["cleanupId"]!,

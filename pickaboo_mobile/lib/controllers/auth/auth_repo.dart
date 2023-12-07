@@ -1,3 +1,7 @@
+
+
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/api/api.dart';
@@ -30,6 +34,8 @@ class AuthRepository {
   Future<ApiResponse> topupWallet(String reference, WidgetRef ref) async {
     final response = _api.postData('/top-up/using/paystack',
         data: {'ref_id': reference}, ref: ref);
+        log(response.toString());
+        
     return response;
   }
 

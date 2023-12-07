@@ -1,6 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../controllers/orders/order_controller.dart';
 import '../../data/models/single_order_schema.dart';
 import '../../utilities/utilities.dart';
@@ -20,6 +21,14 @@ class OrderDetailsView extends ConsumerWidget {
         child: FutureBuilder<SingleOrderSchema>(
             future: ref.watch(orderProvider).viewSingleOrder(id: id, ref: ref),
             builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                log(snapshot.error.toString(), stackTrace: snapshot.stackTrace);
+                return AppErrorWidget(
+                    //snapshot.error!
+                    widgetHeight: 0.7,
+                    errorType: snapshot.error.runtimeType,
+                    error: snapshot.error.toString());
+              }
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const PageLoader();
               } else if (snapshot.hasError) {
@@ -72,14 +81,22 @@ class OrderDetailsView extends ConsumerWidget {
                               .copyWith(color: Colors.black87)),
                       Text(orderDetail.data?.address ?? '',
                           style: semi16(context)),
-                      OrderDetailTile(
-                        name: orderDetail.data?.product?.name ?? '',
-                        price: orderDetail.data?.product?.price ?? '',
-                        quantiity: orderDetail.data?.quantity ?? '',
-                        image: orderDetail.data?.product?.productImages?[0]
-                                ["name"] ??
-                            "'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png'",
-                      ),
+                      Builder(builder: (context) {
+                        const defaultImage =
+                            'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png';
+                        final productImages =
+                            orderDetail.data?.product?.productImages ?? [];
+                        final productImage = productImages.isNotEmpty
+                            ? productImages.first.name
+                            : defaultImage;
+                        return OrderDetailTile(
+                            name: orderDetail.data?.product?.name ?? '',
+                            price: orderDetail.data?.product?.price ?? '',
+                            quantiity: orderDetail.data?.quantity ?? '',
+                            image: productImage ?? defaultImage
+                            //"'https://res.cloudinary.com/greenmouse-tech/image/upload/v1688402669/pikaboo/pickaboo_logo_eatts5.png'",
+                            );
+                      }),
                       const Divider(),
                       RowTitle2(
                           title: 'SubTotal',

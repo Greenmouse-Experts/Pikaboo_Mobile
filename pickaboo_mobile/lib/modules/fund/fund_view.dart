@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
@@ -85,6 +86,11 @@ class _FundViewConsumerState extends ConsumerState<FundView> {
                   width: 40,
                   child: Image.asset('assets/images/pickaboo_logo.png')))
           .then((value) {
+        log(value.toString());
+        // print("Payment Status: ${value.status}");
+        // print("Payment Reference: ${value.reference}");
+        // print("Payment Message: ${value.message}");
+
         fundController.clear();
         FocusManager.instance.primaryFocus?.unfocus();
         if (value.status == true) {

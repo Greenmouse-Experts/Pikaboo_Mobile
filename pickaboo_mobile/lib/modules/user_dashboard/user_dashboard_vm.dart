@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../settings/user_profile_view.dart';
-import '../shop/market_place_view.dart';
+//import '../shop/market_place_view.dart';
 import 'inner_pages/user_home_view.dart';
 
 class UserDashboardViewModel {
   static const pages = [
     UserHomeView(),
-    MarketPlaceView(canGoBack: 'user'),
+    //MarketPlaceView(canGoBack: 'user'),
     UserProfileview(isUser: true)
   ];
 

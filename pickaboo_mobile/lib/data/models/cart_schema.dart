@@ -78,14 +78,14 @@ class Product {
   String toRawJson() => json.encode(toJson());
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
-        id: json["id"],
-        name: json["name"],
-        slug: json["slug"],
-        description: json["description"],
-        price: json["price"],
-        weight: json["weight"],
-        stock: json["stock"],
-        sold: json["sold"],
+        id: json["id"] as int?,
+        name: json["name"] as String?,
+        slug: json["slug"] as String?,
+        description: json["description"] as String?,
+        price: json["price"] as String?,
+        weight: json["weight"] as String?,
+        stock: json["stock"] as String?,
+        sold: int.parse(json["sold"] as String? ?? "0")  ,
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),

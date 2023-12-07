@@ -28,12 +28,12 @@ class AnonNavBar extends ConsumerWidget {
                   color: AppColors.primary, size: width(context) * 0.06),
               icon: Icon(Icons.login_outlined, size: width(context) * 0.06),
               label: 'Sign In'),
-          BottomNavigationBarItem(
-              activeIcon: Icon(Icons.local_mall,
-                  color: AppColors.primary, size: width(context) * 0.06),
-              icon:
-                  Icon(Icons.local_mall_outlined, size: width(context) * 0.06),
-              label: 'Shop'),
+          // BottomNavigationBarItem(
+          //     activeIcon: Icon(Icons.local_mall,
+          //         color: AppColors.primary, size: width(context) * 0.06),
+          //     icon:
+          //         Icon(Icons.local_mall_outlined, size: width(context) * 0.06),
+          //     label: 'Shop'),
           BottomNavigationBarItem(
               activeIcon: Icon(Icons.settings,
                   color: AppColors.primary, size: width(context) * 0.06),
@@ -86,12 +86,12 @@ class UserNavBar extends ConsumerWidget {
                   color: AppColors.primary, size: width(context) * 0.06),
               icon: Icon(Icons.home_outlined, size: width(context) * 0.06),
               label: 'Home'),
-          BottomNavigationBarItem(
-              activeIcon: Icon(Icons.local_mall,
-                  color: AppColors.primary, size: width(context) * 0.06),
-              icon:
-                  Icon(Icons.local_mall_outlined, size: width(context) * 0.06),
-              label: 'Store'),
+          // BottomNavigationBarItem(
+          //     activeIcon: Icon(Icons.local_mall,
+          //         color: AppColors.primary, size: width(context) * 0.06),
+          //     icon:
+          //         Icon(Icons.local_mall_outlined, size: width(context) * 0.06),
+          //     label: 'Store'),
           BottomNavigationBarItem(
               activeIcon: Icon(Icons.person,
                   color: AppColors.primary, size: width(context) * 0.06),

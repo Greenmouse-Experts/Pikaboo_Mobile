@@ -42,6 +42,7 @@ class OrderNotifier extends ChangeNotifier {
       final response = await _repo.getSingleOrder(id, ref);
       return SingleOrderSchema.fromJson(response.data);
     } catch (e) {
+      print(e);
       rethrow;
     }
   }

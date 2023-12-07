@@ -66,9 +66,9 @@ class OrderSchema {
   String toRawJson() => json.encode(toJson());
 
   factory OrderSchema.fromJson(Map<String, dynamic> json) => OrderSchema(
-        id: json["id"],
+        id: (json["id"]),
         address: json["address"],
-        quantity: json["quantity"],
+        quantity: json["quantity"] as String?,
         invoiceNumber: json["invoice_number"],
         totalPrice: json["total_price"],
         coupons: json["coupons"],

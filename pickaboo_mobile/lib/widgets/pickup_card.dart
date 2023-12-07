@@ -11,8 +11,8 @@ class PickUpPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height(context) * 0.11,
-      width: width(context) * 0.6,
+      height: height(context) * 0.15,
+      width: width(context) * 0.8,
       child: InkWell(
         onTap: () => context
             .pushNamed(AppRouter.scheduledRequestsAddress, pathParameters: {

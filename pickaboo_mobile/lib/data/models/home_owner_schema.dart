@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // // To parse this JSON data, do
 // //
 // //     final userSchema = userSchemaFromJson(jsonString);
@@ -154,6 +155,42 @@
 // }
 import 'dart:convert';
 
+extension StringExtension on String? {
+bool get toBool {
+    if (this == null) {
+      return false;
+    }
+    if (this == 'true') {
+      return true;
+    }
+    if (this == 'false') {
+      return false;
+    }
+    if (this == '1') {
+      return true;
+    }
+    if (this == '0') {
+      return false;
+    }
+    return false;
+  }
+}
+
+extension on int? {
+  bool get toBool {
+    if (this == null) {
+      return false;
+    }
+    if (this == 1) {
+      return true;
+    }
+    if (this == 0) {
+      return false;
+    }
+    return false;
+  }
+}
+
 class UserSchema {
   int? id;
   String? pikabooId;
@@ -176,7 +213,7 @@ class UserSchema {
   dynamic address;
   dynamic truckId;
   String? status;
-  String? isVerified;
+  bool? isVerified;
   DateTime? createdAt;
   CreatedByWho? createdByWho;
   BuildingInformation? buildingInformation;
@@ -220,44 +257,55 @@ class UserSchema {
 
   String toRawJson() => json.encode(toJson());
 
-  factory UserSchema.fromJson(Map<String, dynamic> json) => UserSchema(
-        id: json["id"],
-        pikabooId: json["pikaboo_id"],
-        accountType: json["account_type"],
-        title: json["title"],
-        firstName: json["first_name"],
-        middleName: json["middle_name"],
-        lastName: json["last_name"],
-        email: json["email"],
-        phone: json["phone"],
-        phone2: json["phone2"],
-        gender: json["gender"],
-        dob: json["dob"],
-        avatar: json["avatar"],
-        emailVerifiedAt: json["email_verified_at"] == null
-            ? null
-            : DateTime.parse(json["email_verified_at"]),
-        currentPassword: json["current_password"],
-        wallet: json['wallet']?.toString(),
-        fcmToken: json["fcm_token"],
-        meansOfIdentification: json["means_of_identification"],
-        address: json["address"],
-        truckId: json["truck_id"],
-        status: json["status"],
-        isVerified: json["isVerified"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        createdByWho: json["created_by_who"] == null
-            ? null
-            : CreatedByWho.fromJson(json["created_by_who"]),
-        buildingInformation: json["building_information"] == null
-            ? null
-            : BuildingInformation.fromJson(json["building_information"]),
-        truck: json["truck"],
-        zone: json["zone"] == null ? null : Zone.fromJson(json["zone"]),
-        notificationsCount: json["notifications_count"],
-      );
+  factory UserSchema.fromJson(Map<String, dynamic> json) {
+    if (json['isVerified'] != null) {
+      if (json['isVerified'] is String?) {
+        json['isVerified'] =
+            (json['isVerified'] as String?).toBool;
+      } else if (json['isVerified'] is int?) {
+        json['isVerified'] = (json['isVerified'] as int?).toBool;
+      }
+    }
+
+    return UserSchema(
+      id: json["id"],
+      pikabooId: json["pikaboo_id"],
+      accountType: json["account_type"],
+      title: json["title"],
+      firstName: json["first_name"],
+      middleName: json["middle_name"],
+      lastName: json["last_name"],
+      email: json["email"],
+      phone: json["phone"],
+      phone2: json["phone2"],
+      gender: json["gender"],
+      dob: json["dob"],
+      avatar: json["avatar"],
+      emailVerifiedAt: json["email_verified_at"] == null
+          ? null
+          : DateTime.parse(json["email_verified_at"]),
+      currentPassword: json["current_password"],
+      wallet: json['wallet']?.toString(),
+      fcmToken: json["fcm_token"],
+      meansOfIdentification: json["means_of_identification"],
+      address: json["address"],
+      truckId: json["truck_id"],
+      status: json["status"],
+      isVerified: json["isVerified"],
+      createdAt: json["created_at"] == null
+          ? null
+          : DateTime.parse(json["created_at"]),
+      createdByWho: json["created_by_who"] == null
+          ? null
+          : CreatedByWho.fromJson(json["created_by_who"]),
+      buildingInformation: json["building_information"] == null
+          ? null
+          : BuildingInformation.fromJson(json["building_information"]),
+      truck: json["truck"],
+      zone: json["zone"] == null ? null : Zone.fromJson(json["zone"]),
+      notificationsCount: json["notifications_count"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -289,6 +337,74 @@ class UserSchema {
         "zone": zone?.toJson(),
         "notifications_count": notificationsCount,
       };
+
+  UserSchema copyWith({
+    int? id,
+    String? pikabooId,
+    String? accountType,
+    String? title,
+    String? firstName,
+    String? middleName,
+    String? lastName,
+    String? email,
+    String? phone,
+    String? phone2,
+    String? gender,
+    dynamic dob,
+    dynamic avatar,
+    DateTime? emailVerifiedAt,
+    String? currentPassword,
+    String? wallet,
+    dynamic fcmToken,
+    dynamic meansOfIdentification,
+    dynamic address,
+    dynamic truckId,
+    String? status,
+    bool? isVerified,
+    DateTime? createdAt,
+    CreatedByWho? createdByWho,
+    BuildingInformation? buildingInformation,
+    dynamic truck,
+    Zone? zone,
+    int? notificationsCount,
+  }) {
+    return UserSchema(
+      id: id ?? this.id,
+      pikabooId: pikabooId ?? this.pikabooId,
+      accountType: accountType ?? this.accountType,
+      title: title ?? this.title,
+      firstName: firstName ?? this.firstName,
+      middleName: middleName ?? this.middleName,
+      lastName: lastName ?? this.lastName,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      phone2: phone2 ?? this.phone2,
+      gender: gender ?? this.gender,
+      dob: dob ?? this.dob,
+      avatar: avatar ?? this.avatar,
+      emailVerifiedAt: emailVerifiedAt ?? this.emailVerifiedAt,
+      currentPassword: currentPassword ?? this.currentPassword,
+      wallet: wallet ?? this.wallet,
+      fcmToken: fcmToken ?? this.fcmToken,
+      meansOfIdentification:
+          meansOfIdentification ?? this.meansOfIdentification,
+      address: address ?? this.address,
+      truckId: truckId ?? this.truckId,
+      status: status ?? this.status,
+      isVerified: isVerified ?? this.isVerified,
+      createdAt: createdAt ?? this.createdAt,
+      createdByWho: createdByWho ?? this.createdByWho,
+      buildingInformation: buildingInformation ?? this.buildingInformation,
+      truck: truck ?? this.truck,
+      zone: zone ?? this.zone,
+      notificationsCount: notificationsCount ?? this.notificationsCount,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'UserSchema(id: $id, pikabooId: $pikabooId, accountType: $accountType, title: $title, firstName: $firstName, middleName: $middleName, lastName: $lastName, email: $email, phone: $phone, phone2: $phone2, gender: $gender, dob: $dob, avatar: $avatar, emailVerifiedAt: $emailVerifiedAt, currentPassword: $currentPassword, wallet: $wallet, fcmToken: $fcmToken, meansOfIdentification: $meansOfIdentification, address: $address, truckId: $truckId, status: $status, isVerified: $isVerified, createdAt: $createdAt, createdByWho: $createdByWho, buildingInformation: $buildingInformation, truck: $truck, zone: $zone, notificationsCount: $notificationsCount)';
+  }
 }
 
 class BuildingInformation {

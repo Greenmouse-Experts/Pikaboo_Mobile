@@ -356,6 +356,12 @@ class AddressCard extends ConsumerWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    "Pin: ${address.residence?.homeResidence?.id.toString() ?? "no id"}",
+                    style: medium13(context).copyWith(
+                      color: Colors.black.withOpacity(0.4),
+                    ),
+                  ),
                   Text('Pickup address',
                       style: medium13(context)
                           .copyWith(color: Colors.black.withOpacity(0.4))),

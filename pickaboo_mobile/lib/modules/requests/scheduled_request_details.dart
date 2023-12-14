@@ -101,15 +101,17 @@ class ScheduledRequest extends ConsumerWidget {
                 ? Row(
                     children: [
                       Expanded(
-                          child: AppButton(
-                              text: 'Complete',
-                              onPressed: () {
-                                context.pushNamed(AppRouter.qrCode,
-                                    pathParameters: {
-                                      "id": cleanupId,
-                                      "isScheduled": "yes"
-                                    });
-                              })),
+                        child: AppButton(
+                          text: 'Complete',
+                          onPressed: () {
+                            context.pushNamed(AppRouter.qrCode,
+                                pathParameters: {
+                                  "id": cleanupId,
+                                  "isScheduled": "yes"
+                                });
+                          },
+                        ),
+                      ),
                       SizedBox(width: width(context) * 0.05),
                       Expanded(
                         child: AppButton(

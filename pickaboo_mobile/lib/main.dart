@@ -1,4 +1,4 @@
-import 'dart:developer';
+//import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +28,9 @@ Future<void> main() async {
 
   await initInfo();
   await initBackgroundNotification();
-  FlutterError.onError = (details) {
-    log(details.exceptionAsString(), stackTrace: details.stack);
-  };
+  // FlutterError.onError = (details) {
+  //   log(details.exceptionAsString(), stackTrace: details.stack);
+  // };
   final sharedPreferences = await SharedPreferences.getInstance();
   runApp(ProviderScope(overrides: [
     sharedPreferencesProvider. overrideWithValue(sharedPreferences)

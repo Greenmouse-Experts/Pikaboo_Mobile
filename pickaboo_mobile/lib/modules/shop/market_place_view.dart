@@ -76,7 +76,7 @@ class MarketPlaceView extends ConsumerWidget {
                       } else {
                         final groupedProducts =
                             ref.watch(productProvider).groupedProducts;
-                        final categories = groupedProducts.keys.toList();
+                        //final categories = groupedProducts.keys.toList();
                         final products = groupedProducts.values.toList();
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,99 +94,99 @@ class MarketPlaceView extends ConsumerWidget {
                                   delegate: ProductSearchDelegate()),
                             ),
                             SizedBox(height: height(context) * 0.02),
-                            Consumer(builder: (context, ref, _) {
-                              return SizedBox(
-                                height: height(context) * 0.05,
-                                child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: groupedProducts.length,
-                                    itemBuilder: (context, i) =>
-                                        CategorySelector(
-                                          title: categories[i],
-                                          isSelected:
-                                              i == ref.watch(_pageProvider),
-                                          onSelected: () {
-                                            ref
-                                                .read(_pageProvider.notifier)
-                                                .updatePage(i);
-                                          },
-                                        )),
-                              );
-                            }),
-                            Consumer(builder: (context, ref, child) {
-                              final isSingle = ref.watch(switchProvider);
-                              return Row(
-                                children: [
-                                  IconButton(
-                                      onPressed:
-                                          productNotifier.links?.next == null
-                                              ? null
-                                              : () {},
-                                      icon: Icon(
-                                        Icons.skip_previous,
-                                        color:
-                                            productNotifier.links?.next == null
-                                                ? null
-                                                : AppColors.primary,
-                                        size: isMobile(context)
-                                            ? width(context) * 0.06
-                                            : width(context) * 0.05,
-                                      )),
-                                  Text(
-                                    'Page ${productNotifier.meta?.currentPage ?? '1'} / ${productNotifier.meta?.lastPage ?? '1'}',
-                                    style: regular14(context),
-                                  ),
-                                  IconButton(
-                                      onPressed:
-                                          productNotifier.links?.next == null
-                                              ? null
-                                              : () {},
-                                      icon: Icon(
-                                        Icons.skip_next,
-                                        color:
-                                            productNotifier.links?.next == null
-                                                ? null
-                                                : AppColors.primary,
-                                        size: isMobile(context)
-                                            ? width(context) * 0.06
-                                            : width(context) * 0.05,
-                                      )),
-                                  const Spacer(),
-                                  InkWell(
-                                      onTap: () {
-                                        ref
-                                            .read(switchProvider.notifier)
-                                            .switchToSingle();
-                                      },
-                                      child: AppSvgImage(
-                                        imageWidth: isMobile(context)
-                                            ? width(context) * 0.09
-                                            : width(context) * 0.07,
-                                        image: 'assets/images/icons/single.svg',
-                                        color: isSingle
-                                            ? AppColors.primary
-                                            : Colors.grey,
-                                      )),
-                                  SizedBox(width: width(context) * 0.02),
-                                  InkWell(
-                                      onTap: () {
-                                        ref
-                                            .read(switchProvider.notifier)
-                                            .switchToDouble();
-                                      },
-                                      child: AppSvgImage(
-                                        imageWidth: isMobile(context)
-                                            ? width(context) * 0.065
-                                            : width(context) * 0.05,
-                                        image: 'assets/images/icons/double.svg',
-                                        color: !isSingle
-                                            ? AppColors.primary
-                                            : Colors.grey,
-                                      )),
-                                ],
-                              );
-                            }),
-                            SizedBox(height: height(context) * 0.01),
+                            // Consumer(builder: (context, ref, _) {
+                            //   return SizedBox(
+                            //     height: height(context) * 0.05,
+                            //     child: ListView.builder(
+                            //         scrollDirection: Axis.horizontal,
+                            //         itemCount: groupedProducts.length,
+                            //         itemBuilder: (context, i) =>
+                            //             CategorySelector(
+                            //               title: categories[i],
+                            //               isSelected:
+                            //                   i == ref.watch(_pageProvider),
+                            //               onSelected: () {
+                            //                 ref
+                            //                     .read(_pageProvider.notifier)
+                            //                     .updatePage(i);
+                            //               },
+                            //             )),
+                            //   );
+                            // }),
+                            // Consumer(builder: (context, ref, child) {
+                            //   final isSingle = ref.watch(switchProvider);
+                            //   return Row(
+                            //     children: [
+                            //       IconButton(
+                            //           onPressed:
+                            //               productNotifier.links?.next == null
+                            //                   ? null
+                            //                   : () {},
+                            //           icon: Icon(
+                            //             Icons.skip_previous,
+                            //             color:
+                            //                 productNotifier.links?.next == null
+                            //                     ? null
+                            //                     : AppColors.primary,
+                            //             size: isMobile(context)
+                            //                 ? width(context) * 0.06
+                            //                 : width(context) * 0.05,
+                            //           )),
+                            //       Text(
+                            //         'Page ${productNotifier.meta?.currentPage ?? '1'} / ${productNotifier.meta?.lastPage ?? '1'}',
+                            //         style: regular14(context),
+                            //       ),
+                            //       IconButton(
+                            //           onPressed:
+                            //               productNotifier.links?.next == null
+                            //                   ? null
+                            //                   : () {},
+                            //           icon: Icon(
+                            //             Icons.skip_next,
+                            //             color:
+                            //                 productNotifier.links?.next == null
+                            //                     ? null
+                            //                     : AppColors.primary,
+                            //             size: isMobile(context)
+                            //                 ? width(context) * 0.06
+                            //                 : width(context) * 0.05,
+                            //           )),
+                                  // const Spacer(),
+                                  // InkWell(
+                                  //     onTap: () {
+                                  //       ref
+                                  //           .read(switchProvider.notifier)
+                                  //           .switchToSingle();
+                                  //     },
+                                  //     child: AppSvgImage(
+                                  //       imageWidth: isMobile(context)
+                                  //           ? width(context) * 0.09
+                                  //           : width(context) * 0.07,
+                                  //       image: 'assets/images/icons/single.svg',
+                                  //       color: isSingle
+                                  //           ? AppColors.primary
+                                  //           : Colors.grey,
+                                  //     )),
+                                  // SizedBox(width: width(context) * 0.02),
+                                  // InkWell(
+                                  //     onTap: () {
+                                  //       ref
+                                  //           .read(switchProvider.notifier)
+                                  //           .switchToDouble();
+                                  //     },
+                                  //     child: AppSvgImage(
+                                  //       imageWidth: isMobile(context)
+                                  //           ? width(context) * 0.065
+                                  //           : width(context) * 0.05,
+                                  //       image: 'assets/images/icons/double.svg',
+                                  //       color: !isSingle
+                                  //           ? AppColors.primary
+                                  //           : Colors.grey,
+                                  //     )),
+                            //     ],
+                            //   );
+                            // }),
+                            // SizedBox(height: height(context) * 0.01),
                             products.isEmpty
                                 ? Container(
                                     alignment: Alignment.center,

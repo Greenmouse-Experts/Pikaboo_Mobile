@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
 
 enum ApiStatus {
@@ -51,6 +53,11 @@ class ApiResponse {
       isSuccessful: false,
       message: 'Network error occurred. Please try again later.',
     );
+  }
+
+  @override
+  String toString() {
+    return 'ApiResponse(code: $code, data: $data, isSuccessful: $isSuccessful, message: $message, token: $token, error: $error)';
   }
 }
 

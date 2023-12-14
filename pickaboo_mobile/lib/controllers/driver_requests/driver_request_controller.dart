@@ -8,21 +8,30 @@ import '../../data/models/models.dart';
 import '../../widgets/widgets.dart';
 import 'driver_request_repo.dart';
 
+final driverScheduledResidenceProvider = FutureProvider.autoDispose
+    .family<List<DriverScheduleResidenceSchema>, String>((ref, id) {
+  final response =
+      ref.watch(driverRequestProvider).getScheduledResidence(id: id);
+  return response;
+});
+
 final driverRequestProvider =
     ChangeNotifierProvider<DriverRequestNotifier>((ref) {
-  return DriverRequestNotifier();
+  return DriverRequestNotifier(ref);
 });
 
 class DriverRequestNotifier extends ChangeNotifier {
   final _repo = DriverRequestRepo();
 
   List<DriverScheduleSchema> _driverSchedulesHome = [];
+  final Ref ref;
+  DriverRequestNotifier(this.ref);
   List<DriverScheduleSchema> get driverSchedulesHome => _driverSchedulesHome;
 
   List<DriverSpecialSchema> _driverSpecialRequests = [];
   List<DriverSpecialSchema> get driverSpecialRequests => _driverSpecialRequests;
 
-  Future<void> getScheduledRequests({required WidgetRef ref}) async {
+  Future<void> getScheduledRequests() async {
     try {
       final response = await _repo.getScheduledRequest(ref: ref);
       if (response.isSuccessful) {
@@ -34,7 +43,7 @@ class DriverRequestNotifier extends ChangeNotifier {
   }
 
   Future<List<DriverScheduleResidenceSchema>> getScheduledResidence(
-      {required WidgetRef ref, required String id}) async {
+      {required String id}) async {
     try {
       final response = await _repo.getScheduledResidence(ref: ref, id: id);
 
@@ -59,6 +68,7 @@ class DriverRequestNotifier extends ChangeNotifier {
       }, ref: ref).then((response) {
         context.pop();
         if (response.isSuccessful) {
+          ref.invalidate(driverScheduledResidenceProvider);
           AppOverlays.showSuccessDialog(
               context: context,
               content: response.message ?? "Home scanned successfully",
@@ -68,6 +78,7 @@ class DriverRequestNotifier extends ChangeNotifier {
                 context.pop();
               });
         } else {
+          
           AppOverlays.showErrorDialog(
               context: context,
               error: response.message ?? "Unknown error occured");

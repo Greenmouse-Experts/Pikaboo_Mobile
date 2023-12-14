@@ -149,7 +149,9 @@ class _RequestPickupViewConsumerState extends ConsumerState<RequestPickupView> {
                               label: 'Custom Address',
                               isEditable: true,
                             ),
-                      _DatePicker(_date),
+                      DatePicker(
+                        _date,
+                      ),
                       SizedBox(height: height(context) * 0.04),
                       AppButton(text: 'Proceed', onPressed: submitRequest)
                     ],
@@ -162,15 +164,20 @@ class _RequestPickupViewConsumerState extends ConsumerState<RequestPickupView> {
   }
 }
 
-class _DatePicker extends StatefulWidget {
+class DatePicker extends StatefulWidget {
   final TextEditingController dateController;
-  const _DatePicker(this.dateController);
+  final String? text;
 
+  const DatePicker(
+    this.dateController, {
+    this.text = "Expected pickup date",
+    Key? key,
+  }) : super(key: key);
   @override
-  State<_DatePicker> createState() => _DatePickerState();
+  State<DatePicker> createState() => DatePickerState();
 }
 
-class _DatePickerState extends State<_DatePicker> {
+class DatePickerState extends State<DatePicker> {
   //TextEditingController dateController = TextEditingController();
   void selectDate() async {
     final DateTime? selectedDate = await showDatePicker(
@@ -205,7 +212,7 @@ class _DatePickerState extends State<_DatePicker> {
     return CustomDoubleTitle(
       leadingTitle: 'Date',
       leadingContent: widget.dateController.text.isEmpty
-          ? 'Expected pickup date'
+          ? widget.text.toString()
           : widget.dateController.text,
       customEnd: IconButton(
           onPressed: selectDate,

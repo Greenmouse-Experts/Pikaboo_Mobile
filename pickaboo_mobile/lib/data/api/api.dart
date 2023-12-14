@@ -25,7 +25,7 @@ class Api {
 
   Future<ApiResponse> getData(String endpoint,
       {Map<String, dynamic>? queryParameters,
-      required WidgetRef ref,
+      required ref,
       CancelToken? cancelToken,
       bool hasHeader = true}) async {
     try {
@@ -51,7 +51,7 @@ class Api {
 
   Future<ApiResponse> postData(String endpoint,
       {required dynamic data,
-      required WidgetRef ref,
+      required ref,
       CancelToken? cancelToken,
       bool hasHeader = true}) async {
     try {
@@ -94,9 +94,9 @@ class Api {
   }
 
   Future<ApiResponse> patchData(String endpoint,
-      {required dynamic data, bool hasHeader = true}) async {
+      {required Map<String, dynamic> data, bool hasHeader = true}) async {
     try {
-      final response = await _dio.patch(endpoint, data: jsonDecode(data));
+      final response = await _dio.patch(endpoint, data: data);
       return ApiResponse.fromResponse(response);
     } on DioException catch (error) {
       return error.toApiError(cancelToken: CancelToken());

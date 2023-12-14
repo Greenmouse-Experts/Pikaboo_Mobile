@@ -4,6 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 
 const icon = 'mipmap/ic_launcher';
+
 //FirebaseMessaging _firebaseMessaging;
 FirebaseMessaging messaging = FirebaseMessaging.instance;
 
@@ -12,8 +13,8 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 AndroidNotificationChannel channel = const AndroidNotificationChannel(
-  'vam_cards',
-  'High Importance Notifications',
+  'pikaboo_android_id', //initially 'vam_cards'
+  'Pikaboo',
   description: 'This channel is used for important notifications.',
   playSound: true,
   importance: Importance.high,
@@ -46,7 +47,7 @@ initInfo() async {
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onDidReceiveNotificationResponse: (notification) async {});
 
-  final messaging = FirebaseMessaging.instance;
+  // final messaging = FirebaseMessaging.instance;
   NotificationSettings settings = await messaging.requestPermission(
     alert: true,
     badge: true,
@@ -55,7 +56,7 @@ initInfo() async {
   );
 
   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-    FirebaseMessaging.onMessage.listen(_onMessage);
+    FirebaseMessaging.onMessage.listen((message) => _onMessage(message));
   }
 }
 
@@ -63,17 +64,18 @@ initInfo() async {
 ///
 ///
 ///
-Future showNoti() async {
-  BigTextStyleInformation bigStyleInfo = const BigTextStyleInformation(
-    " notification!.body.toString()",
+Future showNoti(RemoteMessage message) async {
+  RemoteNotification? notification = message.notification;
+  BigTextStyleInformation bigStyleInfo = BigTextStyleInformation(
+    notification!.body ?? '',
     htmlFormatBigText: true,
-    contentTitle: "notification.title.toString()",
+    contentTitle: notification.title.toString(),
     htmlFormatContentTitle: true,
   );
   return flutterLocalNotificationsPlugin.show(
     0,
-    " title",
-    " body",
+    notification.title,
+    notification.body,
     NotificationDetails(
       android: AndroidNotificationDetails(
         "Pikabooo Android Id",
@@ -88,13 +90,38 @@ Future showNoti() async {
   );
 }
 
+// Future showNoti() async {
+//   BigTextStyleInformation bigStyleInfo = const BigTextStyleInformation(
+//     " notification!.body.toString()",
+//     htmlFormatBigText: true,
+//     contentTitle: "notification.title.toString()",
+//     htmlFormatContentTitle: true,
+//   );
+//   return flutterLocalNotificationsPlugin.show(
+//     0,
+//     " title",
+//     " body",
+//     NotificationDetails(
+//       android: AndroidNotificationDetails(
+//         "Pikabooo Android Id",
+//         "Pikaboo",
+//         importance: Importance.max,
+//         styleInformation: bigStyleInfo,
+//         priority: Priority.high,
+//         playSound: true,
+//       ),
+//       iOS: const DarwinNotificationDetails(),
+//     ),
+//   );
+// }
+
 Future _onMessage(RemoteMessage message) async {
   debugPrint('foreground cloud message callback called');
 
   RemoteNotification? notification = message.notification;
 
   BigTextStyleInformation bigStyleInfo = BigTextStyleInformation(
-    notification!.body.toString(),
+    notification!.body ?? '',
     htmlFormatBigText: true,
     contentTitle: notification.title.toString(),
     htmlFormatContentTitle: true,
@@ -106,8 +133,8 @@ Future _onMessage(RemoteMessage message) async {
     notification.body,
     NotificationDetails(
       android: AndroidNotificationDetails(
-        "pikaboo_android_id",
-        "Pikaboo",
+        channel.id,
+        channel.name,
         importance: Importance.max,
         channelDescription: channel.description,
         styleInformation: bigStyleInfo,

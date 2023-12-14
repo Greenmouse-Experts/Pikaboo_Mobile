@@ -45,41 +45,52 @@ class _QrCodeScanViewConsumerState extends ConsumerState<QrCodeScanView> {
                 ],
               )),
               Expanded(
-                  flex: 4,
-                  child: Stack(
-                    children: [
-                      MobileScanner(
-                        onDetect: (barcode) {
-                          try {
-                            if (!_canSubmit) {
-                              //     var theBars = barcode.barcodes;
-                              var ddatata = barcode.barcodes;
-
-                              final residenceId =
-                                  ddatata[0].url?.url?.split("sort=").last;
-
-                              _canSubmit = true;
-                              if (widget.isScheduled) {
-                                ref
-                                    .read(driverRequestProvider.notifier)
-                                    .completeCleanUp(
-                                        ref: ref,
-                                        context: context,
-                                        cleanupId: widget.cleanupId,
-                                        residenceId: residenceId.toString());
-                              } else {
-                                // Handle the case when widget.isScheduled is false
-                              }
-                            }
-                          } catch (e) {
-                            print("Error during QR code processing: $e");
-                            // Handle the error, show a message, or take appropriate action
-                          }
-                        },
+                flex: 4,
+                child: Stack(
+                  children: [
+                    MobileScanner(
+                      controller: MobileScannerController(
+                        detectionSpeed: DetectionSpeed.normal,
+                        facing: CameraFacing.back,
+                        torchEnabled: false,
                       ),
-                      const QRScannerOverlay(overlayColour: AppColors.altWhite)
-                    ],
-                  )),
+                      onDetect: (barcode) {
+                        try {
+                          if (!_canSubmit) {
+                            //     var theBars = barcode.barcodes;
+                            var ddatata = barcode.barcodes;
+                            
+                             for (final barcode in ddatata) {
+                              debugPrint('Barcode found! ${barcode.rawValue}');
+                            }
+
+                            final residenceId =
+                                ddatata[0].url?.url?.split("sort=").last;
+                                print("======s=sffs$residenceId");
+
+                            _canSubmit = true;
+                            if (widget.isScheduled) {
+                              ref
+                                  .read(driverRequestProvider.notifier)
+                                  .completeCleanUp(
+                                      ref: ref,
+                                      context: context,
+                                      cleanupId: widget.cleanupId,
+                                      residenceId: residenceId.toString());
+                            } else {
+                              // Handle the case when widget.isScheduled is false
+                            }
+                          }
+                        } catch (e) {
+                          print("Error during QR code processing: $e");
+                          // Handle the error, show a message, or take appropriate action
+                        }
+                      },
+                    ),
+                    const QRScannerOverlay(overlayColour: AppColors.altWhite)
+                  ],
+                ),
+              ),
               Expanded(
                   child: Center(
                 child: Text(

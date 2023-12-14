@@ -82,7 +82,7 @@ class NotificationView extends ConsumerWidget {
                                 itemBuilder: (context, i) => NotificationTile(
                                       notification: unreadNotifications[i],
                                       id: unreadNotifications[i].id!,
-                                    )),
+                                    ),),
                             Padding(
                               padding: screenPadding(context),
                               child: Column(

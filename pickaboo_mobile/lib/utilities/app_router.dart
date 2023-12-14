@@ -11,6 +11,7 @@ import '../modules/history/viiews.dart';
 import '../modules/map/map_view.dart';
 import '../modules/notifications/notifications_view.dart';
 import '../modules/onboarding/views.dart';
+import '../modules/requests/edit_home_owner_account.dart';
 import '../modules/requests/views.dart';
 import '../modules/settings/views.dart';
 import '../modules/shop/views.dart';
@@ -65,6 +66,7 @@ class AppRouter {
   static const String scheduledRequestDetails = "scheduledRequestsDetails";
   static const String specialRequestDetails = "specialRequestDetails";
   static const String qrCode = "qrCoddeScanView";
+  static const String editUserProfile = "editUserProfile";
 }
 
 final GoRouter _router = GoRouter(routes: <RouteBase>[
@@ -217,98 +219,107 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
         )
       ]),
   GoRoute(
-      name: AppRouter.driverDashboard,
-      path: AppRouter.driverDashboard,
-      builder: (context, state) => const DriverDashboardView(),
-      routes: <RouteBase>[
-        GoRoute(
-            name: AppRouter.driiverNotifications,
-            path: AppRouter.driiverNotifications,
-            builder: (context, state) => const NotificationView()),
-        GoRoute(
-            name: AppRouter.pickUpRequests,
-            path: AppRouter.pickUpRequests,
-            builder: (context, state) => const PickUpRequestView()),
-        GoRoute(
-            name: AppRouter.driverFaq,
-            path: AppRouter.driverFaq,
-            builder: (context, state) => const FaqView()),
-        GoRoute(
-            name: AppRouter.driverhistory1,
-            path: AppRouter.driverhistory1,
-            builder: (context, state) => const HistoryView()),
-        GoRoute(
-            name: AppRouter.driverHistory,
-            path: AppRouter.driverHistory,
-            builder: (context, state) => const DriverHistoryView()),
-        GoRoute(
-            name: AppRouter.driverTransactionHistory,
-            path: AppRouter.driverTransactionHistory,
-            builder: (context, state) => const TransactionsHistoryView()),
-        GoRoute(
-            name: AppRouter.driverSupport,
-            path: AppRouter.driverSupport,
-            builder: (context, state) => const SupportView()),
-        GoRoute(
-            name: AppRouter.driverTerms,
-            path: '${AppRouter.driverTerms}/:isAnon',
-            builder: (context, state) => TermsView(
-                  isAnon: state.pathParameters['isAnon']!,
-                )),
-        GoRoute(
-            name: AppRouter.driverRequstDetails,
-            path: '${AppRouter.driverRequstDetails}/:isActive',
-            builder: (context, state) => RequestDetailsView(
-                  isActive: state.pathParameters['isActive']! == 'yes',
-                )),
-        GoRoute(
-            name: AppRouter.driverAccountView,
-            path: AppRouter.driverAccountView,
-            builder: (context, state) => const AccountView()),
-        GoRoute(
-            name: AppRouter.mapView,
-            path: "${AppRouter.mapView}/:latitude/:longitude",
-            builder: (context, state) => AppMapView(
-                  latitude: state.pathParameters['latitude']!,
-                  longitude: state.pathParameters['longitude']!,
-                )),
-        GoRoute(
-          name: AppRouter.scheduledRequestsAddress,
-          path: '${AppRouter.scheduledRequestsAddress}/:id/:schedule',
-          builder: (context, state) => DriverScheduledDetails(
-            id: state.pathParameters['id']!,
-            schedule: state.pathParameters['schedule']!,
-          ),
+    name: AppRouter.driverDashboard,
+    path: AppRouter.driverDashboard,
+    builder: (context, state) => const DriverDashboardView(),
+    routes: <RouteBase>[
+      GoRoute(
+          name: AppRouter.driiverNotifications,
+          path: AppRouter.driiverNotifications,
+          builder: (context, state) => const NotificationView()),
+      GoRoute(
+          name: AppRouter.pickUpRequests,
+          path: AppRouter.pickUpRequests,
+          builder: (context, state) => const PickUpRequestView()),
+      GoRoute(
+          name: AppRouter.driverFaq,
+          path: AppRouter.driverFaq,
+          builder: (context, state) => const FaqView()),
+      GoRoute(
+          name: AppRouter.driverhistory1,
+          path: AppRouter.driverhistory1,
+          builder: (context, state) => const HistoryView()),
+      GoRoute(
+          name: AppRouter.driverHistory,
+          path: AppRouter.driverHistory,
+          builder: (context, state) => const DriverHistoryView()),
+      GoRoute(
+          name: AppRouter.driverTransactionHistory,
+          path: AppRouter.driverTransactionHistory,
+          builder: (context, state) => const TransactionsHistoryView()),
+      GoRoute(
+          name: AppRouter.driverSupport,
+          path: AppRouter.driverSupport,
+          builder: (context, state) => const SupportView()),
+      GoRoute(
+          name: AppRouter.driverTerms,
+          path: '${AppRouter.driverTerms}/:isAnon',
+          builder: (context, state) => TermsView(
+                isAnon: state.pathParameters['isAnon']!,
+              )),
+      GoRoute(
+          name: AppRouter.driverRequstDetails,
+          path: '${AppRouter.driverRequstDetails}/:isActive',
+          builder: (context, state) => RequestDetailsView(
+                isActive: state.pathParameters['isActive']! == 'yes',
+              )),
+      GoRoute(
+          name: AppRouter.driverAccountView,
+          path: AppRouter.driverAccountView,
+          builder: (context, state) => const AccountView()),
+      GoRoute(
+          name: AppRouter.mapView,
+          path: "${AppRouter.mapView}/:latitude/:longitude",
+          builder: (context, state) => AppMapView(
+                latitude: state.pathParameters['latitude']!,
+                longitude: state.pathParameters['longitude']!,
+              )),
+      GoRoute(
+        name: AppRouter.scheduledRequestsAddress,
+        path: '${AppRouter.scheduledRequestsAddress}/:id/:schedule',
+        builder: (context, state) => DriverScheduledDetails(
+          id: state.pathParameters['id']!,
+          schedule: state.pathParameters['schedule']!,
         ),
-        GoRoute(
-          name: AppRouter.scheduledRequestDetails,
-          path:
-              "${AppRouter.scheduledRequestDetails}/:isActive/:request/:cleanupId",
-          builder: (context, state) {
-            return ScheduledRequest(
-                isActive: state.pathParameters["isActive"]! == "yes",
-                cleanupId: state.pathParameters["cleanupId"]!,
-                request: state.pathParameters["request"]!);
-          },
-        ),
-        GoRoute(
-          name: AppRouter.specialRequestDetails,
-          path:
-              "${AppRouter.specialRequestDetails}/:isActive/:request/:cleanupId",
-          builder: (context, state) => SpecialRequest(
+      ),
+      GoRoute(
+        name: AppRouter.scheduledRequestDetails,
+        path:
+            "${AppRouter.scheduledRequestDetails}/:isActive/:request/:cleanupId",
+        builder: (context, state) {
+          return ScheduledRequest(
               isActive: state.pathParameters["isActive"]! == "yes",
               cleanupId: state.pathParameters["cleanupId"]!,
-              request: state.pathParameters["request"]!),
+              request: state.pathParameters["request"]!);
+        },
+      ),
+      GoRoute(
+        name: AppRouter.specialRequestDetails,
+        path:
+            "${AppRouter.specialRequestDetails}/:isActive/:request/:cleanupId",
+        builder: (context, state) => SpecialRequest(
+            isActive: state.pathParameters["isActive"]! == "yes",
+            cleanupId: state.pathParameters["cleanupId"]!,
+            request: state.pathParameters["request"]!),
+      ),
+      GoRoute(
+        name: AppRouter.qrCode,
+        path: "${AppRouter.qrCode}/:id/:isScheduled",
+        builder: (context, state) => QrCodeScanView(
+          cleanupId: state.pathParameters["id"]!,
+          isScheduled: state.pathParameters["isScheduled"] == 'yes',
         ),
-        GoRoute(
-          name: AppRouter.qrCode,
-          path: "${AppRouter.qrCode}/:id/:isScheduled",
-          builder: (context, state) => QrCodeScanView(
-            cleanupId: state.pathParameters["id"]!,
-            isScheduled: state.pathParameters["isScheduled"] == 'yes',
-          ),
+      ),
+      GoRoute(
+        name: AppRouter.editUserProfile,
+        path:
+            AppRouter.editUserProfile,
+        builder: (context, state) => const EditProfilePage(
+         
         ),
-      ]),
+      ),
+    ],
+  ),
 ]);
 
 GoRouter get appRouterConfig => _router;

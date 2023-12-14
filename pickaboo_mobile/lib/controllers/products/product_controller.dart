@@ -78,7 +78,6 @@ class ProductNotifier extends ChangeNotifier {
       }
       result[category]?.add(prod);
     }
-
     return result;
   }
 }

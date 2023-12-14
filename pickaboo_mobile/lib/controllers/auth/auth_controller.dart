@@ -27,6 +27,15 @@ class _AuthNotifier extends ChangeNotifier {
   UserSchema? _user;
   UserSchema? get user => _user;
 
+  set user(UserSchema? value) {
+    _user = value;
+    if(_user != null){
+      setUser(_user!.toRawJson());
+    }
+    
+    notifyListeners();
+  }
+
   bool _isFirstTimeUser = true;
   bool get isFirstTimeUser => _isFirstTimeUser;
 
@@ -102,7 +111,6 @@ class _AuthNotifier extends ChangeNotifier {
               return;
             }
           }
-
           _token = response.token;
           _wallet = _user?.wallet?.toString() ?? '0';
           _accountType = _user?.accountType;
@@ -149,10 +157,10 @@ class _AuthNotifier extends ChangeNotifier {
     }
   }
 
-  // Future<void> _setUser(String user) async {
-  //   final pref = await _prefs;
-  //   pref.setString('user', user);
-  // }
+  Future<void> setUser(String user) async {
+    final pref = await _prefs;
+    pref.setString('user', user);
+  }
 
   Future<void> setFcmToken() async {}
 
@@ -311,7 +319,7 @@ class _AuthNotifier extends ChangeNotifier {
 
   Future<void> refreshUser({required WidgetRef ref}) async {
     try {
-        // final userId = _user?.id.toString() ?? '';
+      // final userId = _user?.id.toString() ?? '';
       _isRefreshing = true;
 
       notifyListeners();

@@ -1,5 +1,3 @@
-
-
 import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +11,7 @@ class AuthRepository {
   Future<ApiResponse> login(dynamic payload, WidgetRef ref) async {
     final response = _api.postData('/auth/mobile/login',
         data: payload, hasHeader: false, ref: ref);
+    print("===========${response}");
     return response;
   }
 
@@ -34,8 +33,8 @@ class AuthRepository {
   Future<ApiResponse> topupWallet(String reference, WidgetRef ref) async {
     final response = _api.postData('/top-up/using/paystack',
         data: {'ref_id': reference}, ref: ref);
-        log(response.toString());
-        
+    log(response.toString());
+
     return response;
   }
 

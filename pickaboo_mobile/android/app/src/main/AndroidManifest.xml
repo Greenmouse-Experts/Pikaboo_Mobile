@@ -4,9 +4,11 @@
    <uses-permission android:name="android.permission.CAMERA"/>
    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
    <application
+
         android:label="Pikaboo"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -23,10 +25,7 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
-            <meta-data
-              android:name="com.google.firebase.messaging.default_notification_channel_id"
-              android:value="pikaboo_android_id"
-              />
+          
               <meta-data
               android:name="com.google.firebase.messaging.default_notification_icon"
               android:resource="@drawable/pickaboo_logo" />
@@ -59,6 +58,10 @@
             android:value="2" />
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyBhqrFBTbvmWQOEBUZ1H7xZgCdXurCXGvI"/>
+        <meta-data
+              android:name="com.google.firebase.messaging.default_notification_channel_id"
+              android:value="pikaboo_android_id"
+              />       
     </application>
     <!-- Provide required visibility configuration for API level 30 and above -->
     <queries>

@@ -48,7 +48,7 @@ class DriverHomeView extends ConsumerWidget {
             child: FutureBuilder(
                 future: ref
                     .watch(driverRequestProvider)
-                    .getScheduledRequests(ref: ref),
+                    .getScheduledRequests(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const PageLoader();

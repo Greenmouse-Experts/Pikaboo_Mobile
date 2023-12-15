@@ -300,6 +300,7 @@ class _AccountViewState extends ConsumerState<AccountView> {
     _name.dispose();
     _email.dispose();
     _phone.dispose();
+    _phone2.dispose();
     _address.dispose();
     _firstName.dispose();
     _middleName.dispose();
@@ -442,21 +443,21 @@ class _AccountViewState extends ConsumerState<AccountView> {
                           controller: _dob,
                           keyboardType: TextInputType.name,
                         ),
-                        EditableTextField(
-                          label: 'Zone',
-                          controller: _streetName,
-                          keyboardType: TextInputType.name,
-                        ),
-                        EditableTextField(
-                          label: 'City',
-                          controller: _townCity,
-                          keyboardType: TextInputType.name,
-                        ),
-                        EditableTextField(
-                          label: 'Zone',
-                          controller: _zone,
-                          keyboardType: TextInputType.name,
-                        ),
+                        // EditableTextField(
+                        //   label: 'Zone',
+                        //   controller: _streetName,
+                        //   keyboardType: TextInputType.name,
+                        // ),
+                        // EditableTextField(
+                        //   label: 'City',
+                        //   controller: _townCity,
+                        //   keyboardType: TextInputType.name,
+                        // ),
+                        // EditableTextField(
+                        //   label: 'Zone',
+                        //   controller: _zone,
+                        //   keyboardType: TextInputType.name,
+                        // ),
                         EditableTextField(
                           label: 'House Number',
                           controller: _buildingInformation,

@@ -32,6 +32,7 @@ class EditProfilePageState extends ConsumerState<EditProfilePage> {
   final TextEditingController _middleName = TextEditingController();
   final TextEditingController _lastName = TextEditingController();
   final TextEditingController _dob = TextEditingController();
+  final TextEditingController _phone2 = TextEditingController();
 
   @override
   void initState() {
@@ -49,12 +50,14 @@ class EditProfilePageState extends ConsumerState<EditProfilePage> {
         'middle_name': _middleName.text,
         'last_name': _lastName.text,
         'dob': _dob.text,
+        'phone2': _phone2.text,
       });
 
       // Make the post request using the postData function
       final response =
           await _api.postData('/profile/update', data: userData, ref: ref);
       if (response.isSuccessful) {
+        // ignore: unused_local_variable
         UserSchema updatedUser = UserSchema.fromJson(response.data);
         final userEditProvider = ref.watch(authProvider.notifier);
         //userEditProvider.setUser(updatedUser.toRawJson());
@@ -68,6 +71,7 @@ class EditProfilePageState extends ConsumerState<EditProfilePage> {
           middleName: _middleName.text,
           lastName: _lastName.text,
           dob: _dob.text,
+          phone2: _phone2.text,
         );
         print("after=====${userEditProvider.user}");
         
@@ -101,12 +105,14 @@ class EditProfilePageState extends ConsumerState<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(authProvider).user;
+     final _accountType = user?.accountType ?? '';
     _email.text = user?.email ?? '';
     _address.text = user?.address ?? '';
     _firstName.text = user?.firstName ?? '';
     _middleName.text = user?.middleName ?? '';
     _lastName.text = user?.lastName ?? '';
     _dob.text = user?.dob ?? '';
+    _phone2.text = user?.phone2 ?? '';
 
     return Scaffold(
       appBar: customAppBar4(context, hasElevation: false, implyLeading: true),
@@ -128,7 +134,11 @@ class EditProfilePageState extends ConsumerState<EditProfilePage> {
                       SizedBox(
                           height: height(context) * 0.01,
                           width: width(context)),
-                      Text('Home Resident',
+                      Text( _accountType == 'Service Personnel'
+                              ? 'Service Personel'
+                              : _accountType == 'Home Resident'
+                                  ? 'Home Resident'
+                                  : 'Unknown Account Type',
                           style: medium16(context)
                               .copyWith(color: AppColors.primary)),
                       SizedBox(height: height(context) * 0.02),
@@ -173,6 +183,13 @@ class EditProfilePageState extends ConsumerState<EditProfilePage> {
                   controller: _address,
                   label: "Address",
                   keyboardType: TextInputType.streetAddress,
+                  isEditable: true,
+                ),
+                const SizedBox(height: 16),
+                EditableTextField(
+                  controller: _phone2,
+                  label: "Secondary Phone Number",
+                  keyboardType: TextInputType.phone,
                   isEditable: true,
                 ),
                 const SizedBox(height: 16),

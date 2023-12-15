@@ -28,11 +28,12 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
-def keystoreProperties = new Properties()
+//TODO: UNCOMMENT
+/* def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-}
+} */
 
 android {
     compileSdkVersion 33
@@ -63,18 +64,46 @@ android {
         multiDexEnabled true
     }
 
-   signingConfigs {
-       release {
+   //TODO: UNCOMMMENT
+    /* signingConfigs {
+        //TODO: COmment out maybe
+        release {
            keyAlias keystoreProperties['keyAlias']
            keyPassword keystoreProperties['keyPassword']
            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
            storePassword keystoreProperties['storePassword']
-       }
-   }
+       } 
+
+    //TODO: the edit
+    if (System.getenv("ANDROID_KEYSTORE_PATH")) {
+            release {
+                storeFile file(System.getenv("ANDROID_KEYSTORE_PATH"))
+                keyAlias System.getenv("ANDROID_KEYSTORE_ALIAS")
+                keyPassword System.getenv("ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
+                storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
+            }
+        } else {
+            release {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+                storePassword keystoreProperties['storePassword']
+            }
+        }
+       
+   } */
    buildTypes {
        release {
-           signingConfig signingConfigs.release
+        //TODO: change from debug to release
+        signingConfig signingConfigs.debug
+        shrinkResources false
+        minifyEnabled false
        }
+       debug {
+            shrinkResources false
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
    }
 
 }

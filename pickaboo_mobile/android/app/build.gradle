@@ -29,11 +29,11 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 //TODO: UNCOMMENT
-/* def keystoreProperties = new Properties()
+def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-} */
+}
 
 android {
     compileSdkVersion 33
@@ -65,7 +65,7 @@ android {
     }
 
    //TODO: UNCOMMMENT
-    /* signingConfigs {
+     signingConfigs {
         //TODO: COmment out maybe
         release {
            keyAlias keystoreProperties['keyAlias']
@@ -91,11 +91,11 @@ android {
             }
         }
        
-   } */
+   }
    buildTypes {
        release {
         //TODO: change from debug to release
-        signingConfig signingConfigs.debug
+        signingConfig signingConfigs.release
         shrinkResources false
         minifyEnabled false
        }

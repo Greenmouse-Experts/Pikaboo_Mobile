@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // To parse this JSON data, do
 //
 //     final driverScheduleSchema = driverScheduleSchemaFromJson(jsonString);
@@ -9,12 +10,15 @@ class DriverScheduleSchema {
   String? status;
   CleanupRequest? cleanupRequest;
   DateTime? createdAt;
+  DateTime? scheduledAt;
+  //Zone? zone;
 
   DriverScheduleSchema({
     this.id,
     this.status,
     this.cleanupRequest,
     this.createdAt,
+    this.scheduledAt,
   });
 
   factory DriverScheduleSchema.fromRawJson(String str) =>
@@ -30,12 +34,13 @@ class DriverScheduleSchema {
       DriverScheduleSchema(
         id: json["id"],
         status: json["status"],
-        cleanupRequest: json["cleanup_request"] == null
-            ? null
-            : CleanupRequest.fromJson(json["cleanup_request"]),
+        cleanupRequest: CleanupRequest.fromJson(json),
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
+            scheduledAt: json["schedule_date"] == null
+            ? null
+            : DateTime.parse(json["schedule_date"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,6 +48,7 @@ class DriverScheduleSchema {
         "status": status,
         "cleanup_request": cleanupRequest?.toJson(),
         "created_at": createdAt?.toIso8601String(),
+        "schedule_date": scheduledAt?.toIso8601String(),
       };
 }
 
@@ -110,4 +116,7 @@ class Zone {
         "name": name,
         "no_of_residence": noOfResidence,
       };
+
+  @override
+  String toString() => 'Zone(name: $name, noOfResidence: $noOfResidence)';
 }

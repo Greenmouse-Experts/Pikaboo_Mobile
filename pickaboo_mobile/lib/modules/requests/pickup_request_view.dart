@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../controllers/driver_requests/driver_request_controller.dart';
 import '../../controllers/requests/request_controller.dart';
 import '../../utilities/utilities.dart';
@@ -39,9 +38,12 @@ class PickUpRequestView extends ConsumerWidget {
                       const PageHeader(
                           title: 'Pickup Requests', hasSearch: false),
                       SizedBox(height: height(context) * 0.01),
-                      Text('Available garbage pickup in your location today.',
-                          style: medium13(context)
-                              .copyWith(color: Colors.black.withOpacity(0.4))),
+                      Text(
+                        'Available garbage pickup in your location today.',
+                        style: medium13(context).copyWith(
+                          color: Colors.black.withOpacity(0.4),
+                        ),
+                      ),
                       SizedBox(height: height(context) * 0.02),
                       Consumer(builder: (context, ref, child) {
                         final i = ref.watch(_pageProvider);
@@ -53,7 +55,9 @@ class PickUpRequestView extends ConsumerWidget {
                                 isSelected: i == 0,
                                 title: 'Scheduled Requests',
                                 onSelected: () {
-                                  ref.read(_pageProvider.notifier).updatePage(0);
+                                  ref
+                                      .read(_pageProvider.notifier)
+                                      .updatePage(0);
                                 },
                               ),
                             ),
@@ -62,7 +66,9 @@ class PickUpRequestView extends ConsumerWidget {
                                 isSelected: i == 1,
                                 title: 'Special Calls',
                                 onSelected: () {
-                                  ref.read(_pageProvider.notifier).updatePage(1);
+                                  ref
+                                      .read(_pageProvider.notifier)
+                                      .updatePage(1);
                                 },
                               ),
                             ),
@@ -81,7 +87,7 @@ class PickUpRequestView extends ConsumerWidget {
                         final i = ref.watch(_pageProvider);
                         final cleanUpRequests =
                             ref.watch(requestProvider).cleanUpRequests;
-
+                        // print(cleanUpRequests);
                         return i == 0
                             ? cleanUpRequests.isEmpty
                                 ? const SizedBox(

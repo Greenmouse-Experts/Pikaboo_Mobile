@@ -43,82 +43,81 @@ class UserRequestsView extends ConsumerWidget {
                       final scheduled =
                           ref.watch(userRequestProvider).userRequests;
                       return DefaultTabController(
-                          length: 2,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const PageHeader(
-                                  title: 'My Requests', hasSearch: false),
-                              TabBar(
-                                  labelColor: Colors.black,
-                                  unselectedLabelColor:
-                                      Colors.black.withOpacity(0.4),
-                                  labelStyle: medium13(context),
-                                  unselectedLabelStyle: medium13(context)
-                                      .copyWith(
-                                          color: Colors.black.withOpacity(0.4)),
-                                  indicatorColor: AppColors.darkGreen,
-                                  tabs: const [
-                                    Tab(text: 'Scheduled'),
-                                    Tab(text: 'Special Calls'),
-                                    // Tab(text: 'What’s new'),
-                                  ]),
-                              Expanded(
-                                child: TabBarView(children: [
-                                  scheduled.isEmpty
-                                      ? Center(
-                                          child: Text(
-                                          'You currently have no scheduled requests',
-                                          style: medium15(context),
-                                        ))
-                                      : ListView.builder(
-                                          itemCount: scheduled.length,
-                                          // shrinkWrap: true,
-                                          // physics:
-                                          //     const NeverScrollableScrollPhysics(),
-                                          itemBuilder: (context, i) {
-                                            // return const RequestCard(
-                                            //   isUser: true,
-                                            // );
-                                            final address =
-                                                "${scheduled[i].residence?.houseNumber ?? ""}, ${scheduled[i].residence?.streetName ?? " "},${scheduled[i].residence?.lga ?? ""}";
-                                            return NewPickUpTile(
-                                                address: address,
-                                                date: scheduled[i].createdAt!,
-                                                price:
-                                                    (scheduled[i].price ?? "0")
-                                                        .formatWithCommas);
-                                          }),
-                                  specials.isEmpty
-                                      ? Center(
-                                          child: Text(
-                                          'You currently have no special requests',
-                                          style: medium15(context),
-                                        ))
-                                      : ListView.builder(
-                                          itemCount: specials.length,
-                                          // shrinkWrap: true,
-                                          // physics:
-                                          //     const NeverScrollableScrollPhysics(),
-                                          itemBuilder: (context, i) {
-                                            // return const RequestCard(
-                                            //   isUser: true,
-                                            // );
-
-                                            return NewPickUpTile(
-                                                address:
-                                                    specials[i].altAddress ??
-                                                        user?.address ??
-                                                        "",
-                                                date:
-                                                    specials[i].completedDate ??
-                                                        specials[i].createdAt!,
-                                                price: "5,000");
-                                          })
+                        length: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const PageHeader(
+                                title: 'My Requests', hasSearch: false),
+                            TabBar(
+                                labelColor: Colors.black,
+                                unselectedLabelColor:
+                                    Colors.black.withOpacity(0.4),
+                                labelStyle: medium13(context),
+                                unselectedLabelStyle: medium13(context)
+                                    .copyWith(
+                                        color: Colors.black.withOpacity(0.4)),
+                                indicatorColor: AppColors.darkGreen,
+                                tabs: const [
+                                  Tab(text: 'Scheduled'),
+                                  Tab(text: 'Special Calls'),
+                                  // Tab(text: 'What’s new'),
                                 ]),
-                              )
-                            ],
-                          ));
+                            Expanded(
+                              child: TabBarView(children: [
+                                scheduled.isEmpty
+                                    ? Center(
+                                        child: Text(
+                                        'You currently have no scheduled requests',
+                                        style: medium15(context),
+                                      ))
+                                    : ListView.builder(
+                                        itemCount: scheduled.length,
+                                        // shrinkWrap: true,
+                                        // physics:
+                                        //     const NeverScrollableScrollPhysics(),
+                                        itemBuilder: (context, i) {
+                                          // return const RequestCard(
+                                          //   isUser: true,
+                                          // );
+                                          final address =
+                                              "${scheduled[i].residence?.houseNumber ?? ""}, ${scheduled[i].residence?.streetName ?? " "},${scheduled[i].residence?.lga ?? ""}";
+                                          return NewPickUpTile(
+                                              address: address,
+                                              date: scheduled[i].createdAt!,
+                                              price: (scheduled[i].price ?? "0")
+                                                  .formatWithCommas);
+                                        }),
+                                specials.isEmpty
+                                    ? Center(
+                                        child: Text(
+                                        'You currently have no special requests',
+                                        style: medium15(context),
+                                      ))
+                                    : ListView.builder(
+                                        itemCount: specials.length,
+                                        // shrinkWrap: true,
+                                        // physics:
+                                        //     const NeverScrollableScrollPhysics(),
+                                        itemBuilder: (context, i) {
+                                          // return const RequestCard(
+                                          //   isUser: true,
+                                          // );
+
+                                          return NewPickUpTile(
+                                              address: specials[i].altAddress ??
+                                                  user?.address ??
+                                                  "",
+                                              date: specials[i].completedDate ??
+                                                  specials[i].createdAt!,
+                                              price: (specials[i].price ?? "0")
+                                                  .toString());
+                                        })
+                              ]),
+                            )
+                          ],
+                        ),
+                      );
                     }
                   })
 

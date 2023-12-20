@@ -268,6 +268,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pickaboo_mobile/utilities/image_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pickaboo_mobile/widgets/building_images.dart';
 
 import '../../controllers/auth/auth_controller.dart';
 import '../../utilities/utilities.dart';
@@ -291,13 +292,24 @@ class _AccountViewState extends ConsumerState<AccountView> {
   final TextEditingController _dob = TextEditingController();
   final TextEditingController _zone = TextEditingController();
   final TextEditingController _phone2 = TextEditingController();
-  final TextEditingController _buildingInformation = TextEditingController();
+  //final TextEditingController _buildingInformation = TextEditingController();
   final TextEditingController _streetName = TextEditingController();
   final TextEditingController _townCity = TextEditingController();
+  final TextEditingController _purposeBuiltFacility = TextEditingController();
+  final TextEditingController _completionStatus = TextEditingController();
+  final TextEditingController _buildingOwnerShip = TextEditingController();
+  final TextEditingController _houseNumber = TextEditingController();
+  final TextEditingController _area = TextEditingController();
+  final TextEditingController _buildingImages = TextEditingController();
+  final TextEditingController _noOfWasteBinNeded = TextEditingController();
+  final TextEditingController _noOfResidents = TextEditingController();
+  final TextEditingController _facilityIncludeSewageSystem =
+      TextEditingController();
 
   @override
   void dispose() {
     _name.dispose();
+    _facilityIncludeSewageSystem.dispose();
     _email.dispose();
     _phone.dispose();
     _phone2.dispose();
@@ -306,6 +318,17 @@ class _AccountViewState extends ConsumerState<AccountView> {
     _middleName.dispose();
     _lastName.dispose();
     _dob.dispose();
+    _zone.dispose();
+    _streetName.dispose();
+    _townCity.dispose();
+    _purposeBuiltFacility.dispose();
+    _completionStatus.dispose();
+    _buildingOwnerShip.dispose();
+    _houseNumber.dispose();
+    _area.dispose();
+    _buildingImages.dispose();
+    _noOfWasteBinNeded.dispose();
+    _noOfResidents.dispose();
     super.dispose();
   }
 
@@ -322,22 +345,27 @@ class _AccountViewState extends ConsumerState<AccountView> {
 
   @override
   Widget build(BuildContext context) {
+    final isVerified = ref.watch(authProvider).user?.isVerified;
+    final editAccountType = ref.watch(authProvider).user?.accountType;
     return Scaffold(
       appBar: customAppBar5(
         actions: [
-          TextButton(
-            onPressed: () async {
-              await context.pushNamed(
-                AppRouter.editUserProfile,
-              );
-              
-            },
-            child: const Text(
-              "EDIT",
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w600,
-                color: AppColors.primary,
+          Visibility(
+            visible: !isVerified! ||
+                editAccountType !=
+                    "Service Personnel", // Show the button only if isVerified is false
+            child: Padding(
+              padding: const EdgeInsets.only(right:10.0),
+              child: AppButton(
+                onPressed: () {
+                  context.pushNamed(
+                    AppRouter.editUserProfile,
+                  );
+                },
+                text: "EDIT",
+                buttonWidth: 0.18,
+                buttonHeight: 0.04,
+                buttonColor: AppColors.primary,
               ),
             ),
           ),
@@ -350,8 +378,10 @@ class _AccountViewState extends ConsumerState<AccountView> {
         child: SafeArea(
           child: Consumer(
             builder: (context, ref, child) {
-              final user = ref.watch(authProvider.notifier).user;
-             final _accountType = user?.accountType ?? '';
+              final user = ref.watch(authProvider).user;
+              final accountType = user?.accountType ?? '';
+              final imagePath =
+                  user?.buildingInformation?.buildingImage.toString() ?? '';
               _firstName.text = user?.firstName ?? '';
               _phone.text = user?.phone ?? '';
               _email.text = user?.email ?? '';
@@ -361,10 +391,24 @@ class _AccountViewState extends ConsumerState<AccountView> {
               _dob.text = user?.dob ?? '';
               _zone.text = user?.zone?.name ?? '';
               _phone2.text = user?.phone2 ?? '';
-              _buildingInformation.text =
-                  user?.buildingInformation?.houseNumber ?? '';
               _streetName.text = user?.buildingInformation?.streetName ?? '';
               _townCity.text = user?.buildingInformation?.townCity ?? '';
+              _purposeBuiltFacility.text =
+                  user?.buildingInformation?.commercialFacility ?? '';
+              _completionStatus.text =
+                  user?.buildingInformation?.completionStatus ?? '';
+              _buildingOwnerShip.text =
+                  user?.buildingInformation?.classification ?? '';
+              _houseNumber.text = user?.buildingInformation?.houseNumber ?? '';
+              _area.text = user?.buildingInformation?.area1 ?? '';
+              _noOfWasteBinNeded.text =
+                  user?.buildingInformation?.wasteBin ?? '';
+              _buildingImages.text =
+                  user?.buildingInformation?.buildingImage ?? '';
+              _noOfResidents.text =
+                  user?.buildingInformation?.noOfResidents ?? '';
+              _facilityIncludeSewageSystem.text =
+                  user?.buildingInformation?.facilityInclude ?? '';
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -384,16 +428,13 @@ class _AccountViewState extends ConsumerState<AccountView> {
                           width: width(context),
                         ),
                         Text(
-                          _accountType == 'Service Personnel'
-                              ? 'Service Personel'
-                              : _accountType == 'Home Resident'
-                                  ? 'Home Resident'
-                                  : 'Unknown Account Type',
+                          accountType == 'Service Personnel'
+                              ? 'Service Personnel'
+                              : 'Home Resident',
                           style: medium16(context).copyWith(
                             color: AppColors.primary,
                           ),
                         ),
-
                         SizedBox(height: height(context) * 0.02),
                       ],
                     ),
@@ -443,30 +484,115 @@ class _AccountViewState extends ConsumerState<AccountView> {
                           controller: _dob,
                           keyboardType: TextInputType.name,
                         ),
-                        // EditableTextField(
-                        //   label: 'Zone',
-                        //   controller: _streetName,
-                        //   keyboardType: TextInputType.name,
-                        // ),
-                        // EditableTextField(
-                        //   label: 'City',
-                        //   controller: _townCity,
-                        //   keyboardType: TextInputType.name,
-                        // ),
-                        // EditableTextField(
-                        //   label: 'Zone',
-                        //   controller: _zone,
-                        //   keyboardType: TextInputType.name,
-                        // ),
-                        EditableTextField(
-                          label: 'House Number',
-                          controller: _buildingInformation,
-                          keyboardType: TextInputType.name,
+                        Visibility(
+                          visible: accountType == 'Home Residence',
+                          child: EditableTextField(
+                            label: 'Zone',
+                            controller: _streetName,
+                            keyboardType: TextInputType.name,
+                          ),
                         ),
+                        Visibility(
+                          visible: accountType == 'Home Residence',
+                          child: EditableTextField(
+                            label: 'City',
+                            controller: _townCity,
+                            keyboardType: TextInputType.name,
+                          ),
+                        ),
+                        Visibility(
+                          visible: accountType == 'Home Residence',
+                          child: EditableTextField(
+                            label: 'Zone',
+                            controller: _zone,
+                            keyboardType: TextInputType.name,
+                          ),
+                        ),
+                        Visibility(
+                          visible: accountType == 'Home Residence',
+                          child: EditableTextField(
+                            label: 'House Number',
+                            controller: _houseNumber,
+                            keyboardType: TextInputType.name,
+                          ),
+                        ),
+                        Visibility(
+                          visible: accountType == 'Home Residence',
+                          child: EditableTextField(
+                            label: 'Number Of Residents',
+                            controller: _noOfResidents,
+                            keyboardType: TextInputType.name,
+                          ),
+                        ),
+                        Visibility(
+                          visible: accountType == 'Home Residence',
+                          child: EditableTextField(
+                            label: 'Purpose Built Facility',
+                            controller: _purposeBuiltFacility,
+                            keyboardType: TextInputType.name,
+                          ),
+                        ),
+                        Visibility(
+                          visible: accountType == 'Home Residence',
+                          child: EditableTextField(
+                            label: 'Completion Status',
+                            controller: _completionStatus,
+                            keyboardType: TextInputType.name,
+                          ),
+                        ),
+                        Visibility(
+                          visible: accountType == 'Home Residence',
+                          child: EditableTextField(
+                            label: 'Facility include Sewage System',
+                            controller: _facilityIncludeSewageSystem,
+                            keyboardType: TextInputType.name,
+                          ),
+                        ),
+                        Visibility(
+                          visible: accountType == 'Home Residence',
+                          child: EditableTextField(
+                            label: 'Building Ownership',
+                            controller: _buildingOwnerShip,
+                            keyboardType: TextInputType.name,
+                          ),
+                        ),
+                        Visibility(
+                          visible: accountType == 'Home Residence',
+                          child: EditableTextField(
+                            label: 'Area',
+                            controller: _area,
+                            keyboardType: TextInputType.name,
+                          ),
+                        ),
+                        Visibility(
+                          visible: accountType == 'Home Residence',
+                          child: EditableTextField(
+                            label: 'Number of Waste Bin Needed',
+                            controller: _noOfWasteBinNeded,
+                            keyboardType: TextInputType.name,
+                          ),
+                        ),
+                        Visibility(
+                          visible: accountType == 'Home Residence',
+                          child: Text(
+                            "Building Image",
+                            style: regular14(context)
+                                .copyWith(color: Colors.black.withOpacity(0.4)),
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        Visibility(
+                          visible: accountType == 'Home Residence',
+                          child: UserDetailsWidget(
+                              buildingImagePath: imagePath,
+                              buildingImagesController: _buildingImages),
+                        ),
+                        SizedBox(height: height(context) * 0.03),
                         Text(
                           'Gender',
-                          style: regular14(context)
-                              .copyWith(color: Colors.black.withOpacity(0.4)),
+                          style: regular14(context).copyWith(
+                            color: Colors.black.withOpacity(0.4),
+                          ),
                         ),
                         Consumer(
                           builder: (context, ref, child) {
@@ -480,8 +606,10 @@ class _AccountViewState extends ConsumerState<AccountView> {
                                   child: RadioListTile(
                                     contentPadding: EdgeInsets.zero,
                                     activeColor: AppColors.primary,
-                                    title:
-                                        Text('Male', style: medium14(context)),
+                                    title: Text(
+                                      'Male',
+                                      style: medium14(context),
+                                    ),
                                     value: 'male',
                                     groupValue: gender,
                                     onChanged: (String? newVal) {},

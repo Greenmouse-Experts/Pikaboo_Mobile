@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+
 class SpecialRequestSchema {
   int? id;
   String? altAddress;
@@ -11,6 +12,7 @@ class SpecialRequestSchema {
   DateTime? completedDate;
   String? status;
   DateTime? createdAt;
+  String? price;
   dynamic servicePersonnel;
 
   SpecialRequestSchema({
@@ -21,8 +23,9 @@ class SpecialRequestSchema {
     this.status,
     this.createdAt,
     this.servicePersonnel,
+    this.price,
   });
-
+  
   factory SpecialRequestSchema.fromRawJson(String str) =>
       SpecialRequestSchema.fromJson(json.decode(str));
 
@@ -35,6 +38,7 @@ class SpecialRequestSchema {
   factory SpecialRequestSchema.fromJson(Map<String, dynamic> json) =>
       SpecialRequestSchema(
         id: json["id"],
+        price: json["amount"],
         altAddress: json["alt_address"],
         scheduleDate: json["schedule_date"],
         completedDate: json["completed_date"] == null
@@ -51,6 +55,7 @@ class SpecialRequestSchema {
         "id": id,
         "alt_address": altAddress,
         "schedule_date": scheduleDate,
+        "price": price,
         "completed_date": completedDate?.toIso8601String(),
         "status": status,
         "created_at": createdAt?.toIso8601String(),

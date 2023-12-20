@@ -29,10 +29,10 @@ class _AuthNotifier extends ChangeNotifier {
 
   set user(UserSchema? value) {
     _user = value;
-    if(_user != null){
+    if (_user != null) {
       setUser(_user!.toRawJson());
     }
-    
+
     notifyListeners();
   }
 

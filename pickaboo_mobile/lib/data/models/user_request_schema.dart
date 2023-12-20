@@ -36,7 +36,7 @@ class UserRequestSchema {
             : Residence.fromJson(json["residence"]),
         zone: json["zone"],
         servicePersonnel: json["service_personnel"],
-        price: json["price"],
+        price: json["amount"],
         status: json["status"],
         createdAt: json["created_at"] == null
             ? null

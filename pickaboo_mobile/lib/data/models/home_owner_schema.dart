@@ -156,7 +156,7 @@
 import 'dart:convert';
 
 extension StringExtension on String? {
-bool get toBool {
+  bool get toBool {
     if (this == null) {
       return false;
     }
@@ -220,6 +220,19 @@ class UserSchema {
   dynamic truck;
   Zone? zone;
   int? notificationsCount;
+  String? streetName;
+  String? houseNumber;
+  String? numberOfResidents;
+  String? noOfWasteBinNeeded;
+  String? buildingOwnerShip;
+  String? meansOfWaterSupply;
+  String? facilityIncludeSewageSystem;
+  //int? numberOfStoreandShops;
+  String? imageUrl;
+  String? area;
+  String? lga;
+  String? completionStatus;
+
 
   UserSchema({
     this.id,
@@ -250,6 +263,17 @@ class UserSchema {
     this.truck,
     this.zone,
     this.notificationsCount,
+    this.streetName,
+    this.houseNumber,
+    this.numberOfResidents,
+    this.noOfWasteBinNeeded,
+    this.buildingOwnerShip,
+    this.meansOfWaterSupply,
+    this.facilityIncludeSewageSystem,
+    this.imageUrl,
+    this.area,
+    this.lga,
+    this.completionStatus,
   });
 
   factory UserSchema.fromRawJson(String str) =>
@@ -260,8 +284,7 @@ class UserSchema {
   factory UserSchema.fromJson(Map<String, dynamic> json) {
     if (json['isVerified'] != null) {
       if (json['isVerified'] is String?) {
-        json['isVerified'] =
-            (json['isVerified'] as String?).toBool;
+        json['isVerified'] = (json['isVerified'] as String?).toBool;
       } else if (json['isVerified'] is int?) {
         json['isVerified'] = (json['isVerified'] as int?).toBool;
       }
@@ -304,6 +327,17 @@ class UserSchema {
       truck: json["truck"],
       zone: json["zone"] == null ? null : Zone.fromJson(json["zone"]),
       notificationsCount: json["notifications_count"],
+      streetName: json["street_name"],
+      houseNumber: json["house_number"],
+      numberOfResidents: json["number_of_residents"],
+      noOfWasteBinNeeded: json["waste_bin"],
+      buildingOwnerShip: json["classification"],
+      meansOfWaterSupply: json["water_supply"],
+      facilityIncludeSewageSystem: json["facility_include"],
+      imageUrl: json["building_image"],
+      area: json["area"],
+      lga: json["lga"],
+
     );
   }
 
@@ -336,6 +370,18 @@ class UserSchema {
         "truck": truck,
         "zone": zone?.toJson(),
         "notifications_count": notificationsCount,
+        "street_name": streetName,
+        "house_number": houseNumber,
+        "number_of_residents": numberOfResidents,
+        "waste_bin": noOfWasteBinNeeded,
+        "classification": buildingOwnerShip,
+        "water_supply": meansOfWaterSupply,
+        "facility_include": facilityIncludeSewageSystem,
+        "building_image": imageUrl,
+        "area": area,
+        "lga": lga,
+        "completion_status": completionStatus,
+        
       };
 
   UserSchema copyWith({
@@ -517,6 +563,63 @@ class BuildingInformation {
         "waste_bin": wasteBin,
         "created_at": createdAt?.toIso8601String(),
       };
+
+  @override
+  String toString() {
+    return 'BuildingInformation(id: $id, userId: $userId, noOfResidents: $noOfResidents, houseNumber: $houseNumber, streetName: $streetName, area1: $area1, area2: $area2, quarter: $quarter, townCity: $townCity, lga: $lga, residential: $residential, shopStores: $shopStores, residentialFacility: $residentialFacility, commercialFacility: $commercialFacility, completionStatus: $completionStatus, facilityInclude: $facilityInclude, waterSupply: $waterSupply, classification: $classification, latitude: $latitude, longtitude: $longtitude, buildingImage: $buildingImage, wasteBin: $wasteBin, createdAt: $createdAt)';
+  }
+
+  BuildingInformation copyWith({
+    int? id,
+    String? userId,
+    String? noOfResidents,
+    String? houseNumber,
+    String? streetName,
+    String? area1,
+    String? area2,
+    dynamic quarter,
+    String? townCity,
+    String? lga,
+    String? residential,
+    String? shopStores,
+    String? residentialFacility,
+    String? commercialFacility,
+    String? completionStatus,
+    String? facilityInclude,
+    String? waterSupply,
+    String? classification,
+    String? latitude,
+    String? longtitude,
+    dynamic buildingImage,
+    String? wasteBin,
+    DateTime? createdAt,
+  }) {
+    return BuildingInformation(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      noOfResidents: noOfResidents ?? this.noOfResidents,
+      houseNumber: houseNumber ?? this.houseNumber,
+      streetName: streetName ?? this.streetName,
+      area1: area1 ?? this.area1,
+      area2: area2 ?? this.area2,
+      quarter: quarter ?? this.quarter,
+      townCity: townCity ?? this.townCity,
+      lga: lga ?? this.lga,
+      residential: residential ?? this.residential,
+      shopStores: shopStores ?? this.shopStores,
+      residentialFacility: residentialFacility ?? this.residentialFacility,
+      commercialFacility: commercialFacility ?? this.commercialFacility,
+      completionStatus: completionStatus ?? this.completionStatus,
+      facilityInclude: facilityInclude ?? this.facilityInclude,
+      waterSupply: waterSupply ?? this.waterSupply,
+      classification: classification ?? this.classification,
+      latitude: latitude ?? this.latitude,
+      longtitude: longtitude ?? this.longtitude,
+      buildingImage: buildingImage ?? this.buildingImage,
+      wasteBin: wasteBin ?? this.wasteBin,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
 }
 
 class CreatedByWho {
@@ -558,6 +661,11 @@ class CreatedByWho {
         "last_name": lastName,
         "email": email,
       };
+
+  @override
+  String toString() {
+    return 'CreatedByWho(id: $id, pikabooId: $pikabooId, firstName: $firstName, middleName: $middleName, lastName: $lastName, email: $email)';
+  }
 }
 
 class Zone {

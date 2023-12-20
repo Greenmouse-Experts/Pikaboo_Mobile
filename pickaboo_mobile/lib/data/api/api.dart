@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+//import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pickaboo_mobile/data/models/dio_logger.dart';
 
 import '../../controllers/auth/auth_controller.dart';
@@ -35,10 +35,12 @@ class Api {
         'Authorization': 'Bearer $authToken',
       };
 
-      final response = await _dio.get(endpoint,
-          queryParameters: queryParameters,
-          cancelToken: cancelToken,
-          options: Options(headers: hasHeader ? authorization : null));
+      final response = await _dio.get(
+        endpoint,
+        queryParameters: queryParameters,
+        cancelToken: cancelToken,
+        options: Options(headers: hasHeader ? authorization : null),
+      );
 
       return ApiResponse.fromResponse(response);
     } on DioException {
@@ -61,10 +63,12 @@ class Api {
         'Authorization': 'Bearer $authToken',
       };
 
-      final response = await _dio.post(endpoint,
-          data: data,
-          cancelToken: cancelToken,
-          options: Options(headers: hasHeader ? authorization : null));
+      final response = await _dio.post(
+        endpoint,
+        data: data,
+        cancelToken: cancelToken,
+        options: Options(headers: hasHeader ? authorization : null),
+      );
 
       return ApiResponse.fromResponse(response);
     } on DioException catch (error) {

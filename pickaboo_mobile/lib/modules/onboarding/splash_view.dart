@@ -7,7 +7,7 @@ import '../../controllers/auth/auth_controller.dart';
 import '../../utilities/utilities.dart';
 
 class SplashView extends ConsumerStatefulWidget {
-  const SplashView({Key? key}) : super(key: key);
+  const SplashView({super.key});
 
   @override
   ConsumerState<SplashView> createState() => _SplashViewConsumerState();

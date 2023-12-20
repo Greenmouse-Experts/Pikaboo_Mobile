@@ -26,8 +26,15 @@ extension StringExtensions on String {
       return this;
     }
   }
+  
+  
 }
-
+extension FormatDoubleWithCommas on double {
+  String get formatDoubleWithCommas {
+    final formatter = NumberFormat("#,##0.00", "en_US");
+    return formatter.format(this);
+  }
+}
 extension DateFormatter on DateTime {
   String get formatedDate {
     DateTime now = this;

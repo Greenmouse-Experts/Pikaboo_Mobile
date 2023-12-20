@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,7 +11,10 @@ class ImageSelector extends StatefulWidget {
   final String? name;
   final Function updateImage;
   const ImageSelector(
-      {super.key, required this.imgUrl, required this.name, required this.updateImage});
+      {super.key,
+      required this.imgUrl,
+      required this.name,
+      required this.updateImage});
 
   @override
   State<ImageSelector> createState() => ImageSelectorState();
@@ -48,21 +50,23 @@ class ImageSelectorState extends State<ImageSelector> {
         children: [
           AppAvatar(
             imgUrl: widget.imgUrl,
-            radius: width(context) * 0.08,
+            radius: width(context) * 0.10,
             selectedImg: selectedImg,
             name: widget.name ?? 'h',
           ),
           Positioned(
-              top: width(context) * 0.12,
-              child: Container(
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.white),
-                  padding: const EdgeInsets.all(1.5),
-                  child: Icon(
-                    Icons.camera_alt,
-                    size: width(context) * 0.04,
-                    color: AppColors.primary,
-                  ),),),
+            top: width(context) * 0.14,
+            child: Container(
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: Colors.white),
+              padding: const EdgeInsets.all(1.5),
+              child: Icon(
+                Icons.camera_alt,
+                size: width(context) * 0.08,
+                color: AppColors.primary,
+              ),
+            ),
+          ),
         ],
       ),
     );

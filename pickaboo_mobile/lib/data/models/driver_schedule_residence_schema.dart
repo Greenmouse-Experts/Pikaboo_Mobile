@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class DriverScheduleResidenceSchema {
@@ -7,6 +8,7 @@ class DriverScheduleResidenceSchema {
   String? price;
   String? status;
   DateTime? createdAt;
+  DateTime? scheduledAt;
 
   DriverScheduleResidenceSchema({
     this.id,
@@ -15,6 +17,7 @@ class DriverScheduleResidenceSchema {
     this.price,
     this.status,
     this.createdAt,
+    this.scheduledAt,
   });
 
   factory DriverScheduleResidenceSchema.fromRawJson(String str) =>
@@ -28,24 +31,30 @@ class DriverScheduleResidenceSchema {
     return val.map((e) => DriverScheduleResidenceSchema.fromJson(e)).toList();
   }
 
-  factory DriverScheduleResidenceSchema.fromJson(Map<String, dynamic> json) =>
-      DriverScheduleResidenceSchema(
-        id: json["id"],
-        residence: json["residence"] == null
-            ? null
-            : Residence.fromJson(json["residence"]),
-        zone: json["zone"],
-        price: json["price"],
-        status: json["status"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-      );
+  factory DriverScheduleResidenceSchema.fromJson(Map<String, dynamic> json) {
+    //print("=====gggg $json");
+    return DriverScheduleResidenceSchema(
+      id: json["id"],
+      scheduledAt: json["schedule_date"] == null
+          ? null
+          : DateTime.parse(json["schedule_date"]),
+      residence: json["residence"] == null
+          ? null
+          : Residence.fromJson(json["residence"]),
+      zone: json["zone"],
+      price: json["price"],
+      status: json["status"],
+      createdAt: json["created_at"] == null
+          ? null
+          : DateTime.parse(json["created_at"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "residence": residence?.toJson(),
         "zone": zone,
+        "schedule_date": scheduledAt?.toIso8601String(),
         "price": price,
         "status": status,
         "created_at": createdAt?.toIso8601String(),
@@ -59,12 +68,20 @@ class DriverScheduleResidenceSchema {
             ? null
             : Residence.fromRouterJson(json["residence"]),
         zone: json["zone"],
+        scheduledAt: json["schedule_date"] == null
+            ? null
+            : DateTime.parse(json["schedule_date"]),
         price: json["price"],
         status: json["status"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
       );
+
+  @override
+  String toString() {
+    return 'DriverScheduleResidenceSchema(id: $id, residence: $residence, zone: $zone, price: $price, status: $status, createdAt: $createdAt, scheduledAt: $scheduledAt)';
+  }
 }
 
 class Residence {
@@ -208,6 +225,11 @@ class Residence {
             ? null
             : HomeResidence.fromRouterJson(json["home_residence"]),
       );
+
+  @override
+  String toString() {
+    return 'Residence(id: $id, userId: $userId, noOfResidents: $noOfResidents, houseNumber: $houseNumber, streetName: $streetName, area1: $area1, area2: $area2, quarter: $quarter, townCity: $townCity, lga: $lga, residential: $residential, shopStores: $shopStores, residentialFacility: $residentialFacility, commercialFacility: $commercialFacility, completionStatus: $completionStatus, facilityInclude: $facilityInclude, waterSupply: $waterSupply, classification: $classification, latitude: $latitude, longtitude: $longtitude, buildingImage: $buildingImage, createdAt: $createdAt, homeResidence: $homeResidence)';
+  }
 }
 
 class HomeResidence {

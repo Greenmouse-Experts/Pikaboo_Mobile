@@ -28,7 +28,6 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
-//TODO: UNCOMMENT
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
@@ -64,46 +63,19 @@ android {
         multiDexEnabled true
     }
 
-   //TODO: UNCOMMMENT
-     signingConfigs {
-        //TODO: COmment out maybe
-        release {
-           keyAlias keystoreProperties['keyAlias']
-           keyPassword keystoreProperties['keyPassword']
-           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-           storePassword keystoreProperties['storePassword']
-       } 
-
-    //TODO: the edit
-    if (System.getenv("ANDROID_KEYSTORE_PATH")) {
-            release {
-                storeFile file(System.getenv("ANDROID_KEYSTORE_PATH"))
-                keyAlias System.getenv("ANDROID_KEYSTORE_ALIAS")
-                keyPassword System.getenv("ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
-                storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
-            }
-        } else {
-            release {
-                keyAlias keystoreProperties['keyAlias']
-                keyPassword keystoreProperties['keyPassword']
-                storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-                storePassword keystoreProperties['storePassword']
-            }
-        }
-       
+   signingConfigs {
+       release {
+           keyAlias 'upload'
+           keyPassword 'Greenmouse2023'
+           storeFile file('C:/Users/regin/Documents/FLUTTER/JOBS/Pikaboo_Mobile/upload-keystore.jks')
+           storePassword 'Greenmouse2023'
+       }
    }
    buildTypes {
        release {
-        //TODO: change from debug to release
-        signingConfig signingConfigs.release
-        shrinkResources false
-        minifyEnabled false
+           signingConfig signingConfigs.release
+        //    multiDexEnabled true
        }
-       debug {
-            shrinkResources false
-            minifyEnabled false
-            signingConfig signingConfigs.debug
-        }
    }
 
 }

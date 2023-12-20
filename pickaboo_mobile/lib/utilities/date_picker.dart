@@ -13,8 +13,8 @@ class HomeOwnerDatePicker extends StatefulWidget {
   const HomeOwnerDatePicker(
     this.dateController, {
     this.text = "Expected pickup date",
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   @override
   State<HomeOwnerDatePicker> createState() => HomeOwnerDatePickerState();
 }
@@ -52,7 +52,7 @@ class HomeOwnerDatePickerState extends State<HomeOwnerDatePicker> {
   @override
   Widget build(BuildContext context) {
     return CustomDoubleTitle(
-      leadingTitle: 'Date',
+      leadingTitle: 'Date of Birth',
       leadingContent: widget.dateController.text.isEmpty
           ? widget.text.toString()
           : widget.dateController.text,

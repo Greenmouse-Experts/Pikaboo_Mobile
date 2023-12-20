@@ -7,6 +7,14 @@ import '../utilities/utilities.dart';
 class PickUpPreview extends StatelessWidget {
   final DriverScheduleSchema schedule;
   const PickUpPreview({super.key, required this.schedule});
+  // String getFormattedDate() {
+  //   DateTime now = DateTime.now();
+  //   String day = now.day.toString().padLeft(2, '0');
+  //   String month = now.month.toString().padLeft(2, '0');
+  //   String year = now.year.toString();
+
+  //   return '$day/$month/$year';
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +22,8 @@ class PickUpPreview extends StatelessWidget {
       height: height(context) * 0.15,
       width: width(context) * 0.8,
       child: InkWell(
-        onTap: () => context
-            .pushNamed(AppRouter.scheduledRequestsAddress, pathParameters: {
+        onTap: () =>
+            context.pushNamed(AppRouter.scheduledRequestsAddress, extra: {
           'id': schedule.cleanupRequest?.id.toString() ?? '',
           'schedule': schedule.toRawJson()
         }),
@@ -60,10 +68,25 @@ class PickUpPreview extends StatelessWidget {
                                   schedule.cleanupRequest?.id.toString() ?? '',
                               'schedule': schedule.toRawJson()
                             }),
-                        child: Text(
-                          'See Details',
-                          style: medium14(context)
-                              .copyWith(color: Colors.black.withOpacity(0.6)),
+                        child: Row(
+                          children: [
+                            Text(
+                              'See Details',
+                              style: medium12(context).copyWith(
+                                  color: Colors.black.withOpacity(0.6)),
+                            ),
+                            SizedBox(width: width(context) * 0.01),
+                            Text(
+                              '||',
+                              style: medium12(context).copyWith(
+                                  color: Colors.black.withOpacity(0.6)),
+                            ),
+                            SizedBox(width: width(context) * 0.01),
+                            Text(
+                                'Date:${schedule.scheduledAt?.formatedDate ?? ''}',
+                                style: medium12(context).copyWith(
+                                    color: Colors.black.withOpacity(0.6))),
+                          ],
                         ),
                       )
                     ],

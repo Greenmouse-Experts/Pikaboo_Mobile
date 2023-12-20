@@ -1,20 +1,25 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // To parse this JSON data, do
 //
 //     final cleanUpSchema = cleanUpSchemaFromJson(jsonString);
 
 import 'dart:convert';
 
+import 'package:pickaboo_mobile/data/models/driver_schedule_schema.dart';
+
 class CleanUpSchema {
   int? id;
   String? status;
   CleanupRequest? cleanupRequest;
   DateTime? createdAt;
+  Zone? zone;
 
   CleanUpSchema({
     this.id,
     this.status,
     this.cleanupRequest,
     this.createdAt,
+    this.zone,
   });
 
   factory CleanUpSchema.fromRawJson(String str) =>
@@ -28,6 +33,7 @@ class CleanUpSchema {
 
   factory CleanUpSchema.fromJson(Map<String, dynamic> json) => CleanUpSchema(
         id: json["id"],
+        zone: json["zone"] == null ? null : Zone.fromJson(json["zone"]),
         status: json["status"],
         cleanupRequest: json["cleanup_request"] == null
             ? null
@@ -39,10 +45,16 @@ class CleanUpSchema {
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "zone": zone?.toJson(),
         "status": status,
         "cleanup_request": cleanupRequest?.toJson(),
         "created_at": createdAt?.toIso8601String(),
       };
+
+  @override
+  String toString() {
+    return 'CleanUpSchema(id: $id, status: $status, cleanupRequest: $cleanupRequest, createdAt: $createdAt)';
+  }
 }
 
 class CleanupRequest {
@@ -82,6 +94,11 @@ class CleanupRequest {
         "created_at": createdAt?.toIso8601String(),
         "zone": zone?.toJson(),
       };
+
+  @override
+  String toString() {
+    return 'CleanupRequest(id: $id, scheduleDate: $scheduleDate, status: $status, createdAt: $createdAt, zone: $zone)';
+  }
 }
 
 class Area {

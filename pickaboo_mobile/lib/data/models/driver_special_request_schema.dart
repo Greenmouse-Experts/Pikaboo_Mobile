@@ -38,7 +38,7 @@ class DriverSpecialSchema {
         id: json["id"],
         altAddress: json["alt_address"],
         scheduleDate: json["schedule_date"],
-        completedDate: json["completed_date"],
+        //completedDate: json["completed_date"],
         status: json["status"],
         createdAt: json["created_at"] == null
             ? null
@@ -46,7 +46,7 @@ class DriverSpecialSchema {
         homeResidence: json["home_residence"] == null
             ? null
             : HomeResidense.fromJson(json["home_residence"]),
-        rating: json["rating"],
+        // rating: json["rating"],
       );
 
   factory DriverSpecialSchema.fromRouterJson(Map<String, dynamic> json) =>
@@ -102,7 +102,7 @@ class HomeResidense {
   String? status;
   String? isVerified;
   DateTime? createdAt;
-  int? createdByWho;
+  String? createdByWho;
   BuildingInformation? buildingInformation;
 
   HomeResidense({
@@ -157,7 +157,7 @@ class HomeResidense {
             ? null
             : DateTime.parse(json["email_verified_at"]),
         currentPassword: json["current_password"],
-        wallet: json["wallet"]?.toString(),
+        wallet: json["wallet"],
         fcmToken: json["fcm_token"],
         meansOfIdentification: json["means_of_identification"],
         address: json["address"],

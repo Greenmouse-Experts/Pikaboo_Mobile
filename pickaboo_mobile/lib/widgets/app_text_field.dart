@@ -442,6 +442,7 @@ class TextArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textCapitalization: TextCapitalization.sentences,
       keyboardType: TextInputType.multiline,
       controller: controller,
       maxLines: 8,

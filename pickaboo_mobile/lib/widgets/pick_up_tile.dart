@@ -22,11 +22,14 @@ class PickupTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       minVerticalPadding: 0,
-      onTap: () => context
-          .pushNamed(AppRouter.scheduledRequestsAddress, pathParameters: {
-        'id': request.cleanupRequest?.id.toString() ?? '',
-        'schedule': request.toRawJson()
-      }),
+      onTap: () {
+      //   print("======${request.cleanupRequest?.id}");
+      //  print("======${request.cleanupRequest}");
+        context.pushNamed(AppRouter.scheduledRequestsAddress, extra: {
+          'id': request.cleanupRequest?.id.toString() ?? request.id.toString(),
+          'schedule': request.toRawJson()
+        });
+      },
       contentPadding: isMobile(context)
           ? EdgeInsets.zero
           : EdgeInsets.symmetric(vertical: height(context) * 0.006),
@@ -68,7 +71,7 @@ class PickupTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Pickup Zone',
+          Text('Pickup Zone at ${request.zone?.name ?? ''}',
               style: medium11(context)
                   .copyWith(color: Colors.black.withOpacity(0.4))),
           SizedBox(height: height(context) * 0.0002),

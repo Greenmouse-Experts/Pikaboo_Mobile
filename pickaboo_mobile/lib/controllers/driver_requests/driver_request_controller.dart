@@ -78,7 +78,6 @@ class DriverRequestNotifier extends ChangeNotifier {
                 context.pop();
               });
         } else {
-          
           AppOverlays.showErrorDialog(
               context: context,
               error: response.message ?? "Unknown error occured");
@@ -93,6 +92,7 @@ class DriverRequestNotifier extends ChangeNotifier {
   Future<void> getSpecialRequests({required WidgetRef ref}) async {
     try {
       final response = await _repo.getSpecialRequest(ref: ref);
+      //print(response);
       if (response.isSuccessful) {
         _driverSpecialRequests = DriverSpecialSchema.getList(response.data);
         //  _driverSpecialRequests = [..._driverSpecialRequests, ...newRequest];

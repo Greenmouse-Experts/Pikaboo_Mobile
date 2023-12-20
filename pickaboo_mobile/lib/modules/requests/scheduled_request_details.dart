@@ -20,7 +20,6 @@ class ScheduledRequest extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final requestDetails =
         DriverScheduleResidenceSchema.fromRawRouterJson(request);
-
     final name =
         "${(requestDetails.residence?.homeResidence?.firstName) ?? ""} ${(requestDetails.residence?.homeResidence?.lastName) ?? ""}";
     final latitue = requestDetails.residence?.latitude ?? "6.5982159133587555";
@@ -66,7 +65,10 @@ class ScheduledRequest extends ConsumerWidget {
                     content: requestDetails.createdAt!.formatedDate),
                 RowTitle(
                     title: 'Status',
-                    content: isActive ? 'Pending' : "Completed")
+                    content: isActive ? 'Pending' : "Completed"),
+                // RowTitle(
+                //     title: 'Date Scheduled',
+                //     content: requestDetails.residence!.area1)
               ],
             ),
           ),

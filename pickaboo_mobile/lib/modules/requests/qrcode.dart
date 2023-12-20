@@ -66,7 +66,7 @@ class _QrCodeScanViewConsumerState extends ConsumerState<QrCodeScanView> {
 
                             final residenceId =
                                 ddatata[0].url?.url?.split("sort=").last;
-                                print("======s=sffs$residenceId");
+                                // print("======s=sffs$residenceId");
 
                             _canSubmit = true;
                             if (widget.isScheduled) {

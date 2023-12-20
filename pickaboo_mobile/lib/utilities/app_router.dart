@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pickaboo_mobile/widgets/error_widget.dart';
 
 import '../modules/anon_dashboard/anon_dashboard_view.dart';
 import '../modules/anon_dashboard/choose_sign_in_view.dart';
@@ -275,13 +276,22 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
                 longitude: state.pathParameters['longitude']!,
               )),
       GoRoute(
-        name: AppRouter.scheduledRequestsAddress,
-        path: '${AppRouter.scheduledRequestsAddress}/:id/:schedule',
-        builder: (context, state) => DriverScheduledDetails(
-          id: state.pathParameters['id']!,
-          schedule: state.pathParameters['schedule']!,
-        ),
-      ),
+          name: AppRouter.scheduledRequestsAddress,
+          path: AppRouter.scheduledRequestsAddress,
+          builder: (context, state) {
+            if (state.extra != null && state.extra is Map<String, dynamic>){
+              final Map<String, dynamic> extra = state.extra as Map<String, dynamic>;
+               return DriverScheduledDetails(
+                id: extra['id'],
+                schedule: extra['schedule']!,
+              );
+            } 
+          return const AppErrorWidget(
+                //snapshot.error!
+                widgetHeight: 0.7,
+                errorType: dynamic,
+                error: "Path does not exist"); 
+          }),
       GoRoute(
         name: AppRouter.scheduledRequestDetails,
         path:
@@ -312,11 +322,8 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
       ),
       GoRoute(
         name: AppRouter.editUserProfile,
-        path:
-            AppRouter.editUserProfile,
-        builder: (context, state) => const EditProfilePage(
-         
-        ),
+        path: AppRouter.editUserProfile,
+        builder: (context, state) => const EditProfilePage(),
       ),
     ],
   ),

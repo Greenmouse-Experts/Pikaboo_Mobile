@@ -60,7 +60,7 @@ class UserRequestsView extends ConsumerWidget {
                                 indicatorColor: AppColors.darkGreen,
                                 tabs: const [
                                   Tab(text: 'Scheduled'),
-                                  Tab(text: 'Special Calls'),
+                                  Tab(text: ''),
                                   // Tab(text: 'What’s new'),
                                 ]),
                             Expanded(

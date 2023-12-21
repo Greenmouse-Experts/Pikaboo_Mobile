@@ -88,7 +88,7 @@ class RequestDetailsView extends ConsumerWidget {
                                     pathParameters: {
                                       "latitude": "23",
                                       "longitude": "3"
-                                    })),
+                                    }),),
                       )
                     ],
                   )

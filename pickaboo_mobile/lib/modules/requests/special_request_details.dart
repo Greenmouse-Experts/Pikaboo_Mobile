@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../controllers/driver_requests/driver_request_controller.dart';
+//import '../../controllers/driver_requests/driver_request_controller.dart';
 import '../../data/models/driver_special_request_schema.dart';
 
 import '../../utilities/utilities.dart';
@@ -102,8 +102,11 @@ class SpecialRequest extends ConsumerWidget {
                               onPressed: () {
                                 context.pushNamed(AppRouter.qrCode,
                                     pathParameters: {
+
                                       "id": cleanupId,
-                                      "isScheduled": "no"
+                                      "isScheduled": "yes",
+                                    },extra: {
+                                      "isSpecial": true,
                                     });
                               })),
                       SizedBox(width: width(context) * 0.05),
@@ -111,12 +114,12 @@ class SpecialRequest extends ConsumerWidget {
                         child: AppButton(
                             text: 'Track',
                             onPressed: () {
-                              ref
-                                  .read(driverRequestProvider.notifier)
-                                  .completeSpecialRequest(
-                                      ref: ref,
-                                      context: context,
-                                      cleanupId: requestDetails.id.toString());
+                               context.pushNamed(
+                                    AppRouter.mapView,
+                                    pathParameters: {
+                                      "latitude": "23",
+                                      "longitude": "3"
+                                    });
                             }),
                       )
                     ],

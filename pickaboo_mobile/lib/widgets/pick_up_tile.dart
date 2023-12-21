@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pickaboo_mobile/controllers/driver_requests/driver_request_controller.dart';
 
 import '../data/models/driver_special_request_schema.dart';
 import '../data/models/models.dart';
@@ -23,8 +24,8 @@ class PickupTile extends StatelessWidget {
     return ListTile(
       minVerticalPadding: 0,
       onTap: () {
-      //   print("======${request.cleanupRequest?.id}");
-      //  print("======${request.cleanupRequest}");
+        //   print("======${request.cleanupRequest?.id}");
+        //  print("======${request.cleanupRequest}");
         context.pushNamed(AppRouter.scheduledRequestsAddress, extra: {
           'id': request.cleanupRequest?.id.toString() ?? request.id.toString(),
           'schedule': request.toRawJson()
@@ -299,12 +300,16 @@ class PickUpCard extends ConsumerWidget {
             ),
             const Spacer(),
             InkWell(
-              onTap: () => context
-                  .pushNamed(AppRouter.specialRequestDetails, pathParameters: {
-                'isActive': specialRequest.status == 'PENDING' ? 'yes' : 'no',
-                "request": specialRequest.toRawJson(),
-                "cleanupId": specialRequest.id.toString()
-              }),
+              onTap: () async{
+                //print(specialRequest.id.toString());
+                await context.pushNamed(AppRouter.specialRequestDetails,
+                    pathParameters: {
+                      'isActive':
+                          specialRequest.status == 'PENDING' ? 'yes' : 'no',
+                      "request": specialRequest.toRawJson(),
+                      "cleanupId": specialRequest.id.toString()
+                    }); ref.read(driverRequestProvider).refresh();
+              },
               child: Row(
                 children: [
                   isActive

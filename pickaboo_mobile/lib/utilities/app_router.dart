@@ -316,6 +316,7 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
         name: AppRouter.qrCode,
         path: "${AppRouter.qrCode}/:id/:isScheduled",
         builder: (context, state) => QrCodeScanView(
+          isSpecial:state.extra == null ? false :(state.extra! as Map<String,dynamic>)['isSpecial'],
           cleanupId: state.pathParameters["id"]!,
           isScheduled: state.pathParameters["isScheduled"] == 'yes',
         ),

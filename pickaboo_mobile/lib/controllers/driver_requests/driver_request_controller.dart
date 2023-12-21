@@ -9,9 +9,21 @@ import '../../widgets/widgets.dart';
 import 'driver_request_repo.dart';
 
 final driverScheduledResidenceProvider = FutureProvider.autoDispose
-    .family<List<DriverScheduleResidenceSchema>, String>((ref, id) {
+    .family<List<DriverScheduleResidenceSchema>, String>((ref, id) async {
   final response =
-      ref.watch(driverRequestProvider).getScheduledResidence(id: id);
+      await ref.watch(driverRequestProvider).getScheduledResidence(id: id);
+  return response;
+});
+
+final driverScheduledRequestProvider = FutureProvider((
+  ref,
+) async {
+  await Future.delayed(
+    Duration(seconds: 6),
+  );
+  final response =
+      await ref.watch(driverRequestProvider).getScheduledRequests();
+  print("rUNNING DRIVERSCHEDULEPROVIDER");
   return response;
 });
 
@@ -31,12 +43,28 @@ class DriverRequestNotifier extends ChangeNotifier {
   List<DriverSpecialSchema> _driverSpecialRequests = [];
   List<DriverSpecialSchema> get driverSpecialRequests => _driverSpecialRequests;
 
-  Future<void> getScheduledRequests() async {
+  set driverSpecialRequests(List<DriverSpecialSchema> value) {
+    _driverSpecialRequests = value;
+    notifyListeners();
+  }
+
+  void refresh() {
+    notifyListeners();
+  }
+
+  set driverSchedulesHome(List<DriverScheduleSchema> value) {
+    _driverSchedulesHome = value;
+    notifyListeners();
+  }
+
+  Future<List<DriverScheduleSchema>> getScheduledRequests() async {
     try {
       final response = await _repo.getScheduledRequest(ref: ref);
       if (response.isSuccessful) {
         _driverSchedulesHome = DriverScheduleSchema.getList(response.data);
+        return _driverSchedulesHome;
       }
+      return [];
     } catch (e) {
       rethrow;
     }
@@ -57,11 +85,32 @@ class DriverRequestNotifier extends ChangeNotifier {
 
   Future<void> completeCleanUp(
       {required WidgetRef ref,
+      bool isSpecial = false,
       required BuildContext context,
       required String cleanupId,
       required String residenceId}) async {
     AppOverlays.loadingDialog(context: context);
     try {
+      if (isSpecial) {
+        _repo.completeSpecialRequest(payload: {
+          "special_request_id": cleanupId,
+        }, ref: ref).then((response) {
+          context.pop();
+          if (response.isSuccessful) {
+            AppOverlays.showSuccessDialog(
+                context: context,
+                content: response.message ?? "Request Completed successfully",
+                onPressed: () {
+                  context.pop();
+                });
+          } else {
+            AppOverlays.showErrorDialog(
+                context: context,
+                error: response.message ?? "Unknown error occured");
+          }
+        });
+        return;
+      }
       _repo.completeCleanUp(payload: {
         "cleanup_request_id": cleanupId,
         "residence_id": residenceId

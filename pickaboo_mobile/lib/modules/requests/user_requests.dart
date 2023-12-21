@@ -60,7 +60,7 @@ class UserRequestsView extends ConsumerWidget {
                                 indicatorColor: AppColors.darkGreen,
                                 tabs: const [
                                   Tab(text: 'Scheduled'),
-                                  Tab(text: ''),
+                                  Tab(text: 'Special Calls'),
                                   // Tab(text: 'What’s new'),
                                 ]),
                             Expanded(
@@ -85,8 +85,7 @@ class UserRequestsView extends ConsumerWidget {
                                           return NewPickUpTile(
                                               address: address,
                                               date: scheduled[i].createdAt!,
-                                              price: (scheduled[i].price ?? "0")
-                                                  .formatWithCommas);
+                                              );
                                         }),
                                 specials.isEmpty
                                     ? Center(

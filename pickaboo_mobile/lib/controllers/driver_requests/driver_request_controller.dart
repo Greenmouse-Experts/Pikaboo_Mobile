@@ -102,6 +102,8 @@ class DriverRequestNotifier extends ChangeNotifier {
                 content: response.message ?? "Request Completed successfully",
                 onPressed: () {
                   context.pop();
+                  context.pop();
+                  context.pop();
                 });
           } else {
             AppOverlays.showErrorDialog(

@@ -107,12 +107,14 @@ class PickupTile extends StatelessWidget {
 class NewPickUpTile extends StatelessWidget {
   final String address;
   final DateTime date;
-  final String price;
-  const NewPickUpTile(
-      {super.key,
-      required this.address,
-      required this.date,
-      required this.price});
+  final String? price;
+
+  const NewPickUpTile({
+    super.key,
+    required this.address,
+    required this.date,
+    this.price,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -122,12 +124,13 @@ class NewPickUpTile extends StatelessWidget {
         SizedBox(height: height(context) * 0.01),
         Text("Waste Address", style: regular14(context)),
         SizedBox(
-            width: width(context) * 0.9,
-            child: Text(
-              address,
-              style: regular12(context).copyWith(color: AppColors.darkAsh),
-              maxLines: 2,
-            )),
+          width: width(context) * 0.9,
+          child: Text(
+            address,
+            style: regular12(context).copyWith(color: AppColors.darkAsh),
+            maxLines: 2,
+          ),
+        ),
         SizedBox(height: height(context) * 0.01),
         const Divider(color: AppColors.lightAsh),
         SizedBox(height: height(context) * 0.01),
@@ -135,23 +138,28 @@ class NewPickUpTile extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(date.formatedDate,
-                style: regular12(context).copyWith(color: AppColors.darkAsh)),
-            const AppSvgImage(image: "assets/images/icons/calender.svg")
+            Text(
+              date.formatedDate,
+              style: regular12(context).copyWith(color: AppColors.darkAsh),
+            ),
+            const AppSvgImage(image: "assets/images/icons/calender.svg"),
           ],
         ),
         SizedBox(height: height(context) * 0.01),
         const Divider(color: AppColors.lightAsh),
-        Container(
-          color: AppColors.fadeGreen,
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: height(context) * 0.015),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Total Price", style: regular14(context)),
-                Text("NGN $price", style: medium14(context))
-              ],
+        Visibility(
+          visible: price != null,
+          child: Container(
+            color: AppColors.fadeGreen,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: height(context) * 0.015),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Total Price", style: regular14(context)),
+                  Text("NGN $price", style: medium14(context)),
+                ],
+              ),
             ),
           ),
         ),
@@ -160,6 +168,7 @@ class NewPickUpTile extends StatelessWidget {
     );
   }
 }
+
 
 class PickupAddressTile extends StatelessWidget {
   final bool isFirst;

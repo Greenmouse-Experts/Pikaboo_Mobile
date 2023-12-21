@@ -77,14 +77,14 @@ class PickUpPreview extends StatelessWidget {
                             ),
                             SizedBox(width: width(context) * 0.01),
                             Text(
-                              '||',
+                              '|',
                               style: medium12(context).copyWith(
                                   color: Colors.black.withOpacity(0.6)),
                             ),
                             SizedBox(width: width(context) * 0.01),
                             Text(
                                 'Date:${schedule.scheduledAt?.formatedDate ?? ''}',
-                                style: medium12(context).copyWith(
+                                style: medium11(context).copyWith(
                                     color: Colors.black.withOpacity(0.6))),
                           ],
                         ),

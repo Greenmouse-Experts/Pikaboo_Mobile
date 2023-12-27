@@ -4,3 +4,4 @@ export './app_textstyle.dart';
 export './app_router.dart';
 export './validator_extensions.dart';
 export './string_extensions.dart';
+export 'geocoding_map.dart';

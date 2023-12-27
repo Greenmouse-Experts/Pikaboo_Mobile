@@ -11,7 +11,7 @@ class AuthRepository {
   Future<ApiResponse> login(dynamic payload, WidgetRef ref) async {
     final response = _api.postData('/auth/mobile/login',
         data: payload, hasHeader: false, ref: ref);
-    print("===========${response}");
+    //print("===========${response}");
     return response;
   }
 

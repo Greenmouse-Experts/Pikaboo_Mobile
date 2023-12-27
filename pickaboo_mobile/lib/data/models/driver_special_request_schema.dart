@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class DriverSpecialSchema {
@@ -346,4 +347,9 @@ class BuildingInformation {
         "building_image": buildingImage,
         "created_at": createdAt?.toIso8601String(),
       };
+
+  @override
+  String toString() {
+    return 'BuildingInformation(id: $id, userId: $userId, noOfResidents: $noOfResidents, houseNumber: $houseNumber, streetName: $streetName, area1: $area1, area2: $area2, quarter: $quarter, townCity: $townCity, lga: $lga, residential: $residential, shopStores: $shopStores, residentialFacility: $residentialFacility, commercialFacility: $commercialFacility, completionStatus: $completionStatus, facilityInclude: $facilityInclude, waterSupply: $waterSupply, classification: $classification, latitude: $latitude, longtitude: $longtitude, buildingImage: $buildingImage, createdAt: $createdAt)';
+  }
 }

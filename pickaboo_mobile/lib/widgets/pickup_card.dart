@@ -63,7 +63,7 @@ class PickUpPreview extends StatelessWidget {
                       InkWell(
                         onTap: () => context.pushNamed(
                             AppRouter.scheduledRequestsAddress,
-                            pathParameters: {
+                            extra: {
                               'id':
                                   schedule.cleanupRequest?.id.toString() ?? '',
                               'schedule': schedule.toRawJson()
@@ -118,19 +118,18 @@ class PickUpPreview extends StatelessWidget {
                   // ),
                   SizedBox(width: width(context) * 0.02),
                   InkWell(
-                    onTap: () => context.pushNamed(
-                        AppRouter.scheduledRequestsAddress,
-                        pathParameters: {
-                          'id': schedule.cleanupRequest?.id.toString() ?? '',
-                          'schedule': schedule.toRawJson()
-                        }),
+                    onTap: () => context
+                        .pushNamed(AppRouter.scheduledRequestsAddress, extra: {
+                      'id': schedule.cleanupRequest?.id.toString() ?? '',
+                      'schedule': schedule.toRawJson()
+                    }),
                     child: Icon(
                       Icons.arrow_forward_ios_outlined,
                       size: width(context) * 0.05,
                       color: Colors.black,
                     ),
                   ),
-                  SizedBox(width: width(context) * 0.02)
+                  SizedBox(width: width(context) * 0.02),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   //   crossAxisAlignment: CrossAxisAlignment.center,

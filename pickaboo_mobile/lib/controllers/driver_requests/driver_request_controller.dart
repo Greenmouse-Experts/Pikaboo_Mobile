@@ -18,12 +18,8 @@ final driverScheduledResidenceProvider = FutureProvider.autoDispose
 final driverScheduledRequestProvider = FutureProvider((
   ref,
 ) async {
-  await Future.delayed(
-    Duration(seconds: 6),
-  );
   final response =
       await ref.watch(driverRequestProvider).getScheduledRequests();
-  print("rUNNING DRIVERSCHEDULEPROVIDER");
   return response;
 });
 

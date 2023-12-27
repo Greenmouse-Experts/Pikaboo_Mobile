@@ -279,18 +279,19 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
           name: AppRouter.scheduledRequestsAddress,
           path: AppRouter.scheduledRequestsAddress,
           builder: (context, state) {
-            if (state.extra != null && state.extra is Map<String, dynamic>){
-              final Map<String, dynamic> extra = state.extra as Map<String, dynamic>;
-               return DriverScheduledDetails(
+            if (state.extra != null && state.extra is Map<String, dynamic>) {
+              final Map<String, dynamic> extra =
+                  state.extra as Map<String, dynamic>;
+              return DriverScheduledDetails(
                 id: extra['id'],
                 schedule: extra['schedule']!,
               );
-            } 
-          return const AppErrorWidget(
+            }
+            return const AppErrorWidget(
                 //snapshot.error!
                 widgetHeight: 0.7,
                 errorType: dynamic,
-                error: "Path does not exist"); 
+                error: "Path does not exist");
           }),
       GoRoute(
         name: AppRouter.scheduledRequestDetails,
@@ -315,11 +316,18 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
       GoRoute(
         name: AppRouter.qrCode,
         path: "${AppRouter.qrCode}/:id/:isScheduled",
-        builder: (context, state) => QrCodeScanView(
-          isSpecial:state.extra == null ? false :(state.extra! as Map<String,dynamic>)['isSpecial'],
-          cleanupId: state.pathParameters["id"]!,
-          isScheduled: state.pathParameters["isScheduled"] == 'yes',
-        ),
+        builder: (context, state) {
+          return QrCodeScanView(
+            isSpecial: state.extra == null
+                ? false
+                : (state.extra! as Map<String, dynamic>)['isSpecial'] ?? false,
+            cleanupId: state.pathParameters["id"]!,
+            isScheduled: state.pathParameters["isScheduled"] == 'yes',
+            expectedResidenceId: state.extra == null
+                ? ""
+                : ((state.extra! as Map<String, dynamic>)['expectedResidenceId'] as String? ?? ""),
+          );
+        },
       ),
       GoRoute(
         name: AppRouter.editUserProfile,

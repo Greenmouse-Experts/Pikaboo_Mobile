@@ -1,7 +1,11 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../data/models/models.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
@@ -18,6 +22,20 @@ class ScheduledRequest extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    void openMap(LatLng coordinates) async {
+      var latitude = coordinates.latitude;
+      double longitude = coordinates.longitude;
+      final url = Platform.isIOS
+          ? 'https://maps.apple.com/?q=$latitude,$longitude'
+          : 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url));
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
+
     final requestDetails =
         DriverScheduleResidenceSchema.fromRawRouterJson(request);
     final name =
@@ -106,11 +124,14 @@ class ScheduledRequest extends ConsumerWidget {
                         child: AppButton(
                           text: 'Complete',
                           onPressed: () {
-                            context.pushNamed(AppRouter.qrCode,
-                                pathParameters: {
-                                  "id": cleanupId,
-                                  "isScheduled": "yes"
-                                });
+                            context
+                                .pushNamed(AppRouter.qrCode, pathParameters: {
+                              "id": cleanupId,
+                              "isScheduled": "yes"
+                            }, extra: {
+                              "expectedResidenceId":
+                                  requestDetails.residence?.homeResidence?.id?.toString() 
+                            });
                           },
                         ),
                       ),
@@ -118,12 +139,25 @@ class ScheduledRequest extends ConsumerWidget {
                       Expanded(
                         child: AppButton(
                             text: 'Track',
-                            onPressed: () => context.pushNamed(
-                                    AppRouter.mapView,
-                                    pathParameters: {
-                                      "latitude": latitue,
-                                      "longitude": longitude
-                                    })),
+                            onPressed: () async {
+                              // print( "Address is"+requestDetails
+                              //     .residence?.homeResidence?.address);
+                              final coordinates =
+                                  await GeocodingMap.getCoordinatesFromAddress(
+                                      requestDetails.residence?.homeResidence
+                                              ?.address ??
+                                          "Ikeja Lagos");
+                              coordinates != null
+                                  // ignore: use_build_context_synchronously
+                                  ? context.pushNamed(AppRouter.mapView,
+                                      pathParameters: {
+                                          "latitude":
+                                              coordinates.latitude.toString(),
+                                          "longitude":
+                                              coordinates.longitude.toString(),
+                                        })
+                                  : openMap(coordinates!);
+                            }),
                       )
                     ],
                   )

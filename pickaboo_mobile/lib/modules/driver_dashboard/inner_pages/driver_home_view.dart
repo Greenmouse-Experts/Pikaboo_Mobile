@@ -201,8 +201,8 @@ class DriverHomeView extends ConsumerWidget {
                   //     if (snapshot.connectionState == ConnectionState.waiting) {
                   //       return const PageLoader();
                   //     } else if (snapshot.hasError) {
-                  //       return AppErrorWidget(
-                  //           //snapshot.error!
+                  //       return orWidget(
+                  //           //snapshot.error!AppErr
                   //           widgetHeight: 0.7,
                   //           errorType: snapshot.error.runtimeType,
                   //           error: snapshot.error.toString());

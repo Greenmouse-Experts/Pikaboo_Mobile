@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -40,9 +39,9 @@ class ScheduledRequest extends ConsumerWidget {
         DriverScheduleResidenceSchema.fromRawRouterJson(request);
     final name =
         "${(requestDetails.residence?.homeResidence?.firstName) ?? ""} ${(requestDetails.residence?.homeResidence?.lastName) ?? ""}";
-    final latitue = requestDetails.residence?.latitude ?? "6.5982159133587555";
-    final longitude =
-        requestDetails.residence?.longtitude ?? "3.3539029113052066";
+    // final latitue = requestDetails.residence?.latitude ?? "6.5982159133587555";
+    // final longitude =
+    //     requestDetails.residence?.longtitude ?? "3.3539029113052066";
     final phone = requestDetails.residence?.homeResidence?.phone ?? "";
     return Scaffold(
       appBar: customAppBar5(context, hasElevation: false),

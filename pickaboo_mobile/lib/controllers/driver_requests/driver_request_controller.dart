@@ -90,6 +90,7 @@ class DriverRequestNotifier extends ChangeNotifier {
       if (isSpecial) {
         _repo.completeSpecialRequest(payload: {
           "special_request_id": cleanupId,
+          "residence_id": residenceId
         }, ref: ref).then((response) {
           context.pop();
           if (response.isSuccessful) {
@@ -153,11 +154,13 @@ class DriverRequestNotifier extends ChangeNotifier {
     required WidgetRef ref,
     required BuildContext context,
     required String cleanupId,
+    required String residenceId,
   }) async {
     AppOverlays.loadingDialog(context: context);
     try {
       _repo.completeSpecialRequest(payload: {
         "special_request_id": cleanupId,
+        "residence_id": residenceId
       }, ref: ref).then((response) {
         context.pop();
         if (response.isSuccessful) {

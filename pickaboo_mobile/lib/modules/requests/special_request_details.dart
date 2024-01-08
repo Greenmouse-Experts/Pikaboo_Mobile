@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 //import '../../controllers/driver_requests/driver_request_controller.dart';
 import '../../data/models/driver_special_request_schema.dart';
@@ -20,6 +24,19 @@ class SpecialRequest extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    void openMap(LatLng coordinates) async {
+      var latitude = coordinates.latitude;
+      double longitude = coordinates.longitude;
+      final url = Platform.isIOS
+          ? 'https://maps.apple.com/?q=$latitude,$longitude'
+          : 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url));
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
     final requestDetails = DriverSpecialSchema.fromRawRouterJson(request);
 
     final name =
@@ -102,24 +119,36 @@ class SpecialRequest extends ConsumerWidget {
                               onPressed: () {
                                 context.pushNamed(AppRouter.qrCode,
                                     pathParameters: {
-
                                       "id": cleanupId,
                                       "isScheduled": "yes",
-                                    },extra: {
+                                    },
+                                    extra: {
                                       "isSpecial": true,
+                                      "expectedResidenceId": requestDetails
+                                          .homeResidence?.id
+                                          .toString()
                                     });
                               })),
                       SizedBox(width: width(context) * 0.05),
                       Expanded(
                         child: AppButton(
                             text: 'Track',
-                            onPressed: () {
-                               context.pushNamed(
-                                    AppRouter.mapView,
-                                    pathParameters: {
-                                      "latitude": "23",
-                                      "longitude": "3"
-                                    });
+                            onPressed: () async{
+                              final coordinates =
+                                  await GeocodingMap.getCoordinatesFromAddress(
+                                      requestDetails.homeResidence
+                                              ?.address ??
+                                          "Ikeja Lagos");
+                              coordinates != null
+                                  // ignore: use_build_context_synchronously
+                                  ? context.pushNamed(AppRouter.mapView,
+                                      pathParameters: {
+                                          "latitude":
+                                              coordinates.latitude.toString(),
+                                          "longitude":
+                                              coordinates.longitude.toString(),
+                                        })
+                                  : openMap(coordinates!);
                             }),
                       )
                     ],

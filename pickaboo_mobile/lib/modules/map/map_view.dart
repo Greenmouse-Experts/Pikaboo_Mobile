@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mapbox_polyline_points/mapbox_polyline_points.dart' as mb;
-import 'package:pickaboo_mobile/controllers/driver_requests/driver_request_controller.dart';
-import 'package:pickaboo_mobile/data/models/driver_schedule_residence_schema.dart';
+// import 'package:pickaboo_mobile/controllers/driver_requests/driver_request_controller.dart';
+// import 'package:pickaboo_mobile/data/models/driver_schedule_residence_schema.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../data/constants.dart';

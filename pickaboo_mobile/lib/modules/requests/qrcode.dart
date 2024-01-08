@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:pickaboo_mobile/controllers/home_residence/home_resident.dart';
+//import 'package:pickaboo_mobile/controllers/home_residence/home_resident.dart';
 //import 'package:pickaboo_mobile/controllers/auth/auth_controller.dart';
 //import 'package:pickaboo_mobile/data/models/driver_special_request_schema.dart';
 //import 'package:pickaboo_mobile/data/models/home_owner_schema.dart';
-
 import '../../controllers/driver_requests/driver_request_controller.dart';
 import '../../utilities/utilities.dart';
 import '../../widgets/widgets.dart';
@@ -83,7 +82,7 @@ class _QrCodeScanViewConsumerState extends ConsumerState<QrCodeScanView> {
                               AppOverlays.showErrorDialog(
                                   context: context,
                                   error:
-                                      "This QR code does not match the expected QR code");
+                                      "This QR code does not match the expected Residence.Please scan the correct QR");
                               // ScaffoldMessenger.of(context).showSnackBar(
                               //   const SnackBar(
                               //     backgroundColor: App,
@@ -109,7 +108,7 @@ class _QrCodeScanViewConsumerState extends ConsumerState<QrCodeScanView> {
                           }
                           // }
                         } catch (e) {
-                          print("Error during QR code processing: $e");
+                          debugPrint("Error during QR code processing: $e");
                           // Handle the error, show a message, or take appropriate action
                         }
                       },

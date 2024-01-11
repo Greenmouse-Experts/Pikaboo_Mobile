@@ -82,7 +82,7 @@ class _QrCodeScanViewConsumerState extends ConsumerState<QrCodeScanView> {
                               AppOverlays.showErrorDialog(
                                   context: context,
                                   error:
-                                      "This QR code does not match the expected Residence.Please scan the correct QR");
+                                      "This QR code does not match the expected Residence.\nPlease scan the correct resident's QR code.");
                               // ScaffoldMessenger.of(context).showSnackBar(
                               //   const SnackBar(
                               //     backgroundColor: App,
